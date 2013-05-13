@@ -21,45 +21,48 @@ public class Fibonaccikeko {
          */
     }
     
-    /*
-     * 
+    /**
+     *
      */
     public void makeHeap(){
-       /* to be implemented*/ 
+        
     }
     
-    /*
-     * return value integer or object??
+    
+    /**
+     *
+     * @return
      */
     public int findMin(/* Heap*/){
         /* to be implemented*/
         return 0;
     }
     
-    /*
+    /**
      * input parameter x ;integer or object??
      */
     public void insert(/* heap, int x*/){
         /* to be implemented*/
     }
     
-    /*
-     * return value integer or object??
+    /**
+     *
+     * @return
      */
     public int deleteMin(/* heap */){
          /* to be implemented*/
         return 0;
     }
     
-    /*
-     * 
+    /**
+     *
      */
     public void decreaseKey(){
         /* to be implemented*/ 
     }
     
-    /*
-     * 
+    /**
+     *
      */
     public void merge(/*heap1, heap2*/){
         /* to be implemented*/ 
