@@ -10,6 +10,8 @@ package Kekoharjoitus;
  */
 public class Kekoharjoitus {
 
+    
+    
     /**
      * @param args the command line arguments
      */
