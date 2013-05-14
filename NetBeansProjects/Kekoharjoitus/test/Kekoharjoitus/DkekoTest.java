@@ -44,8 +44,11 @@ public class DkekoTest {
         System.out.println("makeHeap");
         Dkeko instance = new Dkeko(2);
         instance.makeHeap();
+        Solmu expResult = null;
+        Solmu result = instance.findMin();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       // fail("The test case is a prototype.");
     }
 
     /**
@@ -59,7 +62,7 @@ public class DkekoTest {
         Solmu result = instance.findMin();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      //  fail("The test case is a prototype.");
     }
 
     /**
@@ -71,8 +74,9 @@ public class DkekoTest {
         Dkeko instance = new Dkeko(2);
         Solmu uusi = new Solmu();
         instance.insert(uusi);
+        assertEquals(0, instance.findMin().getKey());
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+     //   fail("The test case is a prototype.");
     }
 
     /**

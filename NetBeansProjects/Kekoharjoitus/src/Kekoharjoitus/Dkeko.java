@@ -41,6 +41,7 @@ public class Dkeko {
     
     /**
      * Lisää Solmu luokan olio minimikekoon
+     * @param x 
      */
     public void insert(Solmu x){
         /* to be implemented*/
@@ -64,6 +65,9 @@ public class Dkeko {
     
     /**
      * Muuttaa keossa olevan alkion x arvoa pienemmäksi arvoon k
+     * @param x 
+     * @param value 
+     * @return 
      */
     public int decreaseKey(Solmu x,int value){
         /* to be implemented*/ 
@@ -77,6 +81,11 @@ public class Dkeko {
         return res;
     }
     
+    /**
+     *
+     * @param lapsi
+     * @return
+     */
     public int vaihdaJarjestys(Solmu lapsi){
         int res=0;
         if(lapsi != null &&lapsi.getKey()==min.getKey() ){
@@ -97,6 +106,11 @@ public class Dkeko {
         return res;
     }
     
+    /**
+     *
+     * @param child
+     * @return
+     */
     public int countParent(int child){
         int p = error;
         if(child ==0){
@@ -106,6 +120,11 @@ public class Dkeko {
         return p;
     }
     
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Solmu findSolmu(int key) {
         Solmu solmu = min;
         for(int i=min.getKey();i<heapSize;i++){
