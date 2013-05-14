@@ -42,7 +42,7 @@ public class DkekoTest {
     @Test
     public void testMakeHeap() {
         System.out.println("makeHeap");
-        Dkeko instance = new Dkeko();
+        Dkeko instance = new Dkeko(2);
         instance.makeHeap();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -54,9 +54,9 @@ public class DkekoTest {
     @Test
     public void testFindMin() {
         System.out.println("findMin");
-        Dkeko instance = new Dkeko();
-        int expResult = 0;
-        int result = instance.findMin();
+        Dkeko instance = new Dkeko(2);
+        Solmu expResult = null;
+        Solmu result = instance.findMin();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -68,8 +68,9 @@ public class DkekoTest {
     @Test
     public void testInsert() {
         System.out.println("insert");
-        Dkeko instance = new Dkeko();
-        instance.insert();
+        Dkeko instance = new Dkeko(2);
+        Solmu uusi = new Solmu();
+        instance.insert(uusi);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -80,7 +81,7 @@ public class DkekoTest {
     @Test
     public void testDeleteMin() {
         System.out.println("deleteMin");
-        Dkeko instance = new Dkeko();
+        Dkeko instance = new Dkeko(2);
         int expResult = 0;
         int result = instance.deleteMin();
         assertEquals(expResult, result);
@@ -94,8 +95,9 @@ public class DkekoTest {
     @Test
     public void testDecreaseKey() {
         System.out.println("decreaseKey");
-        Dkeko instance = new Dkeko();
-        instance.decreaseKey();
+        Dkeko instance = new Dkeko(2);
+        Solmu uusi = new Solmu();
+        instance.decreaseKey(uusi,4);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -106,7 +108,7 @@ public class DkekoTest {
     @Test
     public void testMerge() {
         System.out.println("merge");
-        Dkeko instance = new Dkeko();
+        Dkeko instance = new Dkeko(2);
         instance.merge();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
