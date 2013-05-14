@@ -82,8 +82,8 @@ public class DkekoTest {
     public void testDeleteMin() {
         System.out.println("deleteMin");
         Dkeko instance = new Dkeko(2);
-        int expResult = 0;
-        int result = instance.deleteMin();
+        Solmu expResult = null;
+        Solmu result = instance.deleteMin();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
