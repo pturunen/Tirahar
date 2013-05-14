@@ -13,9 +13,18 @@ public class Solmu {
     private Solmu left;
     private Solmu right;
     private int value;
+    private int key;
 
+    public Solmu(){
+        this.key = -1;
+        this.left = null;
+        this.right = null;
+        this.value = Integer.MAX_VALUE;
+    }
+    
     public Solmu(int value, Solmu left, Solmu right) {
         this.value = value;
+        this.key = -1;
         this.left = left;
         this.right = right;
     }
@@ -36,7 +45,19 @@ public class Solmu {
     public int getValue() {
         return value;
     } 
+    
+    public void setValue(int value){
+        this.value = value;
+    }
+    
+    public int getKey(){
+        return key;
+    }
 
+    public void setKey(int key){
+        this.key = key;
+    }
+    
     public String toString() {
         String l, r;
 

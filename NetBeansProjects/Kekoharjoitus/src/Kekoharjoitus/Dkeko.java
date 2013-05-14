@@ -9,32 +9,54 @@ package Kekoharjoitus;
  * @author pturunen
  */
 public class Dkeko {
+    //private Solmu heap = null;
+    final int empty = 0;
+    private int d=0;
+    private int heapSize = 0;
+    private Solmu min = null;
+    private Solmu tail = null;
+    final int error = -1;
+    final int ok = 0;
     
-    Dkeko(){
-        
+    Dkeko(int k){
+        this.d = k;
     }
     
     /**
      * Luo uuden tyhjän keon
      */
     public void makeHeap(){
+       // heap = null;
+        heapSize = 0;
+        min = null;
+        tail = min;
         
+       // System.out.println(heap.toString());
     }
     
     /**
      * Palauttaa osoittimen keon pienimpään avaimeen
-     * @return
+     * @return null, jos keko tyhjä
      */
-    public int findMin(/* Heap*/){
-        /* to be implemented*/
-        return 0;
+    public Solmu findMin(){
+       /* to be implemented*/
+       if(heapSize == empty){
+             return null;
+        }
+       else {
+           return min;
+       }
     }
     
     /**
-     * Lisää alkion x, jonka avain on key[x] kekoon
+     * 
      */
-    public void insert(/* heap, int x*/){
+    public void insert(Solmu x){
         /* to be implemented*/
+        heapSize = heapSize +1;
+        Solmu uusi = new Solmu();
+        uusi.setKey(heapSize-1);
+        decreaseKey(uusi,x.getValue());
     }
     
     /**
@@ -49,8 +71,56 @@ public class Dkeko {
     /**
      * Muuttaa keossa olevan alkion x arvoa pienemmäksi arvoon k
      */
-    public void decreaseKey(/* x,k*/){
+    public int decreaseKey(Solmu x,int value){
         /* to be implemented*/ 
+        /* nyt vaihdetaan olion arvo, pitaisko vaihtaa olio*/
+        int res = ok;
+        if(x.getKey() < 0 || x.getKey() >= heapSize){
+            return error;
+        }
+        x.setValue(value);
+        res = vaihdaJarjestys(x);
+        return res;
+    }
+    
+    public int vaihdaJarjestys(Solmu lapsi){
+        int res=0;
+        if(lapsi != null &&lapsi.getKey()==min.getKey() ){
+            return res;
+        }
+        Solmu solmu=null;
+        int p =  countParent(lapsi.getKey());
+        solmu = findSolmu(p);
+        if(solmu == null ){
+            return error;  
+        }
+        if (solmu.getValue() > lapsi.getValue()){
+            int apu = solmu.getValue();
+            solmu.setValue(lapsi.getValue());
+            lapsi.setValue(apu);
+            res = vaihdaJarjestys(lapsi);
+        }
+        return res;
+    }
+    
+    public int countParent(int child){
+        int p = error;
+        if(child ==0){
+            return error;
+        }
+        p = (child-1)/d;
+        return p;
+    }
+    
+    public Solmu findSolmu(int key) {
+        Solmu solmu = min;
+        for(int i=min.getKey();i<heapSize;i++){
+            if(solmu.getKey()== key){
+                return solmu;
+            }
+            solmu = solmu.getRight();
+        }
+        return null;
     }
     
     /**
