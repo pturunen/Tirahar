@@ -48,6 +48,7 @@ public class Dkeko {
         heapSize = heapSize +1;
         Solmu uusi = new Solmu();
         uusi.setKey(heapSize-1);
+        tail.setRight(uusi);
         decreaseKey(uusi,x.getValue());
     }
     

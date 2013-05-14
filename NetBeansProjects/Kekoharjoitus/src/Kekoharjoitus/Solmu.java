@@ -41,7 +41,15 @@ public class Solmu {
     public Solmu getRight() {
         return right;
     }
+    
+    public void setLeft(Solmu vasen){
+        this.left = vasen;
+    }
 
+    public void setRight(Solmu oikea){
+        this.right = oikea;
+    }
+    
     public int getValue() {
         return value;
     } 
