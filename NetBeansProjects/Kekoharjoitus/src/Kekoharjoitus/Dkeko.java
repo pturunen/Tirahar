@@ -44,6 +44,7 @@ public class Dkeko {
      */
     public void insert(Solmu x){
         /* to be implemented*/
+        /* update */
         heapSize = heapSize +1;
         Solmu uusi = new Solmu();
         uusi.setKey(heapSize-1);
