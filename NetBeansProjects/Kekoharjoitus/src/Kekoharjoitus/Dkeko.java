@@ -9,7 +9,7 @@ package Kekoharjoitus;
  * @author pturunen
  */
 public class Dkeko {
-    //private Solmu heap = null;
+    
     final int empty = 0;
     private int d=0;
     private int heapSize = 0;
@@ -26,30 +26,21 @@ public class Dkeko {
      * Luo uuden tyhjän keon
      */
     public void makeHeap(){
-       // heap = null;
         heapSize = 0;
         min = null;
         tail = min;
-        
-       // System.out.println(heap.toString());
     }
     
     /**
-     * Palauttaa osoittimen keon pienimpään avaimeen
+     * Palauttaa keon pienimmän keyn solmun
      * @return null, jos keko tyhjä
      */
     public Solmu findMin(){
-       /* to be implemented*/
-       if(heapSize == empty){
-             return null;
-        }
-       else {
            return min;
-       }
     }
     
     /**
-     * 
+     * Lisää Solmu luokan olio minimikekoon
      */
     public void insert(Solmu x){
         /* to be implemented*/
