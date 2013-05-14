@@ -54,9 +54,10 @@ public class Dkeko {
      * Poistaa pienimmän alkion keosta ja palauttaa osoittimen ko alkioon
      * @return
      */
-    public int deleteMin(/* heap */){
+    public Solmu deleteMin(){
          /* to be implemented*/
-        return 0;
+        /* delete and make heapify*/
+        return min;
     }
     
     /**
