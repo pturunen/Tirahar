@@ -50,6 +50,8 @@ public class Dkeko {
         heapSize = heapSize +1;
         x.setKey(heapSize-1);
         tail.setRight(x);
+        x.setLeft(tail);
+        tail = x;
         decreaseKey(x,x.getValue());
     }
     
@@ -64,13 +66,15 @@ public class Dkeko {
     }
     
     /**
-     * Muuttaa keossa olevan alkion x arvoa pienemmäksi arvoon k
+     * Muuttaa keossa olevan solmun arvoa ja
+     * paikkaa keossa, jos tarve vaatii
      * @param x 
      * @param value 
      * @return 
      */
     public int decreaseKey(Solmu x,int value){
         /* to be implemented*/ 
+        //todo:nyt toteutus ylöspäin,po myös alaspäin
         int res = ok;
         if(x.getKey() < 0 || x.getKey() >= heapSize){
             return error;
@@ -87,8 +91,9 @@ public class Dkeko {
      */
     public int vaihdaJarjestys(Solmu lapsi){
         int res=0;
-        if(lapsi != null &&lapsi.getKey()==min.getKey() ){
-            
+        if(lapsi != null && lapsi == min && lapsi.getKey()==min.getKey() ){
+            /* oletetaan että solmu kuuluu kekoon ,validi key arvo*/
+            /* todo:tarkista onko perusteltu olettamus*/
             return res;
         }
         Solmu solmu=null;
@@ -98,13 +103,50 @@ public class Dkeko {
             return error;  
         }
         if (solmu.getValue() > lapsi.getValue()){
-            int apu = solmu.getValue();
-            solmu.setValue(lapsi.getValue());
-            lapsi.setValue(apu);
+            lapsi = muutaOsoittimet(solmu,lapsi);
             res = vaihdaJarjestys(lapsi);
         }
         return res;
     }
+    
+    /**
+     * Vaihdetaan Solmun paikkaa keossa,left ja right 
+     *  linkit päivitetään, sekä key arvo
+     * @param s1 
+     * @param s2 
+     * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
+     */
+    public Solmu muutaOsoittimet(Solmu s1, Solmu s2){
+        Solmu solmuL=null;
+        Solmu solmuR=null;
+        if(s1 == null || s2 == null){
+            return null;
+        }
+        int apu=0;
+        apu = s1.getKey();
+        s1.setKey(s2.getKey());
+        s2.setKey(apu);
+        if(s2 == tail){
+            tail = s1;
+        }
+        if(s1 == min){
+            min=s2;
+        }
+        solmuL = s1.getLeft();
+        solmuL.setRight(s2);
+        s1.setLeft(s2.getLeft());
+        s2.getLeft().setRight(s1);
+        s2.setLeft(solmuL);
+        
+        solmuR = s1.getRight();
+        solmuR.setLeft(s2);
+        s1.setRight(s2.getRight());
+        s2.setRight(solmuR);
+        s1.getRight().setLeft(s1);
+        
+        return s2;
+    }
+    
     
     /**
      *
@@ -123,7 +165,7 @@ public class Dkeko {
     /**
      *
      * @param key
-     * @return
+     * @return Solmu olio, joka vastaa key arvoa
      */
     public Solmu findSolmu(int key) {
         Solmu solmu = min;
