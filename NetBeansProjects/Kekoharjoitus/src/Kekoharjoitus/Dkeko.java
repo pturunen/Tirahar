@@ -41,16 +41,16 @@ public class Dkeko {
     
     /**
      * Lisää Solmu luokan olio minimikekoon
+     * omistajuus olioon siirtyy 
      * @param x 
      */
     public void insert(Solmu x){
         /* to be implemented*/
         /* update */
         heapSize = heapSize +1;
-        Solmu uusi = new Solmu();
-        uusi.setKey(heapSize-1);
-        tail.setRight(uusi);
-        decreaseKey(uusi,x.getValue());
+        x.setKey(heapSize-1);
+        tail.setRight(x);
+        decreaseKey(x,x.getValue());
     }
     
     /**
@@ -71,7 +71,6 @@ public class Dkeko {
      */
     public int decreaseKey(Solmu x,int value){
         /* to be implemented*/ 
-        /* nyt vaihdetaan olion arvo, pitaisko vaihtaa olio*/
         int res = ok;
         if(x.getKey() < 0 || x.getKey() >= heapSize){
             return error;
@@ -89,6 +88,7 @@ public class Dkeko {
     public int vaihdaJarjestys(Solmu lapsi){
         int res=0;
         if(lapsi != null &&lapsi.getKey()==min.getKey() ){
+            
             return res;
         }
         Solmu solmu=null;

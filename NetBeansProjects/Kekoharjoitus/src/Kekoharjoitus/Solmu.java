@@ -18,7 +18,7 @@ public class Solmu {
     /**
      *
      */
-    public Solmu(){
+    protected Solmu(){
         this.key = -1;
         this.left = null;
         this.right = null;
@@ -31,7 +31,7 @@ public class Solmu {
      * @param left
      * @param right
      */
-    public Solmu(int value, Solmu left, Solmu right) {
+    protected Solmu(int value, Solmu left, Solmu right) {
         this.value = value;
         this.key = -1;
         this.left = left;
@@ -42,7 +42,7 @@ public class Solmu {
      *
      * @param value
      */
-    public Solmu(int value) {
+    protected Solmu(int value) {
         this.value = value;
         // left ja right ovat null
     }
@@ -51,7 +51,7 @@ public class Solmu {
      *
      * @return
      */
-    public Solmu getLeft() {
+    protected Solmu getLeft() {
         return left;
     }
 
@@ -59,7 +59,7 @@ public class Solmu {
      *
      * @return
      */
-    public Solmu getRight() {
+    protected Solmu getRight() {
         return right;
     }
     
@@ -67,7 +67,7 @@ public class Solmu {
      *
      * @param vasen
      */
-    public void setLeft(Solmu vasen){
+    protected void setLeft(Solmu vasen){
         this.left = vasen;
     }
 
@@ -75,7 +75,7 @@ public class Solmu {
      *
      * @param oikea
      */
-    public void setRight(Solmu oikea){
+    protected void setRight(Solmu oikea){
         this.right = oikea;
     }
     
@@ -83,7 +83,7 @@ public class Solmu {
      *
      * @return
      */
-    public int getValue() {
+    protected int getValue() {
         return value;
     } 
     
@@ -91,7 +91,7 @@ public class Solmu {
      *
      * @param value
      */
-    public void setValue(int value){
+    protected void setValue(int value){
         this.value = value;
     }
     
@@ -99,7 +99,7 @@ public class Solmu {
      *
      * @return
      */
-    public int getKey(){
+    protected int getKey(){
         return key;
     }
 
@@ -107,7 +107,7 @@ public class Solmu {
      *
      * @param key
      */
-    public void setKey(int key){
+    protected void setKey(int key){
         this.key = key;
     }
     
