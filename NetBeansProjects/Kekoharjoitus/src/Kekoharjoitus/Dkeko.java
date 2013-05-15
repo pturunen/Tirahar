@@ -75,9 +75,9 @@ public class Dkeko {
     public int decreaseKey(Solmu x,int value){
         /* to be implemented*/ 
         //todo:nyt toteutus ylöspäin,po myös alaspäin
-        int res = ok;
+        int res = error;
         if(x.getKey() < 0 || x.getKey() >= heapSize){
-            return error;
+            return res;
         }
         x.setValue(value);
         res = vaihdaJarjestys(x);
@@ -96,7 +96,7 @@ public class Dkeko {
             /* todo:tarkista onko perusteltu olettamus*/
             return res;
         }
-        Solmu solmu=null;
+        Solmu solmu;
         int p =  countParent(lapsi.getKey());
         solmu = findSolmu(p);
         if(solmu == null ){
@@ -117,12 +117,12 @@ public class Dkeko {
      * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
      */
     public Solmu muutaOsoittimet(Solmu s1, Solmu s2){
-        Solmu solmuL=null;
-        Solmu solmuR=null;
+        Solmu solmuL;
+        Solmu solmuR;
         if(s1 == null || s2 == null){
             return null;
         }
-        int apu=0;
+        int apu;
         apu = s1.getKey();
         s1.setKey(s2.getKey());
         s2.setKey(apu);
@@ -132,6 +132,7 @@ public class Dkeko {
         if(s1 == min){
             min=s2;
         }
+        
         solmuL = s1.getLeft();
         solmuL.setRight(s2);
         s1.setLeft(s2.getLeft());
@@ -156,7 +157,7 @@ public class Dkeko {
     public int countParent(int child){
         int p = error;
         if(child ==0){
-            return error;
+            return p;
         }
         p = (child-1)/d;
         return p;
