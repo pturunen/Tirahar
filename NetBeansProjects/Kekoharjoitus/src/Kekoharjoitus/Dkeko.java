@@ -94,10 +94,13 @@ public class Dkeko {
     
     /**
      *
-     * @param lapsi
-     * @return
+     * @param lapsi Solmu olio, jota verrataan olion vanhempaan keossa
+     * Jos vanhemman value arvo on suurempi, lapsi ja vanhempi vaihtavat
+     * paikkaa keossa.Edetään keossa ylöspäin kunnes ollaan juuressa tai 
+     * ei enää vaihtoa.
+     * @return -1, jos virhe, muutoin 0
      */
-    public int vaihdaJarjestys(Solmu lapsi){
+    private int vaihdaJarjestys(Solmu lapsi){
         int res=0;
         if(lapsi != null && lapsi == min && lapsi.getKey()==min.getKey() ){
             /* oletetaan että solmu kuuluu kekoon ,validi key arvo*/
@@ -124,7 +127,7 @@ public class Dkeko {
      * @param s2 
      * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
      */
-    public Solmu muutaOsoittimet(Solmu s1, Solmu s2){
+    private Solmu muutaOsoittimet(Solmu s1, Solmu s2){
         //todo:korjaa null tarkistukset heti alkuun
         //turha ja epaselva tarkastella pitkin matkaa!
         Solmu solmuL;
@@ -172,7 +175,7 @@ public class Dkeko {
      * @param child
      * @return
      */
-    public int countParent(int child){
+    private int countParent(int child){
         int p = error;
         if(child ==0){
             return p;
@@ -186,7 +189,7 @@ public class Dkeko {
      * @param key
      * @return Solmu olio, joka vastaa key arvoa
      */
-    public Solmu findSolmu(int key) {
+    private Solmu findSolmu(int key) {
         Solmu solmu = min;
         if(min!=null){
             for(int i=min.getKey();i<heapSize;i++){
