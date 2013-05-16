@@ -42,7 +42,7 @@ public class DkekoTest {
     @Test
     public void testMakeHeap() {
         System.out.println("makeHeap");
-        Dkeko instance = new Dkeko(2);
+        Dkeko instance = new Dkeko(5);
         instance.makeHeap();
         Solmu expResult = null;
         Solmu result = instance.findMin();
@@ -61,6 +61,11 @@ public class DkekoTest {
         Solmu expResult = null;
         Solmu result = instance.findMin();
         assertEquals(expResult, result);
+        Solmu uusi = new Solmu(8,null,null);
+        instance.insert(uusi);
+        //System.out.println(" uusi"+uusi.getValue());
+        //System.out.println(" min"+instance.findMin().getValue());
+        assertEquals(uusi.getValue(), instance.findMin().getValue());
         // TODO review the generated test code and remove the default call to fail.
       //  fail("The test case is a prototype.");
     }
@@ -100,10 +105,22 @@ public class DkekoTest {
     public void testDecreaseKey() {
         System.out.println("decreaseKey");
         Dkeko instance = new Dkeko(2);
-        Solmu uusi = new Solmu();
-        instance.decreaseKey(uusi,4);
+        Solmu uusi = new Solmu(8,null,null);
+        instance.insert(uusi);
+        assertEquals(0, instance.findMin().getKey());
+        assertEquals(8, instance.findMin().getValue());
+        Solmu uusi2 = new Solmu(9,null,null);
+        instance.insert(uusi2);
+        assertEquals(0, instance.findMin().getKey());
+        assertEquals(8, instance.findMin().getValue());
+        
+        instance.decreaseKey(uusi2,4);
+        assertEquals(0, instance.findMin().getKey());
+        assertEquals(4, instance.findMin().getValue());
+        
+      
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    //    fail("The test case is a prototype.");
     }
 
     /**

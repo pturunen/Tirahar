@@ -26,6 +26,8 @@ public class Dkeko {
      * Luo uuden tyhjän keon
      */
     public void makeHeap(){
+        //Konstruktori luo keon,
+        //mikä on tämän funktion lisäarvo ?
         heapSize = 0;
         min = null;
         tail = min;
@@ -49,7 +51,13 @@ public class Dkeko {
         /* update */
         heapSize = heapSize +1;
         x.setKey(heapSize-1);
-        tail.setRight(x);
+        if(tail!=null){
+            tail.setRight(x);
+            
+        }
+        if(heapSize == 1){
+            min = x;
+        }
         x.setLeft(tail);
         tail = x;
         decreaseKey(x,x.getValue());
@@ -117,6 +125,8 @@ public class Dkeko {
      * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
      */
     public Solmu muutaOsoittimet(Solmu s1, Solmu s2){
+        //todo:korjaa null tarkistukset heti alkuun
+        //turha ja epaselva tarkastella pitkin matkaa!
         Solmu solmuL;
         Solmu solmuR;
         if(s1 == null || s2 == null){
@@ -134,16 +144,24 @@ public class Dkeko {
         }
         
         solmuL = s1.getLeft();
-        solmuL.setRight(s2);
+        if(solmuL != null){
+            solmuL.setRight(s2);
+        }
+        
         s1.setLeft(s2.getLeft());
         s2.getLeft().setRight(s1);
         s2.setLeft(solmuL);
-        
         solmuR = s1.getRight();
-        solmuR.setLeft(s2);
+        if(solmuR != null){
+            solmuR.setLeft(s2);
+        }
+        
         s1.setRight(s2.getRight());
         s2.setRight(solmuR);
-        s1.getRight().setLeft(s1);
+        if(s1.getRight()!=null){
+            s1.getRight().setLeft(s1);
+        }
+        
         
         return s2;
     }
@@ -170,11 +188,13 @@ public class Dkeko {
      */
     public Solmu findSolmu(int key) {
         Solmu solmu = min;
-        for(int i=min.getKey();i<heapSize;i++){
-            if(solmu.getKey()== key){
-                return solmu;
+        if(min!=null){
+            for(int i=min.getKey();i<heapSize;i++){
+                if(solmu.getKey()== key){
+                    return solmu;
+                }
+                solmu = solmu.getRight();
             }
-            solmu = solmu.getRight();
         }
         return null;
     }
