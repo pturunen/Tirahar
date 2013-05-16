@@ -80,6 +80,47 @@ public class DkekoTest {
         Solmu uusi = new Solmu();
         instance.insert(uusi);
         assertEquals(0, instance.findMin().getKey());
+        
+        Dkeko instance5 = new Dkeko(5);
+        Solmu five1 = new Solmu(7,null,null);
+        instance5.insert(five1);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five1.getValue(), instance5.findMin().getValue());
+        
+        Solmu five2 = new Solmu(6,null,null);
+        instance5.insert(five2);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five2.getValue(), instance5.findMin().getValue());
+        
+        Solmu five3 = new Solmu(5,null,null);
+        instance5.insert(five3);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five3.getValue(), instance5.findMin().getValue());
+        
+        Solmu five4 = new Solmu(4,null,null);
+        instance5.insert(five4);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five4.getValue(), instance5.findMin().getValue());
+        
+        Solmu five5 = new Solmu(3,null,null);
+        instance5.insert(five5);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five5.getValue(), instance5.findMin().getValue());
+        
+        Solmu five6 = new Solmu(2,null,null);
+        instance5.insert(five6);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five6.getValue(), instance5.findMin().getValue());
+        
+        Solmu five7 = new Solmu(1,null,null);
+        instance5.insert(five7);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five7.getValue(), instance5.findMin().getValue());
+        
+        Solmu five8 = new Solmu(8,null,null);
+        instance5.insert(five8);
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five7.getValue(), instance5.findMin().getValue());
         // TODO review the generated test code and remove the default call to fail.
      //   fail("The test case is a prototype.");
     }
