@@ -53,6 +53,7 @@ public class Dkeko {
     public void insert(Solmu x){
         /* to be implemented*/
         /* update */
+        System.out.println("insert() BEGIN "+this);
         heapSize = heapSize +1;
         x.setKey(heapSize-1);
         if(tail!=null){
@@ -65,6 +66,8 @@ public class Dkeko {
         x.setLeft(tail);
         tail = x;
         decreaseKey(x,x.getValue());
+        
+        System.out.println("insert() END "+this);
     }
     
     /**
@@ -137,6 +140,7 @@ public class Dkeko {
     public int decreaseKey(Solmu x,int value){
         /* to be implemented*/ 
         int res = error;
+        System.out.println("decreaseKey()");
         if (x.getKey() < 0 || x.getKey() >= heapSize){
             return res;
         }
@@ -158,8 +162,9 @@ public class Dkeko {
      */
     private int vaihdaJarjestys(Solmu lapsi){
         int res=0;
-        
+        System.out.println("vaihdaJarjestys lapsi.getValue="+lapsi.getValue());
         if (lapsi != null && lapsi == min ){
+            System.out.println("lapsi==min");
             return res;
         }
         
@@ -167,9 +172,11 @@ public class Dkeko {
         int p =  countParent(lapsi.getKey());
         solmu = findSolmu(p);
         if (solmu == null ){
+            System.out.println("solmu==null");
             return error;  
         }
         if (solmu.getValue() > lapsi.getValue()){
+            System.out.println("parent.value > lapsi.value");
             lapsi = muutaOsoittimet(solmu,lapsi);
             res = vaihdaJarjestys(lapsi);
         }
@@ -186,11 +193,16 @@ public class Dkeko {
     private Solmu muutaOsoittimet(Solmu s1, Solmu s2){
         //todo:korjaa null tarkistukset heti alkuun
         //turha ja epaselva tarkastella pitkin matkaa!
+        System.out.println("muutaOsoittimet()"); 
         Solmu solmuL;
         Solmu solmuR;
         if (s1 == null || s2 == null){
+            System.out.println("s1==null || s2== null");
             return null;
         }
+        System.out.println("p.value="+s1.getValue()+" p.key="+s1.getKey());
+        System.out.println("l.value="+s2.getValue()+" l.key="+s2.getKey());
+        
         int apu;
         apu = s1.getKey();
         s1.setKey(s2.getKey());
@@ -220,15 +232,20 @@ public class Dkeko {
     
     private void updateMinTail(Solmu s1,Solmu s2){
         if (s2 == tail){
+            System.out.println("updateMinTail s2 old tail, s1 new tail");
             tail = s1;
         }
-        if (s1 == min){
-            min=s2;
-        }
-        if (s1 == tail){
+        else if (s1 == tail){
+            System.out.println("updateMinTail s1 old tail, s2 new tail");
             s2 = tail;
         }
-        if (s2 == min){
+        
+        if (s1 == min){
+           System.out.println("updateMinTail s1 old min, s2 new min");
+           min=s2;
+        }
+        else if (s2 == min){
+            System.out.println("updateMinTail s2 old min, s1 new tail");
             min = s1;
         }
     }
@@ -239,11 +256,13 @@ public class Dkeko {
      * @return
      */
     private int countParent(int child){
+        System.out.println("countParent child.key="+child);
         int p = error;
         if (child ==0){
             return p;
         }
         p = (child-1)/d;
+        System.out.println("parent key="+p);
         return p;
     }
     
@@ -253,6 +272,7 @@ public class Dkeko {
      * @return Solmu olio, joka vastaa key arvoa
      */
     private Solmu findSolmu(int key) {
+        System.out.println("findSolmu() key="+key);
         Solmu solmu = min;
         if (min!=null){
             for (int i=min.getKey();i<heapSize;i++){
@@ -272,4 +292,34 @@ public class Dkeko {
     public void merge(/*heap1, heap2*/){
         /* to be implemented*/ 
     }
+    
+    @Override
+    public String toString(){
+        String keko = "";
+        keko = " Dkeko: d="+d+" heapSize="+heapSize+"\n";
+        if (heapSize >0){
+            keko=keko+" min key="+min.getKey()+" min value="+min.getValue()+"\n";
+            keko=keko+" tail key="+tail.getKey()+" tail value="+tail.getValue()+"\n\n";
+            Solmu next = min;
+            int count = 0;
+            int kerroin = 0;
+            for (int i=0;i< heapSize;i++){
+                next = findSolmu(i);
+                count++;
+                if(next!=null){
+                    keko=keko+"| v="+next.getValue()+" k="+next.getKey()+" ";
+                    if (count==(int)Math.pow(d, kerroin)){
+                        kerroin++;
+                        keko=keko+"\n";
+                        count=0;
+                    }
+                }
+                
+            }
+        }
+        
+        return keko;
+    }
+    
+    
 }

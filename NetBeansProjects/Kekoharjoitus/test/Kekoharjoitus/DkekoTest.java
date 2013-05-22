@@ -113,7 +113,10 @@ public class DkekoTest {
         assertEquals(five6.getValue(), instance5.findMin().getValue());
         
         Solmu five7 = new Solmu(1,null,null);
+        assertEquals(0, instance5.findMin().getKey());
+        System.out.println("five7 testcase begin");
         instance5.insert(five7);
+        System.out.println("five7 testcase end");
         assertEquals(0, instance5.findMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
         
@@ -175,4 +178,5 @@ public class DkekoTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+    
 }
