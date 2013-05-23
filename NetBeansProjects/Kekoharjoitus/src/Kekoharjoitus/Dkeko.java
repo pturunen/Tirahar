@@ -72,11 +72,10 @@ public class Dkeko {
     
     /**
      * Poistaa pienimmän alkion keosta ja palauttaa osoittimen ko alkioon
-     * @return
+     * @return 
      */
     public Solmu deleteMin(){
-         /* to be implemented*/
-        /* delete and make heapify*/
+        System.out.println("deleteMin() BEGIN"+this);
         Solmu mini = min;
         if (heapSize > 0){
            min = tail;
@@ -87,12 +86,12 @@ public class Dkeko {
            heapSize = heapSize -1;
            minHeapify(min);
         }
+        System.out.println("deleteMin() END"+this);
         return mini;
     }
     
     
     private void minHeapify(Solmu solmu){
-        //todo:lapsia d maara 1 to d
         if(heapSize == 0 || heapSize ==1){
             return;
         }
@@ -107,7 +106,6 @@ public class Dkeko {
             }
         }
         if (pienin != solmu){
-            //vaihdetaan solmujen paikkaa
             solmu = muutaOsoittimet(pienin,solmu);
             minHeapify(solmu);
         }
@@ -116,6 +114,8 @@ public class Dkeko {
     /*
      * dkeon lapset i = parent,
      * id +1,id+2,..,id +d
+     * @param solmu, vanhempi solmu, jonka lasta etsitään
+     * @return Solmu luokan olio tai null, jos lasta ei ole
      */
     private Solmu annaLapsi(Solmu solmu,int monesko){
         Solmu lapsi = null;
@@ -186,7 +186,7 @@ public class Dkeko {
     /**
      * Vaihdetaan Solmun paikkaa keossa,left ja right 
      *  linkit päivitetään, sekä key arvo
-     * @param s1 
+     * @param s1 vaihdettava solmu,lapsi tai aikuinen
      * @param s2 keossa kohteena oleva solmu
      * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
      */
@@ -194,20 +194,45 @@ public class Dkeko {
         //todo:korjaa null tarkistukset heti alkuun
         //turha ja epaselva tarkastella pitkin matkaa!
         System.out.println("muutaOsoittimet()"); 
-        Solmu solmuL;
-        Solmu solmuR;
+       
         if (s1 == null || s2 == null){
             System.out.println("s1==null || s2== null");
             return null;
         }
         System.out.println("p.value="+s1.getValue()+" p.key="+s1.getKey());
         System.out.println("l.value="+s2.getValue()+" l.key="+s2.getKey());
+        Solmu solmuL1 = s1.getLeft();
+        Solmu solmuR1 = s1.getRight();
+        Solmu solmuL2 = s2.getLeft();
+        Solmu solmuR2 = s2.getRight();
+        
+        s1.setLeft(solmuL2);
+        s1.setRight(solmuR2);
+        s2.setLeft(solmuL1);
+        s2.setRight(solmuR1);
+        
+        if (solmuL1!=null){
+            solmuL1.setRight(s2);
+        }
+        if (solmuL2!=null){
+            solmuL2.setRight(s1);
+        }
+        
+        if (solmuR1!=null){
+            solmuR1.setLeft(s2);
+        }
+        if (solmuR2!=null){
+            solmuR2.setLeft(s1);
+        }
         
         int apu;
         apu = s1.getKey();
         s1.setKey(s2.getKey());
         s2.setKey(apu);
         updateMinTail(s1,s2);
+        
+        
+        /*
         solmuL = s1.getLeft();
         if (solmuL != null){
             solmuL.setRight(s2);
@@ -226,10 +251,13 @@ public class Dkeko {
         if (s1.getRight()!=null){
             s1.getRight().setLeft(s1);
         }
+        * */
         return s2;
     }
     
-    
+    /*
+     * Päivitetään dkeon min ja tail 
+     */
     private void updateMinTail(Solmu s1,Solmu s2){
         if (s2 == tail){
             System.out.println("updateMinTail s2 old tail, s1 new tail");
@@ -252,8 +280,8 @@ public class Dkeko {
     
     /**
      *
-     * @param child
-     * @return
+     * @param child Solmu luokan olion key arvo, jonka vanhempaa etsitään
+     * @return vanhemman key arvo
      */
     private int countParent(int child){
         System.out.println("countParent child.key="+child);
@@ -267,15 +295,19 @@ public class Dkeko {
     }
     
     /**
-     *
-     * @param key
-     * @return Solmu olio, joka vastaa key arvoa
+     * Etsitään key arvoa vastaavaa Solmu luokan oliota Dkeosta
+     * @param key Solmu luokan olion key arvo 
+     * @return Solmu olio tai null jos key arvoa vastaavaa oliota ei löydy
      */
     private Solmu findSolmu(int key) {
         System.out.println("findSolmu() key="+key);
         Solmu solmu = min;
         if (min!=null){
             for (int i=min.getKey();i<heapSize;i++){
+                System.out.println("findSolmu i="+i+" heapSize="+heapSize);
+                if(solmu==null){
+                    System.out.println("solmu==null i="+i);
+                }
                 if (solmu.getKey()== key){
                     return solmu;
                 }
