@@ -51,23 +51,23 @@ public class Dkeko {
      * @param x 
      */
     public void insert(Solmu x){
-        /* to be implemented*/
-        /* update */
-        System.out.println("insert() BEGIN "+this);
+       // System.out.println("insert() BEGIN "+this);
+       // System.out.println("heapSize ennen lisaysta="+heapSize);
         heapSize = heapSize +1;
+       // System.out.println("heapSize kasvatettu="+heapSize);
         x.setKey(heapSize-1);
-        if(tail!=null){
-            tail.setRight(x);
-            
-        }
+       // System.out.println("uuden olion key="+x.getKey());
         if(heapSize == 1){
             min = x;
         }
+        if (tail!=null){
+            tail.setRight(x);
+        }      
         x.setLeft(tail);
         tail = x;
         decreaseKey(x,x.getValue());
-        
-        System.out.println("insert() END "+this);
+        //System.out.println("-----------------------insert() END "+this);
+        //System.out.println("insert() end");
     }
     
     /**
@@ -75,7 +75,7 @@ public class Dkeko {
      * @return 
      */
     public Solmu deleteMin(){
-        System.out.println("deleteMin() BEGIN"+this);
+        //System.out.println("deleteMin() BEGIN"+this);
         Solmu mini = min;
         if (heapSize > 0){
            min = tail;
@@ -86,7 +86,7 @@ public class Dkeko {
            heapSize = heapSize -1;
            minHeapify(min);
         }
-        System.out.println("deleteMin() END"+this);
+        //System.out.println("deleteMin() END"+this);
         return mini;
     }
     
@@ -138,9 +138,8 @@ public class Dkeko {
      * @return 
      */
     public int decreaseKey(Solmu x,int value){
-        /* to be implemented*/ 
         int res = error;
-        System.out.println("decreaseKey()");
+       // System.out.println("decreaseKey()");
         if (x.getKey() < 0 || x.getKey() >= heapSize){
             return res;
         }
@@ -162,9 +161,10 @@ public class Dkeko {
      */
     private int vaihdaJarjestys(Solmu lapsi){
         int res=0;
-        System.out.println("vaihdaJarjestys lapsi.getValue="+lapsi.getValue());
+        //System.out.println("vaihdaJarjestys lapsi.getValue="+lapsi.getValue());
         if (lapsi != null && lapsi == min ){
-            System.out.println("lapsi==min");
+           // System.out.println("lapsi==min");
+           // System.out.println("heapSize="+heapSize);
             return res;
         }
         
@@ -172,11 +172,11 @@ public class Dkeko {
         int p =  countParent(lapsi.getKey());
         solmu = findSolmu(p);
         if (solmu == null ){
-            System.out.println("solmu==null");
+           // System.out.println("solmu==null");
             return error;  
         }
         if (solmu.getValue() > lapsi.getValue()){
-            System.out.println("parent.value > lapsi.value");
+           // System.out.println("parent.value > lapsi.value");
             lapsi = muutaOsoittimet(solmu,lapsi);
             res = vaihdaJarjestys(lapsi);
         }
@@ -191,46 +191,51 @@ public class Dkeko {
      * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
      */
     private Solmu muutaOsoittimet(Solmu s1, Solmu s2){
-        //todo:korjaa null tarkistukset heti alkuun
-        //turha ja epaselva tarkastella pitkin matkaa!
         System.out.println("muutaOsoittimet()"); 
        
         if (s1 == null || s2 == null){
             System.out.println("s1==null || s2== null");
             return null;
         }
-        System.out.println("p.value="+s1.getValue()+" p.key="+s1.getKey());
-        System.out.println("l.value="+s2.getValue()+" l.key="+s2.getKey());
+     //   System.out.println("p.value="+s1.getValue()+" p.key="+s1.getKey());
+     //   System.out.println("l.value="+s2.getValue()+" l.key="+s2.getKey());
+        
         Solmu solmuL1 = s1.getLeft();
         Solmu solmuR1 = s1.getRight();
         Solmu solmuL2 = s2.getLeft();
         Solmu solmuR2 = s2.getRight();
         
-        s1.setLeft(solmuL2);
-        s1.setRight(solmuR2);
-        s2.setLeft(solmuL1);
-        s2.setRight(solmuR1);
+        if (heapSize == 2){
+            s1.setLeft(s2);
+            s1.setRight(s2.getRight());
+            s2.setLeft(s1.getLeft());
+            s2.setRight(s1);
+        }
+        else{
+            s1.setLeft(solmuL2);
+            s1.setRight(solmuR2);
+            s2.setLeft(solmuL1);
+            s2.setRight(solmuR1);
         
-        if (solmuL1!=null){
-            solmuL1.setRight(s2);
-        }
-        if (solmuL2!=null){
-            solmuL2.setRight(s1);
-        }
-        
-        if (solmuR1!=null){
-            solmuR1.setLeft(s2);
-        }
-        if (solmuR2!=null){
-            solmuR2.setLeft(s1);
-        }
+            if (solmuL1!=null){
+                solmuL1.setRight(s2);
+            }
+            if (solmuL2!=null){
+                solmuL2.setRight(s1);
+            }
+            if (solmuR1!=null){
+                solmuR1.setLeft(s2);
+            }
+            if (solmuR2!=null){
+                solmuR2.setLeft(s1);
+            }
+        } 
         
         int apu;
         apu = s1.getKey();
         s1.setKey(s2.getKey());
         s2.setKey(apu);
         updateMinTail(s1,s2);
-        
         
         /*
         solmuL = s1.getLeft();
@@ -260,20 +265,20 @@ public class Dkeko {
      */
     private void updateMinTail(Solmu s1,Solmu s2){
         if (s2 == tail){
-            System.out.println("updateMinTail s2 old tail, s1 new tail");
+          //  System.out.println("updateMinTail s2 old tail, s1 new tail");
             tail = s1;
         }
         else if (s1 == tail){
-            System.out.println("updateMinTail s1 old tail, s2 new tail");
+          //  System.out.println("updateMinTail s1 old tail, s2 new tail");
             s2 = tail;
         }
         
         if (s1 == min){
-           System.out.println("updateMinTail s1 old min, s2 new min");
+          // System.out.println("updateMinTail s1 old min, s2 new min");
            min=s2;
         }
         else if (s2 == min){
-            System.out.println("updateMinTail s2 old min, s1 new tail");
+         //   System.out.println("updateMinTail s2 old min, s1 new tail");
             min = s1;
         }
     }
@@ -300,14 +305,10 @@ public class Dkeko {
      * @return Solmu olio tai null jos key arvoa vastaavaa oliota ei löydy
      */
     private Solmu findSolmu(int key) {
-        System.out.println("findSolmu() key="+key);
+       // System.out.println("findSolmu() key="+key);
         Solmu solmu = min;
         if (min!=null){
             for (int i=min.getKey();i<heapSize;i++){
-                System.out.println("findSolmu i="+i+" heapSize="+heapSize);
-                if(solmu==null){
-                    System.out.println("solmu==null i="+i);
-                }
                 if (solmu.getKey()== key){
                     return solmu;
                 }
@@ -328,10 +329,10 @@ public class Dkeko {
     @Override
     public String toString(){
         String keko = "";
-        keko = " Dkeko: d="+d+" heapSize="+heapSize+"\n";
+        keko = "\n Dkeko: d="+d+" heapSize="+heapSize+"\n";
         if (heapSize >0){
-            keko=keko+" min key="+min.getKey()+" min value="+min.getValue()+"\n";
-            keko=keko+" tail key="+tail.getKey()+" tail value="+tail.getValue()+"\n\n";
+            //keko=keko+" min key="+min.getKey()+" min value="+min.getValue()+"\n";
+            //keko=keko+" tail key="+tail.getKey()+" tail value="+tail.getValue()+"\n\n";
             Solmu next = min;
             int count = 0;
             int kerroin = 0;
