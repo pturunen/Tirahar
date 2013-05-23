@@ -207,14 +207,59 @@ public class DkekoTest extends TestCase{
         assertEquals(0, instance5.findMin().getKey());
         assertEquals(five8.getValue(), instance5.findMin().getValue());
         
+        System.out.println(" keko "+instance5);
+        
         Solmu pienin;
         pienin = instance5.deleteMin();
         assertEquals(five8.getValue(), pienin.getValue());
         
-      //  pienin = instance5.findMin();
-       // assertEquals(pienin.getValue(), instance5.deleteMin().getValue());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five7.getValue(), instance5.findMin().getValue());
+        
+        
+        
+        System.out.println(" keko "+instance5);
+        pienin = instance5.deleteMin();
+        assertEquals(five7.getValue(), pienin.getValue());
+        
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five6.getValue(), instance5.findMin().getValue());
+        
+        pienin = instance5.deleteMin();
+        assertEquals(five6.getValue(), pienin.getValue());
+        
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five5.getValue(), instance5.findMin().getValue());
+        
+        pienin = instance5.deleteMin();
+        assertEquals(five5.getValue(), pienin.getValue());
+        
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five4.getValue(), instance5.findMin().getValue());
+        
+        pienin = instance5.deleteMin();
+        assertEquals(five4.getValue(), pienin.getValue());
+        
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five3.getValue(), instance5.findMin().getValue());
+        
+        pienin = instance5.deleteMin();
+        assertEquals(five3.getValue(), pienin.getValue());
+        
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five2.getValue(), instance5.findMin().getValue());
+        
+        pienin = instance5.deleteMin();
+        assertEquals(five2.getValue(), pienin.getValue());
+        
+        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(five1.getValue(), instance5.findMin().getValue());
+        
+         pienin = instance5.deleteMin();
+        assertEquals(five1.getValue(), pienin.getValue());
+        
+        assertEquals(null, instance5.findMin());
+       
     }
 
     /**
@@ -294,12 +339,23 @@ public class DkekoTest extends TestCase{
         assertEquals(0, instance5.findMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
       
+        
         System.out.println("---------------testDecreaseKey() decrease 8 to 0");
+        System.out.println("---------- before--------\n"+instance5);
         instance5.decreaseKey(five8, 0);
         assertEquals(0, instance5.findMin().getKey());
         System.out.println("five8 value="+five8.getValue());
         assertEquals(five8.getValue(), instance5.findMin().getValue());
         
+        System.out.println("---------- after--------\n"+instance5);
+        
+        //todo:testitapaus 
+        /*                              1
+         *       2              3              4           5             6     
+          7 8 9 10 11  12 13 14 15 16  17 18 19 20 21  22 23 24 25 26  27 28 29 30 31
+         32 33 34 35 36
+         
+         */
         // TODO review the generated test code and remove the default call to fail.
     //    fail("The test case is a prototype.");
     }

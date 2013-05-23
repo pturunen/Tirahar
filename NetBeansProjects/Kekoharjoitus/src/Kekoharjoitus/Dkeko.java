@@ -75,16 +75,32 @@ public class Dkeko {
      * @return 
      */
     public Solmu deleteMin(){
-        //System.out.println("deleteMin() BEGIN"+this);
+        System.out.println("deleteMin()-->"+this);
         Solmu mini = min;
+        Solmu newTail = null;
         if (heapSize > 0){
+           System.out.println("min.v="+min.getValue()+" min.k="+min.getKey());
            min = tail;
+           newTail = tail.getLeft();
+           System.out.println("min.v="+min.getValue()+" min.k="+min.getKey());
+           System.out.println("tail.v="+tail.getValue()+" tail.k="+tail.getKey());
            min.setLeft(mini.getLeft());
            min.setRight(mini.getRight());
+           if (mini.getRight()!=null){
+               mini.getRight().setLeft(min);
+           }
            min.setKey(mini.getKey());
-           tail = tail.getLeft();
+           tail = newTail;
+           if (newTail!=null){
+               newTail.setRight(null);
+           }
            heapSize = heapSize -1;
-           minHeapify(min);
+           if (heapSize > 1){
+               minHeapify(min);
+           }
+           if (heapSize == 0){
+               min = null;
+           }
         }
         //System.out.println("deleteMin() END"+this);
         return mini;
