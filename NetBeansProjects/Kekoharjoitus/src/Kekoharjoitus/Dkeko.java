@@ -87,11 +87,8 @@ public class Dkeko {
         Solmu mini = min;
         Solmu newTail = null;
         if (heapSize > 0){
-           System.out.println("min.v="+min.getValue()+" min.k="+min.getKey());
            min = tail;
            newTail = tail.getLeft();
-           System.out.println("min.v="+min.getValue()+" min.k="+min.getKey());
-           System.out.println("tail.v="+tail.getValue()+" tail.k="+tail.getKey());
            min.setLeft(mini.getLeft());
            min.setRight(mini.getRight());
            if (mini.getRight()!=null){
@@ -124,7 +121,8 @@ public class Dkeko {
         for (int i=1;i<= d;i++){
             lapsi = annaLapsi(solmu,i);
             if (lapsi!=null){
-                if (lapsi.getKey() <= heapSize && lapsi.getValue() < pienin.getValue()){
+                if (lapsi.getKey() <= heapSize && 
+                        lapsi.getValue() < pienin.getValue()){
                     pienin = lapsi;
                 }
             }
@@ -163,7 +161,6 @@ public class Dkeko {
      */
     public int decreaseKey(Solmu x,int value){
         int res = error;
-        //System.out.println("-----------------------decreaseKey() before "+this);
         if (x.getKey() < 0 || x.getKey() >= heapSize){
             return res;
         }
@@ -172,7 +169,6 @@ public class Dkeko {
         }
         x.setValue(value);
         res = vaihdaJarjestys(x);
-        //System.out.println("------------------------decreaseKey() after "+this);
         return res;
     }
     
@@ -186,10 +182,7 @@ public class Dkeko {
      */
     private int vaihdaJarjestys(Solmu lapsi){
         int res=0;
-        //System.out.println("vaihdaJarjestys lapsi.getValue="+lapsi.getValue());
         if (lapsi != null && lapsi == min ){
-           //System.out.println("lapsi==min");
-           // System.out.println("heapSize="+heapSize);
             return res;
         }
         
@@ -197,11 +190,9 @@ public class Dkeko {
         int p =  countParent(lapsi.getKey());
         solmu = findSolmu(p);
         if (solmu == null ){
-           // System.out.println("solmu==null");
             return error;  
         }
         if (solmu.getValue() > lapsi.getValue()){
-            //System.out.println("parent.value > lapsi.value");
             lapsi = muutaOsoittimet(solmu,lapsi);
             res = vaihdaJarjestys(lapsi);
         }
@@ -341,22 +332,18 @@ public class Dkeko {
         Dkeko uusi = null;
         uusi = new Dkeko(suuri.getAste(),suuri.getHeapSize(),
                                     suuri.findMin(),suuri.getTail());
-        
+        //todo:print komennot poistetaan lopullisesta koodista
         System.out.println("uusi.min.value="+uusi.findMin().getValue());
         System.out.println("uusi.tail.value="+uusi.getTail().getValue());
         System.out.println("uusi.HeapSize="+uusi.getHeapSize());
         
         suuri=null;
-        for (int i=0;i < uusi.getHeapSize();i++){
-            System.out.println(uusi.findSolmu(i).getValue());
-        }
+    
         Solmu solmu =null;
-        
         System.out.println("uusi keko ennen yhdistysta "+uusi);
         
         while (pieni.findMin()!=null){
             solmu = pieni.deleteMin();
-            System.out.println("pienen solmu ="+solmu.getValue()+" solmu.key"+solmu.getKey());
             uusi.insert(solmu);
         }
         return uusi;
@@ -377,10 +364,7 @@ public class Dkeko {
     @Override
     public String toString(){
         String keko = "";
-        keko = "\n Dkeko: d="+d+" heapSize="+heapSize+"\n";
         if (heapSize >0){
-            //keko=keko+" min key="+min.getKey()+" min value="+min.getValue()+"\n";
-            //keko=keko+" tail key="+tail.getKey()+" tail value="+tail.getValue()+"\n\n";
             Solmu next = min;
             int count = 0;
             int kerroin = 0;
