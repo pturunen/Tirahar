@@ -17,8 +17,6 @@ public class Kekoharjoitus {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Solmu solmu = new Solmu(3);
-        Dkeko dkeko = new Dkeko(5);
-        dkeko.makeHeap();
+        
     }
 }

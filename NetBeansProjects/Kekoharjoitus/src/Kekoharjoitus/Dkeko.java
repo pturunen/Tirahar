@@ -24,17 +24,16 @@ public class Dkeko {
      */
     Dkeko(int k){
         this.d = k;
+        this.heapSize =0;
+        this.min = null;
+        this.tail = min;        
     }
     
     /**
      * Luo uuden tyhjän keon
      */
-    public void makeHeap(){
-        //todo:tarkista voiko tämä muodostaa taulukosta
-        //Solmu olioita minheapin.
-        heapSize = 0;
-        min = null;
-        tail = min;
+    public static Dkeko makeHeap(int d){
+        return new Dkeko(d);
     }
     
     /**
@@ -300,9 +299,57 @@ public class Dkeko {
     /**
      * Yhdistää kaksi kekoa toisiinsa,luoden uuden keon ja
      * tuhoten keon T1 ja T2
+     * Uuden keon heapSize on suuremman keon heapSize
+     * @param t1 yhdistettävä Dkeko olio, ei saa olla null
+     * @param t2 yhdistettävä Dkeko olio, ei saa olla null
+     * @return uusi Dkeko olio, tai null jos t1 tai t2 null
      */
-    public void merge(/*heap1, heap2*/){
+    public static Dkeko merge(Dkeko t1, Dkeko t2){
         /* to be implemented*/ 
+        Dkeko suuri=null;
+        Dkeko pieni=null;
+        if (t1==null || t2==null){
+            return null;
+        }
+        
+        if (t1.HeapSize() > t2.HeapSize()){
+             System.out.println("merge t1 > t2");
+            suuri =t1;
+            pieni =t2;
+        }
+        else {
+            System.out.println("merge t2 > t1");
+            suuri =t2;
+            pieni =t1;
+        }
+        
+        Dkeko uusi = null;
+        uusi = Dkeko.makeHeap(suuri.heapSize);
+        uusi.min = suuri.findMin();
+        System.out.println("uusi.min.value="+uusi.min.getValue());
+        uusi.tail = suuri.Tail();
+        System.out.println("uusi.tail.value="+uusi.tail.getValue());
+        suuri=null;
+        for (int i=0;i < uusi.heapSize;i++){
+            System.out.println(uusi.findSolmu(i).getValue());
+        }
+        Solmu solmu =null;
+        
+        while (pieni.findMin()!=null){
+            solmu = pieni.deleteMin();
+            System.out.println("pienen solmu ="+solmu.getValue());
+            uusi.insert(solmu);
+        }
+        return uusi;
+    }
+    
+    
+    public int HeapSize(){
+        return this.heapSize;
+    }
+    
+    public Solmu Tail(){
+        return this.tail;
     }
     
     @Override
