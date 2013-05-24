@@ -29,12 +29,21 @@ public class Dkeko {
         this.tail = min;        
     }
     
+    Dkeko(int k,int heapSize,Solmu min,Solmu tail){
+        this.d = k;
+        this.heapSize =heapSize;
+        this.min = min;
+        this.tail = tail;        
+    }
+    
     /**
      * Luo uuden tyhjän keon
      */
     public static Dkeko makeHeap(int d){
         return new Dkeko(d);
     }
+    
+    
     
     /**
      * Palauttaa keon pienimmän keyn solmun
@@ -275,6 +284,10 @@ public class Dkeko {
         }
         p = (child-1)/d;
         System.out.println("parent key="+p);
+        if(this.findSolmu(p)!=null){
+            System.out.println("parent value"+this.findSolmu(p).getValue());
+        }
+        
         return p;
     }
     
@@ -305,53 +318,62 @@ public class Dkeko {
      * @return uusi Dkeko olio, tai null jos t1 tai t2 null
      */
     public static Dkeko merge(Dkeko t1, Dkeko t2){
+        
         /* to be implemented*/ 
+        //TODO
         Dkeko suuri=null;
         Dkeko pieni=null;
         if (t1==null || t2==null){
             return null;
         }
         
-        if (t1.HeapSize() > t2.HeapSize()){
+        if (t1.getHeapSize() > t2.getHeapSize()){
              System.out.println("merge t1 > t2");
             suuri =t1;
             pieni =t2;
         }
         else {
-            System.out.println("merge t2 > t1");
+            System.out.println("merge t2 > t1 ");
             suuri =t2;
             pieni =t1;
         }
         
         Dkeko uusi = null;
-        uusi = Dkeko.makeHeap(suuri.heapSize);
-        uusi.min = suuri.findMin();
-        System.out.println("uusi.min.value="+uusi.min.getValue());
-        uusi.tail = suuri.Tail();
-        System.out.println("uusi.tail.value="+uusi.tail.getValue());
+        uusi = new Dkeko(suuri.getAste(),suuri.getHeapSize(),
+                                    suuri.findMin(),suuri.getTail());
+        
+        System.out.println("uusi.min.value="+uusi.findMin().getValue());
+        System.out.println("uusi.tail.value="+uusi.getTail().getValue());
+        System.out.println("uusi.HeapSize="+uusi.getHeapSize());
+        
         suuri=null;
-        for (int i=0;i < uusi.heapSize;i++){
+        for (int i=0;i < uusi.getHeapSize();i++){
             System.out.println(uusi.findSolmu(i).getValue());
         }
         Solmu solmu =null;
         
+        System.out.println("uusi keko ennen yhdistysta "+uusi);
+        
         while (pieni.findMin()!=null){
             solmu = pieni.deleteMin();
-            System.out.println("pienen solmu ="+solmu.getValue());
+            System.out.println("pienen solmu ="+solmu.getValue()+" solmu.key"+solmu.getKey());
             uusi.insert(solmu);
         }
         return uusi;
     }
     
     
-    public int HeapSize(){
+    public int getHeapSize(){
         return this.heapSize;
     }
     
-    public Solmu Tail(){
+    public Solmu getTail(){
         return this.tail;
     }
     
+    public int getAste(){
+        return d;
+    }
     @Override
     public String toString(){
         String keko = "";

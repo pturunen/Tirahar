@@ -370,7 +370,7 @@ public class DkekoTest extends TestCase{
         Dkeko instance2 = new Dkeko(2);
         Solmu solmu=null;
         Dkeko instance5 = new Dkeko(5);
-        for(int i=28;i>=2;i--){
+        for(int i=11;i>=2;i--){
             solmu = new Solmu(i);
             instance5.insert(solmu);
         }
