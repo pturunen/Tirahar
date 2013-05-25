@@ -173,7 +173,7 @@ public class Dkeko {
     /**
      * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
-     * @param alkio, Kekoalkio olio,jonka sisaltamaa Solmu olion arvoa
+     * @param alkio, Solmu olio,jonka arvoa
      * halutaan pienentää
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
