@@ -10,7 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 /**
  *
@@ -32,6 +32,9 @@ public class DkekoTest extends TestCase{
     int solmuarvo1 = 0;
     int solmuarvo2 = 0;
     
+    int pienin =0;
+    int suurin =0;
+    
     public DkekoTest(String testName) {
         super(testName);
     }
@@ -47,6 +50,7 @@ public class DkekoTest extends TestCase{
     
     @Before
     public void setUp() {
+        instanssi = null;
         instanssi2 = new Dkeko(2);
         instanssi3 = new Dkeko(3);
         instanssi5 = new Dkeko(5);
@@ -57,6 +61,8 @@ public class DkekoTest extends TestCase{
         solmu = new Solmu(solmuarvo);
         solmu1 = new Solmu(solmuarvo1);
         solmu2 = new Solmu(solmuarvo2);
+        pienin=Integer.MAX_VALUE;
+        suurin =0;
     }
     
     @After
@@ -172,6 +178,7 @@ public class DkekoTest extends TestCase{
     /**
      * Testaa findMin 
      * odotettu lopputulos ,palauttaa yhden Solmu olion
+     * arvolla 0,pysyy koko ajan keon pienimpänä
      * joka pysyy keossa.Asetetaan solmut järjestyksessä
      * pienemmästä suurempaan
      */
@@ -199,70 +206,106 @@ public class DkekoTest extends TestCase{
     
     
     /**
-     * Test of insert method, of class Dkeko.
+     * Testaa insert() 
+     * odotettu lopputulos ,kekoon onnistuu yhden solmun lisäys
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
      */
     @Test
-    public void testInsert() {
-        System.out.println("insert");
-        Dkeko instance = new Dkeko(2);
-        Solmu uusi = new Solmu();
-        instance.insert(uusi);
-        assertEquals(uusi.getValue(), instance.findMin().getValue());
-        
-        Dkeko instance5 = new Dkeko(5);
-        Solmu five1 = new Solmu(7);
-        instance5.insert(five1);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five1.getValue(), instance5.findMin().getValue());
-        //System.out.println("------------testInsert: after 7");
-        
-        Solmu five2 = new Solmu(6);
-        instance5.insert(five2);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five2.getValue(), instance5.findMin().getValue());
-        //System.out.println("------------testInsert: after 6");
-        
-        Solmu five3 = new Solmu(5);
-        instance5.insert(five3);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five3.getValue(), instance5.findMin().getValue());
-        //System.out.println("------------testInsert: after 5");
-        
-        Solmu five4 = new Solmu(4);
-        instance5.insert(five4);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five4.getValue(), instance5.findMin().getValue());
-        //System.out.println("------------testInsert: after 4");
-        
-        Solmu five5 = new Solmu(3);
-        System.out.println("--------before inserting value3");
-        instance5.insert(five5);
-        System.out.println("--------after inserting value3");
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five5.getValue(), instance5.findMin().getValue());
-       // System.out.println("------------testInsert: after 3 tail.value="+instance5.tail.getValue());
-        System.out.println("------------testInsert: after 3 min.value="+instance5.findMin().getValue());
-        
-        Solmu five6 = new Solmu(2);
-        instance5.insert(five6);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five6.getValue(), instance5.findMin().getValue());
-       // System.out.println("------------testInsert: after 2 tail.value="+instance5.tail.getValue());
-        System.out.println("------------testInsert: after 2 min.value="+instance5.findMin().getValue());
-        
-        Solmu five7 = new Solmu(1);
-        assertEquals(0, instance5.getMin().getKey());
-        instance5.insert(five7);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five7.getValue(), instance5.findMin().getValue());
-       //System.out.println("------------testInsert: after 1 tail.value="+instance5.tail.getValue());
-       System.out.println("------------testInsert: after 1 min.value="+instance5.findMin().getValue());
-        
-        Solmu five8 = new Solmu(8);
-        instance5.insert(five8);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five7.getValue(), instance5.findMin().getValue());
+    public void haarautumisaste2YksiSolmuInsert() {
+        assertEquals(solmuNull, instanssi2.getMin());
+        instanssi2.insert(solmu);
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
     }
+
+     /**
+     * Testaa insert() 
+     * odotettu lopputulos ,kekoon onnistuu yhden solmun lisäys
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     */
+    @Test
+    public void haarautumisaste5YksiSolmuInsert() {
+        assertEquals(solmuNull, instanssi5.getMin());
+        instanssi5.insert(solmu);
+        assertEquals(solmu.getValue(), instanssi5.findMin().getValue());
+    }
+    
+    
+    /**
+     * Testaa insert() 
+     * odotettu lopputulos,kekoon onnistuu useamman kuin haarautumisaste 
+     * solmun lisääminen
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     */
+    @Test
+    public void haarautumisaste2ViisiSolmuaInsert() {
+        assertEquals(solmuNull, instanssi2.getMin());
+        assertEquals(2, instanssi2.getAste());
+        //isommasta pienempään järjestyksessä
+        for (int i=4;i>=0;i--){
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+            assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+        }
+        
+        //pienemmästä isompaan solmu järjestyksessä
+        instanssi2 =Dkeko.makeHeap(solmuarvo2);
+        assertEquals(solmuNull, instanssi2.findMin());
+        for (int i=0;i<5;i++){
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+            assertEquals(0, instanssi2.findMin().getValue());
+        }
+        
+        }
+        
+     /**
+     * Testaa insert() 
+     * odotettu lopputulos,kekoon onnistuu useamman kuin haarautumisaste 
+     * solmun lisääminen solmun arvo valitaan satunnaisesti
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     */
+    @Test
+    public void haarautumisaste2RandomSolmuaInsert() {
+        assertEquals(solmuNull, instanssi2.findMin());
+        for (int i=0;i<29;i++){
+            solmuarvo =(int) Math.random();
+            if (pienin > solmuarvo){
+                pienin = solmuarvo;
+            }
+            solmu = new Solmu(solmuarvo);
+            instanssi2.insert(solmu);
+            assertEquals(pienin, instanssi2.findMin().getValue());
+        }
+        
+        instanssi2.insert(solmu);
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+    }
+    
+    /**
+     * Testaa insert() 
+     * odotettu lopputulos,kekoon onnistuu useamman kuin haarautumisaste 
+     * solmun lisääminen solmun arvo valitaan satunnaisesti
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     */
+    @Test
+    public void haarautumisaste20RandomSolmuaInsert() {
+        assertEquals(solmuNull, instanssi20.getMin());
+        for (int i=0;i<9260;i++){
+            solmuarvo =(int) Math.random();
+            if (pienin > solmuarvo){
+                pienin = solmuarvo;
+            }
+            solmu = new Solmu(solmuarvo);
+            instanssi20.insert(solmu);
+            assertEquals(pienin, instanssi20.findMin().getValue());
+        }
+    }
+    
 
     /**
      * Test of deleteMin method, of class Dkeko.
@@ -519,11 +562,15 @@ public class DkekoTest extends TestCase{
      suite.addTest(new DkekoTest("yksiSolmuKekoFindMinTest"));
      suite.addTest(new DkekoTest("keossa210SolmuSolmuKekoFindMinTest"));
      suite.addTest(new DkekoTest("keossa012SolmuSolmuKekoFindMinTest"));
-     suite.addTest(new DkekoTest("testInsert"));
+     suite.addTest(new DkekoTest("haarautumisaste2YksiSolmuInsert"));
+     suite.addTest(new DkekoTest("haarautumisaste5YksiSolmuInsert"));
+     suite.addTest(new DkekoTest("haarautumisaste2ViisiSolmuaInsert"));
+     suite.addTest(new DkekoTest("haarautumisaste2RandomSolmuaInsert"));
+     suite.addTest(new DkekoTest("haarautumisaste20RandomSolmuaInsert"));
      suite.addTest(new DkekoTest("testDeleteMin"));
      suite.addTest(new DkekoTest("testDecreaseKey"));
      suite.addTest(new DkekoTest("testMerge"));
-     
+        
     return suite;
  }
     
