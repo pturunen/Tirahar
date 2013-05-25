@@ -81,30 +81,30 @@ public class DkekoTest extends TestCase{
         Dkeko instance = new Dkeko(2);
         Solmu uusi = new Solmu();
         instance.insert(uusi);
-        assertEquals(0, instance.findMin().getKey());
+        assertEquals(uusi.getValue(), instance.findMin().getValue());
         
         Dkeko instance5 = new Dkeko(5);
         Solmu five1 = new Solmu(7);
         instance5.insert(five1);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five1.getValue(), instance5.findMin().getValue());
         //System.out.println("------------testInsert: after 7");
         
         Solmu five2 = new Solmu(6);
         instance5.insert(five2);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five2.getValue(), instance5.findMin().getValue());
         //System.out.println("------------testInsert: after 6");
         
         Solmu five3 = new Solmu(5);
         instance5.insert(five3);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five3.getValue(), instance5.findMin().getValue());
         //System.out.println("------------testInsert: after 5");
         
         Solmu five4 = new Solmu(4);
         instance5.insert(five4);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five4.getValue(), instance5.findMin().getValue());
         //System.out.println("------------testInsert: after 4");
         
@@ -112,33 +112,30 @@ public class DkekoTest extends TestCase{
         System.out.println("--------before inserting value3");
         instance5.insert(five5);
         System.out.println("--------after inserting value3");
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five5.getValue(), instance5.findMin().getValue());
        // System.out.println("------------testInsert: after 3 tail.value="+instance5.tail.getValue());
         System.out.println("------------testInsert: after 3 min.value="+instance5.findMin().getValue());
         
         Solmu five6 = new Solmu(2);
         instance5.insert(five6);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five6.getValue(), instance5.findMin().getValue());
        // System.out.println("------------testInsert: after 2 tail.value="+instance5.tail.getValue());
         System.out.println("------------testInsert: after 2 min.value="+instance5.findMin().getValue());
         
         Solmu five7 = new Solmu(1);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         instance5.insert(five7);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
        //System.out.println("------------testInsert: after 1 tail.value="+instance5.tail.getValue());
        System.out.println("------------testInsert: after 1 min.value="+instance5.findMin().getValue());
         
         Solmu five8 = new Solmu(8);
         instance5.insert(five8);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
-        //System.out.println("------------testInsert: after 8");
-        // TODO review the generated test code and remove the default call to fail.
-     //   fail("The test case is a prototype.");
     }
 
     /**
@@ -155,104 +152,102 @@ public class DkekoTest extends TestCase{
         Dkeko instance5 = new Dkeko(5);
         Solmu five1 = new Solmu(7);
         instance5.insert(five1);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five1.getValue(), instance5.findMin().getValue());
         
         Solmu five2 = new Solmu(6);
         instance5.insert(five2);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five2.getValue(), instance5.findMin().getValue());
         
         Solmu five3 = new Solmu(5);
         System.out.println("------------testInsert BEFORE kolmas-------");
         instance5.insert(five3);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five3.getValue(), instance5.findMin().getValue());
         
         Solmu five4 = new Solmu(4);
         instance5.insert(five4);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five4.getValue(), instance5.findMin().getValue());
         
         Solmu five5 = new Solmu(3);
         instance5.insert(five5);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five5.getValue(), instance5.findMin().getValue());
         
         Solmu five6 = new Solmu(2);
         instance5.insert(five6);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five6.getValue(), instance5.findMin().getValue());
         
         Solmu five7 = new Solmu(1);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         System.out.println("five7 testcase begin");
         instance5.insert(five7);
         System.out.println("five7 testcase end");
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0,instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
         
         Solmu five8 = new Solmu(8);
         instance5.insert(five8);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
         
         //decrease value must be less than original value
         //expected result no changes
-        instance5.decreaseKey(five7, 10);
-        assertEquals(0, instance5.findMin().getKey());
+        Kekoalkio alkio =instance5.findKekoalkio(five7);
+        instance5.decreaseKey(alkio, 10);
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
       
-        instance5.decreaseKey(five8, 0);
-        assertEquals(0, instance5.findMin().getKey());
+        alkio =instance5.findKekoalkio(five8);
+        instance5.decreaseKey(alkio, 0);
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five8.getValue(), instance5.findMin().getValue());
-        
-        System.out.println(" keko "+instance5);
         
         Solmu pienin;
         pienin = instance5.deleteMin();
         assertEquals(five8.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
-        
-        
         
         System.out.println(" keko "+instance5);
         pienin = instance5.deleteMin();
         assertEquals(five7.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five6.getValue(), instance5.findMin().getValue());
         
         pienin = instance5.deleteMin();
         assertEquals(five6.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five5.getValue(), instance5.findMin().getValue());
         
         pienin = instance5.deleteMin();
         assertEquals(five5.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five4.getValue(), instance5.findMin().getValue());
         
         pienin = instance5.deleteMin();
         assertEquals(five4.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five3.getValue(), instance5.findMin().getValue());
         
         pienin = instance5.deleteMin();
         assertEquals(five3.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0,instance5.getMin().getKey());
         assertEquals(five2.getValue(), instance5.findMin().getValue());
         
         pienin = instance5.deleteMin();
         assertEquals(five2.getValue(), pienin.getValue());
         
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five1.getValue(), instance5.findMin().getValue());
         
          pienin = instance5.deleteMin();
@@ -271,93 +266,87 @@ public class DkekoTest extends TestCase{
         Dkeko instance = new Dkeko(2);
         Solmu uusi = new Solmu(8);
         instance.insert(uusi);
-        assertEquals(0, instance.findMin().getKey());
+        assertEquals(0, instance.getMin().getKey());
         assertEquals(8, instance.findMin().getValue());
         Solmu uusi2 = new Solmu(9);
         instance.insert(uusi2);
-        assertEquals(0, instance.findMin().getKey());
+        assertEquals(0, instance.getMin().getKey());
         assertEquals(8, instance.findMin().getValue());
         
-        instance.decreaseKey(uusi2,4);
-        assertEquals(0, instance.findMin().getKey());
+        Kekoalkio alkio = instance.findKekoalkio(uusi2);
+        instance.decreaseKey(alkio,4);
+        assertEquals(0, instance.getMin().getKey());
         assertEquals(4, instance.findMin().getValue());
         
         Dkeko instance5 = new Dkeko(5);
         System.out.println("---------------testDecreaseKey() insert 7");
         Solmu five1 = new Solmu(7);
         instance5.insert(five1);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five1.getValue(), instance5.findMin().getValue());
         System.out.println("---------------testDecreaseKey() insert 6");
         
         Solmu five2 = new Solmu(6);
         instance5.insert(five2);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five2.getValue(), instance5.findMin().getValue());
         System.out.println("---------------testDecreaseKey() insert 5");
         
         Solmu five3 = new Solmu(5);
         instance5.insert(five3);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five3.getValue(), instance5.findMin().getValue());
         System.out.println("---------------testDecreaseKey() insert 4");
         
         Solmu five4 = new Solmu(4);
         instance5.insert(five4);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five4.getValue(), instance5.findMin().getValue());
         System.out.println("---------------testDecreaseKey() insert 3");
         
         Solmu five5 = new Solmu(3);
         instance5.insert(five5);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five5.getValue(), instance5.findMin().getValue());
         System.out.println("---------------testDecreaseKey() insert 2");
         
         Solmu five6 = new Solmu(2);
         instance5.insert(five6);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five6.getValue(), instance5.findMin().getValue());
         
         System.out.println("---------------testDecreaseKey() insert 1");
         Solmu five7 = new Solmu(1);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         instance5.insert(five7);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
         
         System.out.println("---------------testDecreaseKey() insert 8");
         Solmu five8 = new Solmu(8);
         instance5.insert(five8);
-        assertEquals(0, instance5.findMin().getKey());
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
         
         //decrease value must be less than original value
         //expected result no changes
         System.out.println("---------------testDecreaseKey() decrease 1 to 10");
-        instance5.decreaseKey(five7, 10);
-        assertEquals(0, instance5.findMin().getKey());
+        alkio = instance5.findKekoalkio(five7);
+        instance5.decreaseKey(alkio, 10);
+        assertEquals(0, instance5.getMin().getKey());
         assertEquals(five7.getValue(), instance5.findMin().getValue());
       
         
         System.out.println("---------------testDecreaseKey() decrease 8 to 0");
         System.out.println("---------- before--------\n"+instance5);
-        instance5.decreaseKey(five8, 0);
-        assertEquals(0, instance5.findMin().getKey());
+        alkio = instance5.findKekoalkio(five8);
+        instance5.decreaseKey(alkio, 0);
+        assertEquals(0, instance5.getMin().getKey());
         System.out.println("five8 value="+five8.getValue());
         assertEquals(five8.getValue(), instance5.findMin().getValue());
         
         System.out.println("---------- after--------\n"+instance5);
         
-        //todo:testitapaus 
-        /*                              1
-         *       2              3              4           5             6     
-          7 8 9 10 11  12 13 14 15 16  17 18 19 20 21  22 23 24 25 26  27 28 29 30 31
-         32 33 34 35 36
-         
-         */
-        // TODO review the generated test code and remove the default call to fail.
-    //    fail("The test case is a prototype.");
     }
 
     /**
@@ -397,12 +386,12 @@ public class DkekoTest extends TestCase{
     
      public static junit.framework.Test suite(){
      junit.framework.TestSuite suite = new junit.framework.TestSuite();
-    /* suite.addTest(new DkekoTest("testMakeHeap"));
+     suite.addTest(new DkekoTest("testMakeHeap"));
      suite.addTest(new DkekoTest("testFindMin"));
      suite.addTest(new DkekoTest("testInsert"));
      suite.addTest(new DkekoTest("testDeleteMin"));
      suite.addTest(new DkekoTest("testDecreaseKey"));
-     */suite.addTest(new DkekoTest("testMerge"));
+     suite.addTest(new DkekoTest("testMerge"));
      
     return suite;
  }

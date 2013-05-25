@@ -13,23 +13,33 @@ public class Dkeko {
     final int empty = 0;
     private int d=0;
     private int heapSize = 0;
-    private Solmu min = null;
-    private Solmu tail = null;
+    private Kekoalkio min = null;
+    private Kekoalkio tail = null;
     final int error = -1;
     final int ok = 0;
     
     /**
      * Dkeon konstruktori
-     * @param k alustaa d keon haarautumisasteen
+     * @param d alustaa dkeon haarautumisasteen
      */
-    Dkeko(int k){
-        this.d = k;
+    Dkeko(int d){
+        this.d = d;
         this.heapSize =0;
         this.min = null;
         this.tail = min;        
     }
     
-    Dkeko(int k,int heapSize,Solmu min,Solmu tail){
+    /**
+     * Dkeon konstruktori
+     * @param k alustaa d keon haarautumisasteen
+     * @param heapSize keon koko
+     * @param min Kekoalkio olio, kaksisuuntaisen linkitetyn listan 
+     * ensimmäinen alkio, sisältää Solmu olion, jonka value kentän arvon
+     * perusteella minimikeko palauttaa pienimmän arvon
+     * @param tail Kekoalkion olio, kaksisuuntaisen linkitetyn listan viimeinen
+     * alkio
+     */
+    Dkeko(int k,int heapSize,Kekoalkio min,Kekoalkio tail){
         this.d = k;
         this.heapSize =heapSize;
         this.min = min;
@@ -38,6 +48,8 @@ public class Dkeko {
     
     /**
      * Luo uuden tyhjän keon
+     * @param d, alustaa dkeon haarautumisasteen
+     * @return Dkeko luokan olion
      */
     public static Dkeko makeHeap(int d){
         return new Dkeko(d);
@@ -46,255 +58,229 @@ public class Dkeko {
     
     
     /**
-     * Palauttaa keon pienimmän keyn solmun
-     * @return null, jos keko tyhjä
+     * Palauttaa keon pienimmän arvon eli Solmu olion,
+     * jonka value arvo on keon pienin.Solmu säilyy keossa
+     * @return null, jos keko tyhjä, muutoin Solmu luokan olio
      */
     public Solmu findMin(){
-           return min;
+        Solmu result=null;
+        if (min!=null){
+            result = new Solmu(min.getValue().getValue());
+        }
+           return result;
     }
     
     /**
-     * Lisää Solmu luokan olio minimikekoon
+     * Lisää Solmu luokan olion minimikekoon
      * omistajuus olioon siirtyy 
-     * @param x 
+     * @param x Solmu luokan olio,joka lisätään kekoon
      */
     public void insert(Solmu x){
-       // System.out.println("insert() BEGIN "+this);
-       // System.out.println("heapSize ennen lisaysta="+heapSize);
+       if (x == null) {
+           return;
+       }
         heapSize = heapSize +1;
-       // System.out.println("heapSize kasvatettu="+heapSize);
-        x.setKey(heapSize-1);
-       // System.out.println("uuden olion key="+x.getKey());
-        if(heapSize == 1){
-            min = x;
+        Kekoalkio alkio = new Kekoalkio();
+        alkio.setKey(heapSize-1);
+        alkio.setValue(x);
+       
+        if (heapSize == 1){
+            min = alkio;
         }
         if (tail!=null){
-            tail.setRight(x);
+            tail.setRight(alkio);
         }      
-        x.setLeft(tail);
-        tail = x;
-        decreaseKey(x,x.getValue());
-        //System.out.println("-----------------------insert() END "+this);
-        //System.out.println("insert() end");
+        alkio.setLeft(tail);
+        tail = alkio;
+        decreaseKey(tail,x.getValue());
     }
     
     /**
      * Poistaa pienimmän alkion keosta ja palauttaa osoittimen ko alkioon
-     * @return 
+     * @return Solmu luokan olio, poistetaan keosta
      */
     public Solmu deleteMin(){
-        System.out.println("deleteMin()-->"+this);
-        Solmu mini = min;
-        Solmu newTail = null;
+        Kekoalkio mini = null;
+        Solmu solmu=null;
         if (heapSize > 0){
-           min = tail;
-           newTail = tail.getLeft();
-           min.setLeft(mini.getLeft());
-           min.setRight(mini.getRight());
-           if (mini.getRight()!=null){
-               mini.getRight().setLeft(min);
+           mini =  new Kekoalkio(min.getValue());
+           min.setValue(tail.getValue()); 
+           if ( tail.getLeft()!=null){
+               tail.getLeft().setRight(null); 
            }
-           min.setKey(mini.getKey());
-           tail = newTail;
-           if (newTail!=null){
-               newTail.setRight(null);
-           }
+           
+           tail = tail.getLeft();
            heapSize = heapSize -1;
            if (heapSize > 1){
                minHeapify(min);
            }
            if (heapSize == 0){
                min = null;
+               tail=null;
            }
+           solmu = mini.getValue();
         }
-        //System.out.println("deleteMin() END"+this);
-        return mini;
+        return solmu;
     }
     
-    
-    private void minHeapify(Solmu solmu){
+    /**
+     * @param alkio Kekoalkio luokan olio, jos olio on 
+     * rikkonut kekoehdon, funktio korjaa keon
+     */
+    private void minHeapify(Kekoalkio alkio){
         if(heapSize == 0 || heapSize ==1){
             return;
         }
-        Solmu lapsi = null;
-        Solmu pienin = solmu;
+        Kekoalkio child = null;
+        Kekoalkio pienin = alkio;
         for (int i=1;i<= d;i++){
-            lapsi = annaLapsi(solmu,i);
-            if (lapsi!=null){
-                if (lapsi.getKey() <= heapSize && 
-                        lapsi.getValue() < pienin.getValue()){
-                    pienin = lapsi;
+            child = getChild(alkio,i);
+            if (child!=null){
+                if (child.getKey() <= heapSize && 
+                    child.getValue().getValue() < pienin.getValue().getValue()){
+                    pienin = child;
                 }
             }
         }
-        if (pienin != solmu){
-            solmu = muutaOsoittimet(pienin,solmu);
-            minHeapify(solmu);
+        Kekoalkio uusi;
+        if (pienin != alkio){
+            //lapsi oli pienempi,alkuper alkio putoaa keossa alemmas
+            uusi = vaihdaPaikkaa(pienin,alkio);
+            minHeapify(uusi);
         }
     }
     
-    /*
-     * dkeon lapset i = parent,
-     * id +1,id+2,..,id +d
-     * @param solmu, vanhempi solmu, jonka lasta etsitään
-     * @return Solmu luokan olio tai null, jos lasta ei ole
+    /**
+     * Funktio palauttaa Kekoalkio olion lapsen keosta
+     * @param alkio, vanhempi Kekoalkio olio, jonka lasta etsitään
+     * @param monesko ,lapsien järjestysnumero väli 1-d
+     * funktiolta voi kysyä yhden lapsen kerrallaan
+     * @return Kekoalkio luokan olio tai null, jos lasta ei ole
      */
-    private Solmu annaLapsi(Solmu solmu,int monesko){
-        Solmu lapsi = null;
+    private Kekoalkio getChild(Kekoalkio alkio,int monesko){
+        Kekoalkio child = null;
         if (monesko > d || monesko == 0){
-            return lapsi;
+            return child;
         }
-        int lapsikey = (solmu.getKey()*d)+monesko;
-        if (lapsikey < heapSize){
-            lapsi = findSolmu(lapsikey);
+        int childKey = (alkio.getKey()*d)+monesko;
+        if (childKey < heapSize){
+            child = findSolmu(childKey);
         }
-        return lapsi;
+        return child;
     }
     
     
     /**
      * Pienentää keossa olevan solmun arvoa ja
-     * muuttaa solmun paikkaa keossa ylöspäin, jos tarve vaatii
-     * @param x 
-     * @param value 
-     * @return 
+     * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
+     * @param alkio, Kekoalkio olio,jonka sisaltamaa Solmu olion arvoa
+     * halutaan pienentää
+     * @param value Solmu olion valuen uusi arvo
+     * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
      */
-    public int decreaseKey(Solmu x,int value){
+    public int decreaseKey(Kekoalkio alkio,int value){
         int res = error;
-        if (x.getKey() < 0 || x.getKey() >= heapSize){
+        if (alkio.getKey() < 0 || alkio.getKey() >= heapSize || alkio.getValue()==null){
             return res;
         }
-        if (x.getValue() < value){
+        if (alkio.getValue().getValue() < value){
             return error;
         }
-        x.setValue(value);
-        res = vaihdaJarjestys(x);
+        alkio.getValue().setValue(value);
+        res = vaihdaJarjestys(alkio);
         return res;
     }
     
     /**
      *
-     * @param lapsi Solmu olio, jota verrataan olion vanhempaan keossa
+     * @param child Kekoalkion olio, jota verrataan olion vanhempaan keossa
      * Jos vanhemman value arvo on suurempi, lapsi ja vanhempi vaihtavat
      * paikkaa keossa.Edetään keossa ylöspäin kunnes ollaan juuressa tai 
      * ei enää vaihtoa.
      * @return -1, jos virhe, muutoin 0
      */
-    private int vaihdaJarjestys(Solmu lapsi){
+    private int vaihdaJarjestys(Kekoalkio child){
         int res=0;
-        if (lapsi != null && lapsi == min ){
+        Kekoalkio uusi;
+        if (child != null && child == min ){
             return res;
         }
-        
-        Solmu solmu;
-        int p =  countParent(lapsi.getKey());
-        solmu = findSolmu(p);
-        if (solmu == null ){
+        Kekoalkio parent;
+        int p =  countParent(child.getKey());
+        parent = findSolmu(p);
+        if (parent == null ){
             return error;  
         }
-        if (solmu.getValue() > lapsi.getValue()){
-            lapsi = muutaOsoittimet(solmu,lapsi);
-            res = vaihdaJarjestys(lapsi);
+        if (parent.getValue().getValue() > child.getValue().getValue()){
+            uusi = vaihdaPaikkaa(parent,child);
+            res = vaihdaJarjestys(uusi);
         }
         return res;
     }
     
     /**
-     * Vaihdetaan Solmun paikkaa keossa,left ja right 
-     *  linkit päivitetään, sekä key arvo
-     * @param s1 vaihdettava solmu,lapsi tai aikuinen
-     * @param s2 keossa kohteena oleva solmu
-     * @return null, jos s1 tai s2 ovat null,muutoin s2 olio
+     * Vaihdetaan Solmu olion paikkaa keossa
+     * @param s1 Kekoalkio olio,jonka value saa s2 valuen arvon eli Solmu olion
+     * @param s2 Kekoalkio olio,jonka value saa s1 valuen arvon eli Solmu olion
+     * @return null, jos virhe käsittelyssä, muutoin palauttaa s1 olion
      */
-    private Solmu muutaOsoittimet(Solmu s1, Solmu s2){ 
+    private Kekoalkio vaihdaPaikkaa(Kekoalkio s1, Kekoalkio s2){ 
         if (s1 == null || s2 == null){
             return null;
         }
-        int apu;
-        apu = s1.getKey();
-        s1.setKey(s2.getKey());
-        s2.setKey(apu);
-        updateMinTail(s1,s2);
-        //L1<-->S1<-->R1  L2<--->S2<--->R2
-        Solmu solmuL = s1.getLeft();
-        if (solmuL != null){
-            solmuL.setRight(s2);
-        }
-        s1.setLeft(s2.getLeft());
-        if (s2.getLeft()!=null){
-            s2.getLeft().setRight(s1);
-        }
-        s2.setLeft(solmuL);
-        if (solmuL!= null){
-            solmuL.setRight(s2);
-        }
-        Solmu solmuR = s1.getRight();
-        if (solmuR != null){
-            solmuR.setLeft(s2);
-        }
-        s1.setRight(s2.getRight());
-        if (s2.getRight()!= null){
-            s2.getRight().setLeft(s1);
-        }
-        s2.setRight(solmuR);
-        if (s1.getRight()!=null){
-            s1.getRight().setLeft(s1);
-        }
-        return s2;
-    }
-    
-    /*
-     * Päivitetään dkeon min ja tail 
-     */
-    private void updateMinTail(Solmu s1,Solmu s2){
-        if (s2 == tail){
-            tail = s1;
-        }
-        else if (s1 == tail){
-            s2 = tail;
-        }
-        
-        if (s1 == min){
-           min=s2;
-        }
-        else if (s2 == min){
-            min = s1;
-        }
+        Solmu apu;
+        apu = s1.getValue();
+        s1.setValue(s2.getValue());
+        s2.setValue(apu);
+        return s1;
     }
     
     /**
-     *
-     * @param child Solmu luokan olion key arvo, jonka vanhempaa etsitään
+     * Funktio palauttaa paramterina annetun lapsen keyn perusteella 
+     * vanhemman key arvon keossa
+     * @param childKey Kekoalkion luokan olion key arvo, jonka vanhempaa etsitään
      * @return vanhemman key arvo
      */
-    private int countParent(int child){
-        System.out.println("countParent child.key="+child);
-        int p = error;
-        if (child ==0){
-            return p;
+    private int countParent(int childKey){
+        int parentKey = error;
+        if (childKey ==0){
+            return parentKey;
         }
-        p = (child-1)/d;
-        System.out.println("parent key="+p);
-        if(this.findSolmu(p)!=null){
-            System.out.println("parent value"+this.findSolmu(p).getValue());
-        }
-        
-        return p;
+        parentKey = (childKey-1)/d;
+        return parentKey;
     }
     
     /**
-     * Etsitään key arvoa vastaavaa Solmu luokan oliota Dkeosta
-     * @param key Solmu luokan olion key arvo 
-     * @return Solmu olio tai null jos key arvoa vastaavaa oliota ei löydy
+     * Etsitään key arvoa vastaavaa Kekoalkio luokan oliota Dkeosta
+     * @param key Kekoalkio luokan olion key arvo 
+     * @return Kekoalkio olio tai null, jos key arvoa vastaavaa oliota ei löydy
      */
-    private Solmu findSolmu(int key) {
-        Solmu solmu = min;
+    private Kekoalkio findSolmu(int key) {
+        Kekoalkio alkio = min;
         if (min!=null){
             for (int i=0;i<heapSize;i++){
-                if (solmu.getKey()== key){
-                    return solmu;
+                if (alkio.getKey()== key){
+                    return alkio;
                 }
-                solmu = solmu.getRight();
+                alkio = alkio.getRight();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Etsitään Solmu luokan olion vastaavaa Kekoalkio luokan oliota Dkeosta
+     * @param solmu Solmu luokan olion,jonka Kekoalkio halutaan saada selville 
+     * @return Kekoalkio olio tai null, jos Solmua vastaavaa oliota ei löydy
+     */
+    public Kekoalkio findKekoalkio(Solmu solmu){
+        Kekoalkio alkio = min;
+        if (solmu!=null){
+            for (int i=0;i<heapSize;i++){
+                if (alkio.getValue().getValue()== solmu.getValue()){
+                    return alkio;
+                }
+                alkio = alkio.getRight();
             }
         }
         return null;
@@ -303,45 +289,31 @@ public class Dkeko {
     /**
      * Yhdistää kaksi kekoa toisiinsa,luoden uuden keon ja
      * tuhoten keon T1 ja T2
-     * Uuden keon heapSize on suuremman keon heapSize
+     * Uuden keon haarautumisaste on suuremman keon mukaan
      * @param t1 yhdistettävä Dkeko olio, ei saa olla null
      * @param t2 yhdistettävä Dkeko olio, ei saa olla null
      * @return uusi Dkeko olio, tai null jos t1 tai t2 null
      */
-    public static Dkeko merge(Dkeko t1, Dkeko t2){
-        
+    public static Dkeko merge(Dkeko t1, Dkeko t2){ 
         /* to be implemented*/ 
-        //TODO
         Dkeko suuri=null;
         Dkeko pieni=null;
         if (t1==null || t2==null){
             return null;
         }
-        
         if (t1.getHeapSize() > t2.getHeapSize()){
-             System.out.println("merge t1 > t2");
             suuri =t1;
             pieni =t2;
         }
         else {
-            System.out.println("merge t2 > t1 ");
             suuri =t2;
             pieni =t1;
         }
-        
         Dkeko uusi = null;
         uusi = new Dkeko(suuri.getAste(),suuri.getHeapSize(),
-                                    suuri.findMin(),suuri.getTail());
-        //todo:print komennot poistetaan lopullisesta koodista
-        System.out.println("uusi.min.value="+uusi.findMin().getValue());
-        System.out.println("uusi.tail.value="+uusi.getTail().getValue());
-        System.out.println("uusi.HeapSize="+uusi.getHeapSize());
-        
+                                    suuri.getMin(),suuri.getTail());
         suuri=null;
-    
         Solmu solmu =null;
-        System.out.println("uusi keko ennen yhdistysta "+uusi);
-        
         while (pieni.findMin()!=null){
             solmu = pieni.deleteMin();
             uusi.insert(solmu);
@@ -349,42 +321,35 @@ public class Dkeko {
         return uusi;
     }
     
-    
+    /**
+     * Funktio palauttaa dkeon koon
+     * @return int keon koko
+     */
     public int getHeapSize(){
         return this.heapSize;
     }
     
-    public Solmu getTail(){
+    /**
+     * Funktio palauttaa dkeon viimeisen alkion
+     * @return Kekoalkio olio
+     */
+    public Kekoalkio getTail(){
         return this.tail;
     }
     
+    /**
+     * Funktio palauttaa dkeon ensimmäisen alkion
+     * @return Kekoalkio olio
+     */
+    public Kekoalkio getMin(){
+        return this.min;
+    }
+    
+    /**
+     * Funktio palauttaa dkeon haarautumisasteen
+     * @return int 
+     */
     public int getAste(){
         return d;
     }
-    @Override
-    public String toString(){
-        String keko = "";
-        if (heapSize >0){
-            Solmu next = min;
-            int count = 0;
-            int kerroin = 0;
-            for (int i=0;i< heapSize;i++){
-                next = findSolmu(i);
-                count++;
-                if(next!=null){
-                    keko=keko+"| v="+next.getValue()+" k="+next.getKey()+" ";
-                    if (count==(int)Math.pow(d, kerroin)){
-                        kerroin++;
-                        keko=keko+"\n";
-                        count=0;
-                    }
-                }
-                
-            }
-        }
-        
-        return keko;
-    }
-    
-    
 }
