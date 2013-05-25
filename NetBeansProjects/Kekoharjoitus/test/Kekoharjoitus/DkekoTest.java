@@ -17,6 +17,20 @@ import static org.junit.Assert.*;
  * @author pturunen
  */
 public class DkekoTest extends TestCase{
+    Dkeko instanssi =null;
+    Dkeko instanssi2 =null;
+    Dkeko instanssi3 =null;
+    Dkeko instanssi5 =null;
+    Dkeko instanssi20 =null;
+    
+    Solmu solmu = null;
+    Solmu solmu1 = null;
+    Solmu solmu2 = null;
+    Solmu solmuNull = null;
+    
+    int solmuarvo = 0;
+    int solmuarvo1 = 0;
+    int solmuarvo2 = 0;
     
     public DkekoTest(String testName) {
         super(testName);
@@ -24,6 +38,7 @@ public class DkekoTest extends TestCase{
     
     @BeforeClass
     public static void setUpClass() {
+        
     }
     
     @AfterClass
@@ -32,46 +47,157 @@ public class DkekoTest extends TestCase{
     
     @Before
     public void setUp() {
+        instanssi2 = new Dkeko(2);
+        instanssi3 = new Dkeko(3);
+        instanssi5 = new Dkeko(5);
+        instanssi20 = new Dkeko(20);
+        solmuarvo = 0;
+        solmuarvo1 = 1;
+        solmuarvo2 = 2;
+        solmu = new Solmu(solmuarvo);
+        solmu1 = new Solmu(solmuarvo1);
+        solmu2 = new Solmu(solmuarvo2);
     }
     
     @After
     public void tearDown() {
     }
 
+    
     /**
-     * Test of makeHeap method, of class Dkeko.
+     * Testi Dkeon konstruktorille
      */
     @Test
-    public void testMakeHeap() {
-        System.out.println("makeHeap");
-        Dkeko instance = null;
-        instance =  Dkeko.makeHeap(5);
-        Solmu expResult = null;
-        Solmu result = instance.findMin();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-       // fail("The test case is a prototype.");
+    public void testaaKonstruktoriDkekoTest(){
+       assertEquals(2, instanssi2.getAste());
+       assertEquals(3, instanssi3.getAste());
+       assertEquals(5, instanssi5.getAste());
+       assertEquals(20, instanssi20.getAste());
+    }
+    
+    
+    /**
+     * Testi MakeHeap() perustapaus
+     * odotettu tulos funktio palauttaa Dkeko olion
+     */
+    @Test
+    public void aste2OkMakeHeapTest(){
+       instanssi =Dkeko.makeHeap(2);
+       assertEquals(2, instanssi.getAste());
+       assertEquals(0, instanssi.getHeapSize());
+       assertEquals(null, instanssi.getMin());
+       assertEquals(null, instanssi.getTail());
+       
+       instanssi =Dkeko.makeHeap(20);
+       assertEquals(20, instanssi.getAste());
+       assertEquals(0, instanssi.getHeapSize());
+       assertEquals(null, instanssi.getMin());
+       assertEquals(null, instanssi.getTail());
+    }
+    
+    /**
+     * Testi MakeHeap() virhetapaus
+     * odotettu tulos funktio palauttaa null
+     */
+    @Test
+    public void asteNotOkMakeHeapTest(){
+       instanssi =Dkeko.makeHeap(-2);
+       assertEquals(null, instanssi);
+       
+       instanssi =Dkeko.makeHeap(7);
+       assertEquals(7, instanssi.getAste());
+       
+       instanssi =Dkeko.makeHeap(0);
+       assertEquals(null, instanssi);
     }
 
     /**
-     * Test of findMin method, of class Dkeko.
+     * Testaa findMin 
+     * odotettu lopputulos ,palauttaa null
      */
     @Test
-    public void testFindMin() {
-        System.out.println("findMin");
-        Dkeko instance = new Dkeko(2);
-        Solmu expResult = null;
-        Solmu result = instance.findMin();
-        assertEquals(expResult, result);
-        Solmu uusi = new Solmu(8);
-        instance.insert(uusi);
-        //System.out.println(" uusi"+uusi.getValue());
-        //System.out.println(" min"+instance.findMin().getValue());
-        assertEquals(uusi.getValue(), instance.findMin().getValue());
-        // TODO review the generated test code and remove the default call to fail.
-      //  fail("The test case is a prototype.");
+    public void tyhjaKekoFindMinTest() {
+        assertEquals(null, instanssi2.findMin());
+        assertEquals(null, instanssi3.findMin());
+        assertEquals(null, instanssi5.findMin());
     }
 
+    /**
+     * Testaa findMin 
+     * odotettu lopputulos ,palauttaa yhden Solmu olion
+     * joka pysyy keossa.
+     */
+    @Test
+    public void yksiSolmuKekoFindMinTest() {
+        assertEquals(null, instanssi2.findMin());
+        instanssi2.insert(solmu1);
+        assertEquals(1, solmu1.getValue());
+        
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu1.getValue(), instanssi2.findMin().getValue());
+       
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu1.getValue(), instanssi2.findMin().getValue());
+    }
+    
+    /**
+     * Testaa findMin 
+     * odotettu lopputulos ,palauttaa yhden Solmu olion
+     * joka pysyy keossa.Asetetaan solmut järjestyksessä
+     * suuremmasta pienempään
+     */
+    @Test
+    public void keossa210SolmuSolmuKekoFindMinTest() {
+        assertEquals(null, instanssi2.findMin());
+        
+        instanssi2.insert(solmu2);
+        assertEquals(2, solmu2.getValue());
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu2.getValue(), instanssi2.findMin().getValue());
+        
+        instanssi2.insert(solmu1);
+        assertEquals(1, solmu1.getValue());
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu1.getValue(), instanssi2.findMin().getValue());
+        
+        instanssi2.insert(solmu);
+        assertEquals(0, solmu.getValue());
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+        
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+    }
+    
+    /**
+     * Testaa findMin 
+     * odotettu lopputulos ,palauttaa yhden Solmu olion
+     * joka pysyy keossa.Asetetaan solmut järjestyksessä
+     * pienemmästä suurempaan
+     */
+    @Test
+    public void keossa012SolmuSolmuKekoFindMinTest() {
+        assertEquals(null, instanssi2.findMin());
+        instanssi2.insert(solmu);
+        assertEquals(0, solmu.getValue());
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+        
+        instanssi2.insert(solmu1);
+        assertEquals(1, solmu1.getValue());
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+        
+        instanssi2.insert(solmu2);
+        assertEquals(2, solmu2.getValue());
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+        
+        assertNotNull(instanssi2.findMin());
+        assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
+    }
+    
+    
     /**
      * Test of insert method, of class Dkeko.
      */
@@ -386,8 +512,13 @@ public class DkekoTest extends TestCase{
     
      public static junit.framework.Test suite(){
      junit.framework.TestSuite suite = new junit.framework.TestSuite();
-     suite.addTest(new DkekoTest("testMakeHeap"));
-     suite.addTest(new DkekoTest("testFindMin"));
+     suite.addTest(new DkekoTest("testaaKonstruktoriDkekoTest"));
+     suite.addTest(new DkekoTest("aste2OkMakeHeapTest"));
+     suite.addTest(new DkekoTest("asteNotOkMakeHeapTest"));
+     suite.addTest(new DkekoTest("tyhjaKekoFindMinTest"));
+     suite.addTest(new DkekoTest("yksiSolmuKekoFindMinTest"));
+     suite.addTest(new DkekoTest("keossa210SolmuSolmuKekoFindMinTest"));
+     suite.addTest(new DkekoTest("keossa012SolmuSolmuKekoFindMinTest"));
      suite.addTest(new DkekoTest("testInsert"));
      suite.addTest(new DkekoTest("testDeleteMin"));
      suite.addTest(new DkekoTest("testDecreaseKey"));

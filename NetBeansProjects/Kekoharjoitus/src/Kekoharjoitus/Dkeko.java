@@ -52,10 +52,11 @@ public class Dkeko {
      * @return Dkeko luokan olion
      */
     public static Dkeko makeHeap(int d){
+        if (d <1){
+            return null;
+        }
         return new Dkeko(d);
     }
-    
-    
     
     /**
      * Palauttaa keon pienimmän arvon eli Solmu olion,
@@ -168,7 +169,6 @@ public class Dkeko {
         }
         return child;
     }
-    
     
     /**
      * Pienentää keossa olevan solmun arvoa ja
