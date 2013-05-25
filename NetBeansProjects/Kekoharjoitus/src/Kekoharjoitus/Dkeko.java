@@ -77,7 +77,7 @@ public class Dkeko {
      * @param x Solmu luokan olio,joka lisätään kekoon
      */
     public void insert(Solmu x){
-       if (x == null) {
+       if (x == null || findKekoalkio(x)!=null) {
            return;
        }
         heapSize = heapSize +1;
