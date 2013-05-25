@@ -212,7 +212,7 @@ public class DkekoTest extends TestCase{
      * palauttaa tarkistuksessa oikean minimikeon arvon
      */
     @Test
-    public void haarautumisaste2YksiSolmuInsert() {
+    public void haarautumisaste2YksiSolmuInsertTest() {
         assertEquals(solmuNull, instanssi2.getMin());
         instanssi2.insert(solmu);
         assertEquals(solmu.getValue(), instanssi2.findMin().getValue());
@@ -225,7 +225,7 @@ public class DkekoTest extends TestCase{
      * palauttaa tarkistuksessa oikean minimikeon arvon
      */
     @Test
-    public void haarautumisaste5YksiSolmuInsert() {
+    public void haarautumisaste5YksiSolmuInsertTest() {
         assertEquals(solmuNull, instanssi5.getMin());
         instanssi5.insert(solmu);
         assertEquals(solmu.getValue(), instanssi5.findMin().getValue());
@@ -240,7 +240,7 @@ public class DkekoTest extends TestCase{
      * palauttaa tarkistuksessa oikean minimikeon arvon
      */
     @Test
-    public void haarautumisaste2ViisiSolmuaInsert() {
+    public void haarautumisaste2ViisiSolmuaInsertTest() {
         assertEquals(solmuNull, instanssi2.getMin());
         assertEquals(2, instanssi2.getAste());
         //isommasta pienempään järjestyksessä
@@ -269,7 +269,7 @@ public class DkekoTest extends TestCase{
      * palauttaa tarkistuksessa oikean minimikeon arvon
      */
     @Test
-    public void haarautumisaste2RandomSolmuaInsert() {
+    public void haarautumisaste2RandomSolmuaInsertTest() {
         assertEquals(solmuNull, instanssi2.findMin());
         for (int i=0;i<29;i++){
             solmuarvo =(int) Math.random();
@@ -293,7 +293,7 @@ public class DkekoTest extends TestCase{
      * palauttaa tarkistuksessa oikean minimikeon arvon
      */
     @Test
-    public void haarautumisaste20RandomSolmuaInsert() {
+    public void haarautumisaste20RandomSolmuaInsertTest() {
         assertEquals(solmuNull, instanssi20.getMin());
         for (int i=0;i<9260;i++){
             solmuarvo =(int) Math.random();
@@ -306,126 +306,44 @@ public class DkekoTest extends TestCase{
         }
     }
     
-
     /**
-     * Test of deleteMin method, of class Dkeko.
+     * Testaa deleteMin() 
+     * odotettu lopputulos,keko palauttaa null, koska keko tyhja
+     * 
      */
     @Test
-    public void testDeleteMin() {
-        System.out.println("deleteMin");
-        Dkeko instance = new Dkeko(2);
-        Solmu expResult = null;
-        Solmu result = instance.deleteMin();
-        assertEquals(expResult, result);
-        
-        Dkeko instance5 = new Dkeko(5);
-        Solmu five1 = new Solmu(7);
-        instance5.insert(five1);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five1.getValue(), instance5.findMin().getValue());
-        
-        Solmu five2 = new Solmu(6);
-        instance5.insert(five2);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five2.getValue(), instance5.findMin().getValue());
-        
-        Solmu five3 = new Solmu(5);
-        System.out.println("------------testInsert BEFORE kolmas-------");
-        instance5.insert(five3);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five3.getValue(), instance5.findMin().getValue());
-        
-        Solmu five4 = new Solmu(4);
-        instance5.insert(five4);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five4.getValue(), instance5.findMin().getValue());
-        
-        Solmu five5 = new Solmu(3);
-        instance5.insert(five5);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five5.getValue(), instance5.findMin().getValue());
-        
-        Solmu five6 = new Solmu(2);
-        instance5.insert(five6);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five6.getValue(), instance5.findMin().getValue());
-        
-        Solmu five7 = new Solmu(1);
-        assertEquals(0, instance5.getMin().getKey());
-        System.out.println("five7 testcase begin");
-        instance5.insert(five7);
-        System.out.println("five7 testcase end");
-        assertEquals(0,instance5.getMin().getKey());
-        assertEquals(five7.getValue(), instance5.findMin().getValue());
-        
-        Solmu five8 = new Solmu(8);
-        instance5.insert(five8);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five7.getValue(), instance5.findMin().getValue());
-        
-        //decrease value must be less than original value
-        //expected result no changes
-        Kekoalkio alkio =instance5.findKekoalkio(five7);
-        instance5.decreaseKey(alkio, 10);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five7.getValue(), instance5.findMin().getValue());
-      
-        alkio =instance5.findKekoalkio(five8);
-        instance5.decreaseKey(alkio, 0);
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five8.getValue(), instance5.findMin().getValue());
-        
-        Solmu pienin;
-        pienin = instance5.deleteMin();
-        assertEquals(five8.getValue(), pienin.getValue());
-        
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five7.getValue(), instance5.findMin().getValue());
-        
-        System.out.println(" keko "+instance5);
-        pienin = instance5.deleteMin();
-        assertEquals(five7.getValue(), pienin.getValue());
-        
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five6.getValue(), instance5.findMin().getValue());
-        
-        pienin = instance5.deleteMin();
-        assertEquals(five6.getValue(), pienin.getValue());
-        
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five5.getValue(), instance5.findMin().getValue());
-        
-        pienin = instance5.deleteMin();
-        assertEquals(five5.getValue(), pienin.getValue());
-        
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five4.getValue(), instance5.findMin().getValue());
-        
-        pienin = instance5.deleteMin();
-        assertEquals(five4.getValue(), pienin.getValue());
-        
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five3.getValue(), instance5.findMin().getValue());
-        
-        pienin = instance5.deleteMin();
-        assertEquals(five3.getValue(), pienin.getValue());
-        
-        assertEquals(0,instance5.getMin().getKey());
-        assertEquals(five2.getValue(), instance5.findMin().getValue());
-        
-        pienin = instance5.deleteMin();
-        assertEquals(five2.getValue(), pienin.getValue());
-        
-        assertEquals(0, instance5.getMin().getKey());
-        assertEquals(five1.getValue(), instance5.findMin().getValue());
-        
-         pienin = instance5.deleteMin();
-        assertEquals(five1.getValue(), pienin.getValue());
-        
-        assertEquals(null, instance5.findMin());
-       
+    public void tyhjakekodeleteMinTest() {
+        assertNull(instanssi2.findMin());
+        assertNull(instanssi2.deleteMin());
     }
 
+    /**
+     * Testaa deleteMin() 
+     * odotettu lopputulos,keko palauttaa null, koska keko tyhja
+     * 
+     */
+    @Test
+    public void aste20RandomDeleteMinTest() {
+        assertEquals(solmuNull, instanssi20.getMin());
+        for (int i=0;i<9260;i++){
+            solmuarvo =(int) Math.random();
+            if (pienin > solmuarvo){
+                pienin = solmuarvo;
+            }
+            solmu = new Solmu(solmuarvo);
+            instanssi20.insert(solmu);
+            assertEquals(pienin, instanssi20.findMin().getValue());
+        }
+        
+        while (instanssi20.getHeapSize()!=0){
+            pienin = instanssi20.findMin().getValue();
+            assertEquals(pienin, instanssi20.deleteMin().getValue());
+            if (instanssi20.getHeapSize()!=0){
+              assertTrue(pienin != instanssi20.findMin().getValue());  
+            } 
+        }
+    }
+    
     /**
      * Test of decreaseKey method, of class Dkeko.
      */
@@ -562,12 +480,12 @@ public class DkekoTest extends TestCase{
      suite.addTest(new DkekoTest("yksiSolmuKekoFindMinTest"));
      suite.addTest(new DkekoTest("keossa210SolmuSolmuKekoFindMinTest"));
      suite.addTest(new DkekoTest("keossa012SolmuSolmuKekoFindMinTest"));
-     suite.addTest(new DkekoTest("haarautumisaste2YksiSolmuInsert"));
-     suite.addTest(new DkekoTest("haarautumisaste5YksiSolmuInsert"));
-     suite.addTest(new DkekoTest("haarautumisaste2ViisiSolmuaInsert"));
-     suite.addTest(new DkekoTest("haarautumisaste2RandomSolmuaInsert"));
-     suite.addTest(new DkekoTest("haarautumisaste20RandomSolmuaInsert"));
-     suite.addTest(new DkekoTest("testDeleteMin"));
+     suite.addTest(new DkekoTest("haarautumisaste2YksiSolmuInsertTest"));
+     suite.addTest(new DkekoTest("haarautumisaste5YksiSolmuInsertTest"));
+     suite.addTest(new DkekoTest("haarautumisaste2ViisiSolmuaInsertTest"));
+     suite.addTest(new DkekoTest("haarautumisaste2RandomSolmuaInsertTest"));
+     suite.addTest(new DkekoTest("haarautumisaste20RandomSolmuaInsertTest"));
+     suite.addTest(new DkekoTest("aste20RandomDeleteMinTest"));
      suite.addTest(new DkekoTest("testDecreaseKey"));
      suite.addTest(new DkekoTest("testMerge"));
         
