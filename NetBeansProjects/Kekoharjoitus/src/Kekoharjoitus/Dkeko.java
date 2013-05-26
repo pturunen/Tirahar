@@ -11,7 +11,7 @@ package Kekoharjoitus;
 public class Dkeko {
     
     final int empty = 0;
-    private int d=0;
+    private int d =0;
     private int heapSize = 0;
     private Kekoalkio min = null;
     private Kekoalkio tail = null;
@@ -22,7 +22,7 @@ public class Dkeko {
      * Dkeon konstruktori
      * @param d alustaa dkeon haarautumisasteen
      */
-    Dkeko(int d){
+    public Dkeko(int d){
         this.d = d;
         this.heapSize =0;
         this.min = null;
@@ -39,7 +39,7 @@ public class Dkeko {
      * @param tail Kekoalkion olio, kaksisuuntaisen linkitetyn listan viimeinen
      * alkio
      */
-    Dkeko(int k,int heapSize,Kekoalkio min,Kekoalkio tail){
+    public Dkeko(int k,int heapSize,Kekoalkio min,Kekoalkio tail){
         this.d = k;
         this.heapSize =heapSize;
         this.min = min;
@@ -65,8 +65,8 @@ public class Dkeko {
      */
     public Solmu findMin(){
         Solmu result=null;
-        if (min!=null){
-            result = new Solmu(min.getValue().getValue());
+        if (this.min!=null){
+            result = new Solmu(this.min.getValue().getValue());
         }
            return result;
     }
@@ -80,13 +80,13 @@ public class Dkeko {
        if (x == null || findKekoalkio(x)!=null) {
            return;
        }
-        heapSize = heapSize +1;
+        this.heapSize = this.heapSize +1;
         Kekoalkio alkio = new Kekoalkio();
-        alkio.setKey(heapSize-1);
+        alkio.setKey(this.heapSize-1);
         alkio.setValue(x);
        
-        if (heapSize == 1){
-            min = alkio;
+        if (this.heapSize == 1){
+            this.min = alkio;
         }
         if (tail!=null){
             tail.setRight(alkio);
@@ -160,11 +160,11 @@ public class Dkeko {
      */
     private Kekoalkio getChild(Kekoalkio alkio,int monesko){
         Kekoalkio child = null;
-        if (monesko > d || monesko == 0){
+        if (monesko > this.d || monesko == 0){
             return child;
         }
         int childKey = (alkio.getKey()*d)+monesko;
-        if (childKey < heapSize){
+        if (childKey < this.heapSize){
             child = findSolmu(childKey);
         }
         return child;
@@ -356,6 +356,6 @@ public class Dkeko {
      * @return int 
      */
     public int getAste(){
-        return d;
+        return this.d;
     }
 }

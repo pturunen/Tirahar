@@ -14,7 +14,7 @@ public class Solmu {
     /**
      * Solmu luokan konstruktori
      */
-        Solmu(){
+        public Solmu(){
         this.value = Integer.MAX_VALUE;
     }
     
@@ -23,7 +23,7 @@ public class Solmu {
      * @param value Solmu luokan olion arvo, jonka mukaan
      * minimikeko on järjestetty
      */
-        Solmu(int value) {
+        public Solmu(int value) {
         this.value = value;
     }
 
@@ -31,15 +31,15 @@ public class Solmu {
      * Funktio palauttaa Solmu olion value arvon
      * @return Solmu olion parametrin value arvon
      */
-    protected int getValue() {
-        return value;
+    public int getValue() {
+        return this.value;
     } 
     
     /**
      * Funktio asettaa Solmu olion value arvon
      * @param value integer arvo 
      */
-    protected void setValue(int value){
+    public void setValue(int value){
         this.value = value;
     }
 

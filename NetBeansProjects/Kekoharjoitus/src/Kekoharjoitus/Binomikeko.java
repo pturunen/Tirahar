@@ -10,7 +10,7 @@ package Kekoharjoitus;
  */
 public class Binomikeko {
     
-    Binomikeko(){
+    public Binomikeko(){
         
     }
     

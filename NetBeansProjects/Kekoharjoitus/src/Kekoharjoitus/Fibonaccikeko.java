@@ -10,7 +10,7 @@ package Kekoharjoitus;
  */
 public class Fibonaccikeko {
     
-    Fibonaccikeko(){
+    public Fibonaccikeko(){
         /*
         p[x]
         child[x]

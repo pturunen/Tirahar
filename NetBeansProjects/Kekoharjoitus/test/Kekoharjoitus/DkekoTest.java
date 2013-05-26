@@ -18,20 +18,20 @@ import java.util.Random;
  * @author pturunen
  */
 public class DkekoTest extends TestCase{
-    Dkeko instanssi =null;
-    Dkeko instanssi2 =null;
-    Dkeko instanssi3 =null;
-    Dkeko instanssi5 =null;
-    Dkeko instanssi20 =null;
+    public Dkeko instanssi =null;
+    public Dkeko instanssi2 =null;
+    public Dkeko instanssi3 =null;
+    public Dkeko instanssi5 =null;
+    public Dkeko instanssi20 =null;
     
-    Solmu solmu = null;
-    Solmu solmu1 = null;
-    Solmu solmu2 = null;
-    Solmu solmuNull = null;
+    public Solmu solmu = null;
+    public Solmu solmu1 = null;
+    public Solmu solmu2 = null;
+    public Solmu solmuNull = null;
     
-    int solmuarvo = 0;
-    int solmuarvo1 = 0;
-    int solmuarvo2 = 0;
+    public int solmuarvo = 0;
+    public int solmuarvo1 = 0;
+    public int solmuarvo2 = 0;
     
     int pienin =0;
     int suurin =0;
@@ -53,7 +53,8 @@ public class DkekoTest extends TestCase{
     @Before
     public void setUp() {
         instanssi = null;
-        instanssi2 = new Dkeko(2);
+        int aste = 2;
+        instanssi2 = new Dkeko(aste);
         instanssi3 = new Dkeko(3);
         instanssi5 = new Dkeko(5);
         instanssi20 = new Dkeko(20);

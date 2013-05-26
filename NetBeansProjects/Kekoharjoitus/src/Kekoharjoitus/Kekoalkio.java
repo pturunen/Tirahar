@@ -18,7 +18,7 @@ public class Kekoalkio {
     /**
      * Kekoalkio luokan konstruktori
      */
-    protected Kekoalkio(){
+    public Kekoalkio(){
         this.key = -1;
         this.left = null;
         this.right = null;
@@ -30,7 +30,7 @@ public class Kekoalkio {
      * @param value Solmu luokan olio
      * 
      */
-    protected Kekoalkio(Solmu value) {
+    public Kekoalkio(Solmu value) {
         this.solmu = value;
         this.key = -1;
         this.left = null;
@@ -42,8 +42,8 @@ public class Kekoalkio {
      * Kekoalkio oliossa on linkki edelliseen ja seuraavaan Kekoalkio olioon
      * @return Kekoalkio olio edelliseen Kekoalkio olioon linkitetysssä listassa
      */
-    protected Kekoalkio getLeft() {
-        return left;
+    public Kekoalkio getLeft() {
+        return this.left;
     }
 
     /**
@@ -51,8 +51,8 @@ public class Kekoalkio {
      * Kekoalkio oliossa on linkki edelliseen ja seuraavaan Kekoalkio olioon
      * @return Kekoalkio olio seuraavaan Kekoalkio olioon linkitetysssä listassa
      */
-    protected Kekoalkio getRight() {
-        return right;
+    public Kekoalkio getRight() {
+        return this.right;
     }
     
  
@@ -62,7 +62,7 @@ public class Kekoalkio {
      * @param vasen Kekoalkio olio, joka asetetaan ko Kekoalkio olion edelle
      *  linkitetyssä listassa
      */
-    protected void setLeft(Kekoalkio vasen){
+    public void setLeft(Kekoalkio vasen){
         this.left = vasen;
     }
 
@@ -72,7 +72,7 @@ public class Kekoalkio {
      * @param oikea  Kekoalkio olio, joka asetetaan ko Kekoalkio oliota seuraavaksi
      *  linkitetyssä listassa
      */
-    protected void setRight(Kekoalkio oikea){
+    public void setRight(Kekoalkio oikea){
         this.right = oikea;
     }
     
@@ -80,15 +80,15 @@ public class Kekoalkio {
      * Funktio palauttaa Solmu olion
      * @return Solmu olio
      */
-    protected Solmu getValue() {
-        return solmu;
+    public Solmu getValue() {
+        return this.solmu;
     } 
     
     /**
      * Funktio asettaa Solmu olion Kekoalkion value kenttään
      * @param value Solmu luokan olio 
      */
-    protected void setValue(Solmu value){
+    public void setValue(Solmu value){
         this.solmu = value;
     }
     
@@ -99,8 +99,8 @@ public class Kekoalkio {
      * keon minimiarvo
      * @return int 
      */
-    protected int getKey(){
-        return key;
+    public int getKey(){
+        return this.key;
     }
 
     /**
@@ -108,10 +108,16 @@ public class Kekoalkio {
      * key arvo kertoo Solmu olion paikan keossa
      * arvoalue 0-(keonkoko-1).key arvolla 0 löytyy
      * keon minimiarvo
-     * @param key int
+     * @param key int 
+     * @return palauttaa nollan, jos asetettu arvo oli validi,
+     * muutoin arvoa ei aseteta ja palautetaan -1
      */
-    protected void setKey(int key){
+    public int setKey(int key){
+        if (key < 0){
+            return -1;
+        }
         this.key = key;
+        return 0;
     }
     
 }
