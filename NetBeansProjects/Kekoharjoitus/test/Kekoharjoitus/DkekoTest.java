@@ -476,6 +476,22 @@ public class DkekoTest extends TestCase{
         assertEquals(summa, instanssi.getHeapSize());
     }
     
+    /**
+     * Testaa merge() t1 == null
+     * odotettu tulos: palauttaa null
+     */
+    @Test
+    public void testaaT1NullMergeTest() {
+        for(int i=12;i>=3;i--){
+            solmu = new Solmu(i);
+            instanssi5.insert(solmu);
+        }
+        instanssi2 = null;
+        assertNull(Dkeko.merge(instanssi2,instanssi5));
+        assertNull(Dkeko.merge(instanssi5,instanssi2));
+    }
+    
+    
      public static junit.framework.Test suite(){
      junit.framework.TestSuite suite = new junit.framework.TestSuite();
      suite.addTest(new DkekoTest("testaaKonstruktoriDkekoTest"));
@@ -498,6 +514,8 @@ public class DkekoTest extends TestCase{
      suite.addTest(new DkekoTest("aste5RandomDecreaseKeyTest"));
      suite.addTest(new DkekoTest("testaaT2SuurempiMergeTest"));
      suite.addTest(new DkekoTest("testaaT1SuurempiMergeTest"));
+     suite.addTest(new DkekoTest("testaaT1NullMergeTest"));
+     
            
     return suite;
  }
