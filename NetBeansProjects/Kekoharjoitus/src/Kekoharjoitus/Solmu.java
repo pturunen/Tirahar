@@ -21,7 +21,7 @@ public class Solmu {
     /**
      *
      * @param value Solmu luokan olion arvo, jonka mukaan
-     * minimikeko on järjestetty
+     * minimikeko on järjestetään
      */
         public Solmu(int value) {
         this.value = value;
