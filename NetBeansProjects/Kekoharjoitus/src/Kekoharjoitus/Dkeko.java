@@ -312,6 +312,7 @@ public class Dkeko {
             pieni =t2;
         }
         else {
+            //todo:jos keot yhtasuuria tee toisen tyyppinen merge
             suuri =t2;
             pieni =t1;
         }

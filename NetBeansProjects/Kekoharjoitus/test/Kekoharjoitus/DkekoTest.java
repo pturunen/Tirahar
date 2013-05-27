@@ -477,6 +477,28 @@ public class DkekoTest extends TestCase{
     }
     
     /**
+     * Testaa merge() t1 >== t2
+     * odotettu tulos: palauttaa uuden keko olion, jonka 
+     * keon aste on sama kuin t2 parametrina annetun keon aste
+     */
+    @Test
+    public void testaaT1T2YhtasuuriaMergeTest() {
+        for(int i=9;i>4;i--){
+            solmu = new Solmu(i);
+            instanssi5.insert(solmu);
+        }
+        for(int i=4;i>=0;i--){
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+        }
+        int summa = instanssi5.getHeapSize() + instanssi2.getHeapSize();
+        instanssi = Dkeko.merge(instanssi5,instanssi2);
+        assertEquals(0, instanssi.findMin().getValue());
+        assertEquals(instanssi2.getAste(), instanssi.getAste());
+        assertEquals(summa, instanssi.getHeapSize());
+    }
+    
+    /**
      * Testaa merge() t1 == null
      * odotettu tulos: palauttaa null
      */
@@ -515,6 +537,8 @@ public class DkekoTest extends TestCase{
      suite.addTest(new DkekoTest("testaaT2SuurempiMergeTest"));
      suite.addTest(new DkekoTest("testaaT1SuurempiMergeTest"));
      suite.addTest(new DkekoTest("testaaT1NullMergeTest"));
+     suite.addTest(new DkekoTest("testaaT1T2YhtasuuriaMergeTest"));
+     
      
            
     return suite;
