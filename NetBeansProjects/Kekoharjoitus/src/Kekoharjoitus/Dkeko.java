@@ -301,7 +301,6 @@ public class Dkeko {
      * @return uusi Dkeko olio, tai null jos t1 tai t2 null
      */
     public static Dkeko merge(Dkeko t1, Dkeko t2){ 
-        /* to be implemented*/ 
         Dkeko suuri=null;
         Dkeko pieni=null;
         if (t1==null || t2==null){
@@ -368,11 +367,7 @@ public class Dkeko {
     }
     
     private static void asetaKeyt(Dkeko uusi, Kekoalkio alkio,int key){
-        //System.out.println("asetaKeyt --------------------------key="+key+" heapsize="+uusi.heapSize);
-        if (uusi.getHeapSize() <= key){
-            //System.out.println(" key suurempi tai yhtasuuri =");
-            //palaa ylospain, korjaa kekoehto tasoittain alhaalta ylospain
-            //korjaus aina alaspain
+        if (uusi.getHeapSize() <= key){   
             return;
         }
         if (alkio != null){
