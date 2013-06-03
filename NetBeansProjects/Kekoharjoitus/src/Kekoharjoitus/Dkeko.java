@@ -307,14 +307,11 @@ public class Dkeko {
         if (t1==null || t2==null){
             return null;
         }
+        suuri =t2;
+        pieni =t1;
         if (t1.getHeapSize() > t2.getHeapSize()){
             suuri =t1;
             pieni =t2;
-        }
-        else {
-            //todo:jos keot yhtasuuria tee toisen tyyppinen merge
-            suuri =t2;
-            pieni =t1;
         }
         Dkeko uusi = null;
         uusi = new Dkeko(suuri.getAste(),suuri.getHeapSize(),
@@ -326,6 +323,64 @@ public class Dkeko {
             uusi.insert(solmu);
         }
         return uusi;
+    }
+    
+    /**
+     * Yhdistää kaksi kekoa toisiinsa,luoden uuden keon ja
+     * tuhoten keon T1 ja T2.
+     * Bottom up heap construction, haarautumisaste valitaan
+     * suurimman haarautumisateen mukaan
+     * Uuden keon haarautumisaste on suuremman keon mukaan
+     * @param t1 yhdistettävä Dkeko olio, ei saa olla null
+     * @param t2 yhdistettävä Dkeko olio, ei saa olla null
+     * @return uusi Dkeko olio, tai null jos t1 tai t2 null
+     */
+    public static Dkeko mergeBottomUp(Dkeko t1, Dkeko t2){ 
+        Dkeko suuri=null;
+        Dkeko pieni=null;
+        if (t1==null || t2==null){
+            return null;
+        }
+        suuri =t2;
+        pieni =t1;
+        if (t1.getHeapSize() != t2.getHeapSize()){
+            if (t1.getHeapSize() > t2.getHeapSize()){
+                suuri =t1;
+                pieni =t2;
+            }
+        }
+        else {
+            if (t1.getAste() > t2.getAste()){
+                suuri =t1;
+                pieni =t2;
+            }
+        }
+        Dkeko uusi;
+        int heapsize = suuri.getHeapSize() + pieni.getHeapSize();
+        suuri.getTail().setRight(pieni.getMin());
+        pieni.getMin().setLeft(suuri.getTail());
+        uusi = new Dkeko(suuri.getAste(),heapsize,
+                                    suuri.getMin(),pieni.getTail());
+        suuri=null;
+        pieni=null;
+        asetaKeyt(uusi,uusi.getMin(),0);
+        return uusi;
+    }
+    
+    private static void asetaKeyt(Dkeko uusi, Kekoalkio alkio,int key){
+        //System.out.println("asetaKeyt --------------------------key="+key+" heapsize="+uusi.heapSize);
+        if (uusi.getHeapSize() <= key){
+            //System.out.println(" key suurempi tai yhtasuuri =");
+            //palaa ylospain, korjaa kekoehto tasoittain alhaalta ylospain
+            //korjaus aina alaspain
+            return;
+        }
+        if (alkio != null){
+            alkio.setKey(key);
+            asetaKeyt(uusi, alkio.getRight(),key+1);
+            uusi.minHeapify(alkio);
+        }
+        
     }
     
     /**

@@ -19,12 +19,17 @@ import java.util.Random;
  */
 public class DkekoTest extends TestCase{
     public Dkeko instanssi =null;
+    public Dkeko instanssiMergeBottomUp = null;
+    public Dkeko intanssiMerge = null;
+    public Dkeko instanssiT1 = null;
+    public Dkeko instanssiT2 = null;        
     public Dkeko instanssi2 =null;
     public Dkeko instanssi3 =null;
     public Dkeko instanssi5 =null;
     public Dkeko instanssi20 =null;
     
     public Solmu solmu = null;
+    public Solmu solmuMerge = null;
     public Solmu solmu1 = null;
     public Solmu solmu2 = null;
     public Solmu solmuNull = null;
@@ -53,6 +58,7 @@ public class DkekoTest extends TestCase{
     @Before
     public void setUp() {
         instanssi = null;
+        instanssiMergeBottomUp = null;
         int aste = 2;
         instanssi2 = new Dkeko(aste);
         instanssi3 = new Dkeko(3);
@@ -67,6 +73,17 @@ public class DkekoTest extends TestCase{
         pienin=Integer.MAX_VALUE;
         suurin =0;
         generator = new Random();
+        
+        instanssiT1 = new Dkeko(2);
+        instanssiT2 = new Dkeko(5);
+        for(int i=900;i>400;i--){
+            solmuMerge = new Solmu(i);
+            instanssiT2.insert(solmuMerge);
+        }
+        for(int i=400;i>=0;i--){
+            solmuMerge = new Solmu(i);
+            instanssiT1.insert(solmuMerge);
+        }
     }
     
     @After
@@ -461,6 +478,29 @@ public class DkekoTest extends TestCase{
      */
     @Test
     public void testaaT1SuurempiMergeTest() {
+        for(int i=1200;i>=300;i--){
+            solmu = new Solmu(i);
+            instanssi5.insert(solmu);
+        }
+        for(int i=200;i>=1;i--){
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+        }
+        int summa = instanssi5.getHeapSize() + instanssi2.getHeapSize();
+        instanssi = Dkeko.merge(instanssi5,instanssi2);
+        assertEquals(1, instanssi.findMin().getValue());
+        assertEquals(instanssi5.getAste(), instanssi.getAste());
+        assertEquals(summa, instanssi.getHeapSize());
+    }
+    
+    
+    /**
+     * Testaa mergeBottomUp() t1 > t2
+     * odotettu tulos: palauttaa uuden keko olion, jonka 
+     * keon aste on sama kuin suuremman parametrina annetun keon aste
+     */
+    @Test
+    public void testaaT1SuurempiMergeBottomUpTest() {
         for(int i=12;i>=3;i--){
             solmu = new Solmu(i);
             instanssi5.insert(solmu);
@@ -470,7 +510,7 @@ public class DkekoTest extends TestCase{
             instanssi2.insert(solmu);
         }
         int summa = instanssi5.getHeapSize() + instanssi2.getHeapSize();
-        instanssi = Dkeko.merge(instanssi5,instanssi2);
+        instanssi = Dkeko.mergeBottomUp(instanssi5,instanssi2);
         assertEquals(1, instanssi.findMin().getValue());
         assertEquals(instanssi5.getAste(), instanssi.getAste());
         assertEquals(summa, instanssi.getHeapSize());
@@ -483,20 +523,74 @@ public class DkekoTest extends TestCase{
      */
     @Test
     public void testaaT1T2YhtasuuriaMergeTest() {
-        for(int i=9;i>4;i--){
+        for(int i=900;i>400;i--){
             solmu = new Solmu(i);
             instanssi5.insert(solmu);
         }
-        for(int i=4;i>=0;i--){
+        for(int i=400;i>=0;i--){
             solmu = new Solmu(i);
             instanssi2.insert(solmu);
         }
         int summa = instanssi5.getHeapSize() + instanssi2.getHeapSize();
-        instanssi = Dkeko.merge(instanssi5,instanssi2);
+        instanssi = Dkeko.merge(instanssi2,instanssi5);
         assertEquals(0, instanssi.findMin().getValue());
-        assertEquals(instanssi2.getAste(), instanssi.getAste());
+        assertEquals(instanssi5.getAste(), instanssi.getAste());
         assertEquals(summa, instanssi.getHeapSize());
     }
+    
+    
+    
+    /**
+     * Testaa mergeBottomUp() t1 >== t2
+     * odotettu tulos: palauttaa uuden keko olion, jonka 
+     * haarautumisaste on sama kuin t2 annetun keon haarautumisaste
+     * keot samankokoisia,mutta eri haarautumisaste.suurempi valitaan
+     */
+    @Test
+    public void testaaT1T2YhtasuuriaMergeBottomUpTest() {
+        for(int i=900;i>400;i--){
+            solmu = new Solmu(i);
+            instanssi5.insert(solmu);
+        }
+        for(int i=400;i>=0;i--){
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+        }
+        int summa = instanssi5.getHeapSize() + instanssi2.getHeapSize();
+        instanssi = Dkeko.mergeBottomUp(instanssi2,instanssi5);
+        assertEquals(0, instanssi.findMin().getValue());
+        assertEquals(instanssi5.getAste(), instanssi.getAste());
+        assertEquals(summa, instanssi.getHeapSize());
+    }
+    
+    
+    /*
+     * Testaa merge() ja mergeBottomUp() minimikekojen tulos
+     */
+    @Test
+    public void testaaKekoLopputuloksetBothMergetTest() {
+        int summa = instanssiT2.getHeapSize() + instanssiT1.getHeapSize();
+        instanssiMergeBottomUp = Dkeko.mergeBottomUp(instanssiT1,instanssiT2);
+        
+        instanssiT1 = new Dkeko(2);
+        instanssiT2 = new Dkeko(5);
+        for(int i=900;i>400;i--){
+            solmuMerge = new Solmu(i);
+            instanssiT2.insert(solmuMerge);
+        }
+        for(int i=400;i>=0;i--){
+            solmuMerge = new Solmu(i);
+            instanssiT1.insert(solmuMerge);
+        }
+        instanssi = Dkeko.merge(instanssiT1,instanssiT2);
+       
+        for (int i=0;i<instanssi.getHeapSize();i++){
+            assertEquals(instanssi.deleteMin().getValue(),
+                    instanssiMergeBottomUp.deleteMin().getValue());
+        }
+    }
+    
+    
     
     /**
      * Testaa merge() t1 == null
@@ -536,10 +630,11 @@ public class DkekoTest extends TestCase{
      suite.addTest(new DkekoTest("aste5RandomDecreaseKeyTest"));
      suite.addTest(new DkekoTest("testaaT2SuurempiMergeTest"));
      suite.addTest(new DkekoTest("testaaT1SuurempiMergeTest"));
+     suite.addTest(new DkekoTest("testaaT1SuurempiMergeBottomUpTest"));
      suite.addTest(new DkekoTest("testaaT1NullMergeTest"));
      suite.addTest(new DkekoTest("testaaT1T2YhtasuuriaMergeTest"));
-     
-     
+     suite.addTest(new DkekoTest("testaaT1T2YhtasuuriaMergeBottomUpTest"));
+     suite.addTest(new DkekoTest("testaaKekoLopputuloksetBothMergetTest"));
            
     return suite;
  }
