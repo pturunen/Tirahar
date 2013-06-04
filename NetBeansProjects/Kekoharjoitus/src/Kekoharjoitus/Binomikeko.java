@@ -10,6 +10,8 @@ package Kekoharjoitus;
  */
 public class Binomikeko {
     
+    //private Solmu[] juurilista;
+    
     public Binomikeko(){
         
     }
