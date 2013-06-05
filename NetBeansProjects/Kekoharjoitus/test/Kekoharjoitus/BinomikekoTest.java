@@ -4,6 +4,7 @@
  */
 package Kekoharjoitus;
 
+import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,6 +17,16 @@ import static org.junit.Assert.*;
  * @author pturunen
  */
 public class BinomikekoTest {
+    
+    public Binomikeko instanssi =null;
+    public Binomikeko instanssi2 = null;
+    public Binomikeko instanssiUusi = null;
+    public Binomipuu binomipuu = null;
+    public Binomipuu binomipuu2 = null;
+    public Solmu solmu = null;
+    public Solmu solmu2 = null;
+    public int arvo =0;
+    Random generator = null;
     
     public BinomikekoTest() {
     }
@@ -30,85 +41,133 @@ public class BinomikekoTest {
     
     @Before
     public void setUp() {
+       instanssi = new Binomikeko();
+       instanssi2 = new Binomikeko();
+       binomipuu = new Binomipuu();
+       binomipuu2 = new Binomipuu();
+       arvo = 8;
+       solmu = new Solmu(arvo);
+       arvo=2;
+       solmu2 = new Solmu(arvo);
+       
+       generator = new Random(); 
     }
     
     @After
     public void tearDown() {
     }
 
+    
     /**
-     * Test of makeHeap method, of class Binomikeko.
+     * Testi Binomikeko konstruktorille
      */
     @Test
-    public void testMakeHeap() {
-        System.out.println("makeHeap");
-        Binomikeko instance = new Binomikeko();
-        instance.makeHeap();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testaaKonstruktoriBinomikekoTest(){
+       assertEquals(null, instanssi.findMin());
+    }
+    
+    /**
+     * Testi MakeHeap() perustapaus
+     * odotettu tulos funktio palauttaa Binomikeko olion
+     */
+    @Test
+    public void aste2OkMakeHeapTest(){
+       instanssi =Binomikeko.makeHeap();
+       assertEquals(null, instanssi.findMin());
     }
 
     /**
-     * Test of findMin method, of class Binomikeko.
+     * Testaa findMin 
+     * odotettu lopputulos ,palauttaa null
      */
     @Test
-    public void testFindMin() {
-        System.out.println("findMin");
-        Binomikeko instance = new Binomikeko();
-        int expResult = 0;
-        int result = instance.findMin();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void tyhjaKekoFindMinTest() {
+        assertEquals(null, instanssi.findMin());
     }
 
     /**
-     * Test of insert method, of class Binomikeko.
+     * Testaa findMin 
+     * asetetaan kaksi Solmu oliota Binomikekoon, siten että ensimmäisen Solmu 
+     * olion value arvo on suurempi kuin toisen.
+     * odotettu lopputulos ,palauttaa yhden Solmu olion
+     * joka pysyy keossa.
      */
     @Test
-    public void testInsert() {
-        System.out.println("insert");
-        Binomikeko instance = new Binomikeko();
-        instance.insert();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void kaksiSolmuaKekoFindMinTest() {
+        assertEquals(null, instanssi.findMin());
+        instanssi.insert(solmu);
+        assertEquals(solmu.getValue(), instanssi.findMin().getValue());
+        assertTrue(solmu.getValue() > solmu2.getValue());
+        instanssi.insert(solmu2);
+        assertEquals(solmu2.getValue(), instanssi.findMin().getValue());
     }
 
     /**
-     * Test of deleteMin method, of class Binomikeko.
+     * Testaa deleteMin 
+     * odotettu lopputulos ; palauttaa binomikeon pienimmän arvon omaavan
+     * Solmu olion ja poistaa sen keosta.
      */
     @Test
-    public void testDeleteMin() {
-        System.out.println("deleteMin");
-        Binomikeko instance = new Binomikeko();
-        int expResult = 0;
-        int result = instance.deleteMin();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void keossaYksiSolmuDeleteMinTest() {
+        assertNull(instanssi.findMin());
+        assertNull(instanssi.deleteMin());
+        instanssi.insert(solmu);
+        assertEquals(solmu.getValue(), instanssi.findMin().getValue());
+        assertEquals(solmu.getValue(), instanssi.deleteMin().getValue());
     }
 
     /**
-     * Test of decreaseKey method, of class Binomikeko.
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa -1, koska keko on tyhja
+     * 
      */
     @Test
-    public void testDecreaseKey() {
-        System.out.println("decreaseKey");
-        Binomikeko instance = new Binomikeko();
-        instance.decreaseKey();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void tyhjaKekoDecreaseKeyTest() {
+        assertNull(instanssi.findMin());
+        assertEquals(-1, instanssi.decreaseKey(solmu, 2)); 
     }
 
     /**
-     * Test of merge method, of class Binomikeko.
+     * Testaa merge() 
+     * odotettu tulos: palauttaa uuden keko olion, jonka 
+     * pienin alkio on sama kuin t1
      */
     @Test
-    public void testMerge() {
-        System.out.println("merge");
-        Binomikeko instance = new Binomikeko();
-        instance.merge();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testaaT1PieninMergeTest() {
+        for (int i=12;i>=3;i--){
+            
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+        }
+        for(int i=2;i>=1;i--){
+            solmu = new Solmu(i);
+            instanssi.insert(solmu);
+        }
+        int summa = instanssi.getHeapSize() + instanssi2.getHeapSize();
+        instanssiUusi = Binomikeko.merge(instanssi,instanssi2);
+        assertEquals(1, instanssiUusi.findMin().getValue());
+        assertEquals(summa, instanssiUusi.getHeapSize());
+    }
+    
+     /**
+     * Testaa merge() 
+     * odotettu tulos: palauttaa uuden keko olion, jonka 
+     * pienin alkio on sama kuin t2
+     */
+    @Test
+    public void testaaT2PieninMergeTest() {
+        for (int i=12;i>=3;i--){
+            
+            solmu = new Solmu(i);
+            instanssi.insert(solmu);
+        }
+        for(int i=2;i>=1;i--){
+            solmu = new Solmu(i);
+            instanssi2.insert(solmu);
+        }
+        int summa = instanssi.getHeapSize() + instanssi2.getHeapSize();
+        instanssiUusi = Binomikeko.merge(instanssi,instanssi2);
+        assertEquals(1, instanssiUusi.findMin().getValue());
+        assertEquals(summa, instanssiUusi.getHeapSize());
     }
 }
