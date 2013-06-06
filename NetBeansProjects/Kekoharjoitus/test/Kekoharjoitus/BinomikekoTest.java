@@ -77,6 +77,19 @@ public class BinomikekoTest {
     }
 
     /**
+     * Testaa insert() 
+     * odotettu lopputulos ,kekoon onnistuu yhden solmun lisäys
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     */
+    @Test
+    public void insertYksiSolmuInsertTest() {
+        assertNull(instanssi.findMin());
+        instanssi.insert(solmu);
+        assertEquals(solmu.getValue(), instanssi.findMin().getValue());
+    }
+    
+    /**
      * Testaa findMin 
      * odotettu lopputulos ,palauttaa null
      */
