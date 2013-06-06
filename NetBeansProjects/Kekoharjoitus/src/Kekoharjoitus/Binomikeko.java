@@ -62,7 +62,7 @@ public class Binomikeko {
          edellinen = getEdellinenJuuriListassa(uusi.getDegree());
      }
      liitaJuurilistaan(edellinen, uusi);
-     //todo: juurilistan lapikaynti
+     yhdistaJuuriLista(this);
     }
     
     /**
@@ -124,6 +124,55 @@ public class Binomikeko {
     }
     
     /**
+     * Lomittaa kaksi Binomikeko olion juurilistaa toisiinsa ja
+     * luo uuden Binomikeko olion
+     * @param keko1 Binomikeko olio 
+     * @param keko2 Binomikeko olio
+     * Binomikeon juurilista täytetään pienemmästä suurempaan
+     * binomipuun degree arvon perusteella.Funktio vain lisää
+     * binomipuu oikeaan paikkaan listassa.Ei tee yhdistystä juurilistan
+     * binomipuihin, joilla sama degree arvo.
+     * @return Binomikeko ,sisältää uuden yhdistetyn juurilistan
+     */
+    private static Binomikeko lomitaJuuriListat(Binomikeko keko1, Binomikeko keko2){
+        Binomikeko kekoUusi = null;
+        if (keko1 !=null && keko2 != null){
+            //System.out.println("lomitaJuuriListat1");
+            Binomipuu puu1 = keko1.juurilistaMin;
+            Binomipuu puu2 = keko2.juurilistaMin;
+            Binomipuu puuPrev = null;
+            Binomipuu puuCurr = null;
+            kekoUusi = Binomikeko.makeHeap();
+            
+            if (keko1.juurilistaMin.getDegree() < 
+                                    keko2.juurilistaMin.getDegree()){
+                kekoUusi.juurilistaMin = keko1.juurilistaMin;
+                puu1 = keko1.getJuuriListaMin().getSibling();
+            }
+            else {
+                kekoUusi.juurilistaMin = keko2.juurilistaMin;
+                puu2 = keko2.getJuuriListaMin().getSibling();
+            }
+            puuPrev = kekoUusi.juurilistaMin;
+            while (puu1 != null || puu2 !=null){
+                if (puu1 == null ||puu2!=null && 
+                        puu2.getDegree() <= puu1.getDegree()){
+                    puuCurr = puu2;
+                    puu2 = puu2.getSibling();
+                }
+                else if (puu2 == null || puu1 != null &&
+                        puu1.getDegree() <= puu2.getDegree()){
+                    puuCurr = puu1;
+                    puu1 = puu1.getSibling();
+                }
+                puuPrev.setSibling(puuCurr);
+                puuPrev = puuCurr;
+            }
+        }
+        return kekoUusi;
+    }
+    
+    /**
      * Poistaa pienimmän alkion keosta ja palauttaa osoittimen ko alkioon
      * @return Solmu luokan olio, poistetaan keosta
      */
@@ -142,20 +191,66 @@ public class Binomikeko {
      */
     public int decreaseKey(Solmu alkio, int value){
         /* to be implemented*/ 
-        return 0;
+        return -1;
     }
     
     /**
      * Yhdistää kaksi kekoa toisiinsa,luoden uuden keon ja
      * tuhoten keon T1 ja T2
+     * Lomittaa juurilistat ja yhdistaa saman degreen juurilistan
+     * alkiot toisiinsa.
      * @param t1 yhdistettävä Binomikeko olio, ei saa olla null
      * @param t2 yhdistettävä Binomikeko olio, ei saa olla null
      * @return uusi Binomikeko olio, tai null jos t1 tai t2 null
      */
     public static Binomikeko merge(Binomikeko t1,Binomikeko t2){
-        /* to be implemented*/ 
-        Binomikeko binomikeko = Binomikeko.makeHeap();
-        return binomikeko;
+        Binomikeko uusi = lomitaJuuriListat(t1, t2);
+        if (uusi !=null){
+            uusi = yhdistaJuuriLista(uusi);
+        }
+        return uusi;
+    }
+    
+    /**
+     * Yhdistää saman degreen juurilistan
+     * alkiot toisiinsa.Funktion suorituksen jalkeen vain yksi jokaista
+     * degree astetta juurilistassa
+     * @param keko Binomikeko olio, ei saa olla null
+     * @return uusi Binomikeko olio, null jos keko oli null
+     */
+    private static Binomikeko yhdistaJuuriLista(Binomikeko keko){
+       if (keko == null){
+           return keko;
+       }
+       Binomipuu prev = null;
+       Binomipuu curr = keko.juurilistaMin;
+       Binomipuu next = curr.getSibling();
+       while (next != null){
+           if (curr.getDegree() != next.getDegree() ||
+                   next.getSibling() != null && next.getSibling().getDegree() ==
+                   curr.getDegree()){
+               prev = curr;
+               curr = next;
+           }
+           else {
+               if (curr.getValue().getValue() <= next.getValue().getValue()){
+                   curr.setSibling(next.getSibling());
+                   keko.link(curr, next);
+               }
+               else {
+                   if (prev == null ){
+                       keko.juurilistaMin = next;
+                   }
+                   else {
+                       prev.setSibling(next);
+                   }
+                   keko.link(next, curr);
+                   curr = next;
+               }
+           }
+           next = curr.getSibling();
+       }
+        return keko;
     }
     
     /**
@@ -172,6 +267,9 @@ public class Binomikeko {
         return count;
     }
     
+    public Binomipuu getJuuriListaMin(){
+        return this.juurilistaMin;
+    }
     
     /**
      * Palauttaa juurilistasta sen binomipuu olion, jonka

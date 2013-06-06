@@ -90,6 +90,36 @@ public class BinomikekoTest {
     }
     
     /**
+     * Testaa insert() 
+     * odotettu lopputulos ,kekoon onnistuu solmun lisäys
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     * juurilistan kolme solmua,
+     *  12 ;degree 0
+     *   7  ;degree 1
+     *  15 ;degree 2
+     *  heapsize = 7 solmua
+     */
+    @Test
+    public void insert7SolmuInsertTest() {
+        assertNull(instanssi.findMin());
+        int pienin = Integer.MAX_VALUE;
+        int [] taulukko = {41,28,33,15,7,25,12};
+        for (int i =0;i<taulukko.length;i++){
+            solmu = new Solmu(taulukko[i]);
+            instanssi.insert(solmu);
+            if (pienin > solmu.getValue()){
+                pienin = solmu.getValue();
+            }
+            assertEquals(pienin, instanssi.findMin().getValue());
+        }
+        assertEquals(pienin, instanssi.findMin().getValue());
+        assertEquals(12,instanssi.getJuuriListaMin().getValue().getValue());
+    }
+    
+    
+    
+    /**
      * Testaa findMin 
      * odotettu lopputulos ,palauttaa null
      */
@@ -137,50 +167,49 @@ public class BinomikekoTest {
     @Test
     public void tyhjaKekoDecreaseKeyTest() {
         assertNull(instanssi.findMin());
-        assertEquals(-1, instanssi.decreaseKey(solmu, 2)); 
+        assertEquals(0, instanssi.decreaseKey(solmu, 2)); 
     }
 
     /**
      * Testaa merge() 
-     * odotettu tulos: palauttaa uuden keko olion, jonka 
-     * pienin alkio on sama kuin t1
+     *
+     * keko 1
+     * 12---->7---->15
+     *       25   28 ->33
+     *            41
+     * keko 2
+     * 18----->3---------------------------->6
+     *         37               8---->29------->10--->44
+     *                   30-->23-->22  48->31   17
+     *                 45->32 24       50
+     *                 55
      */
     @Test
-    public void testaaT1PieninMergeTest() {
-        for (int i=12;i>=3;i--){
-            
-            solmu = new Solmu(i);
-            instanssi2.insert(solmu);
-        }
-        for(int i=2;i>=1;i--){
-            solmu = new Solmu(i);
-            instanssi.insert(solmu);
-        }
-        int summa = instanssi.getHeapSize() + instanssi2.getHeapSize();
-        instanssiUusi = Binomikeko.merge(instanssi,instanssi2);
-        assertEquals(1, instanssiUusi.findMin().getValue());
-        assertEquals(summa, instanssiUusi.getHeapSize());
+    public void yhdistaKaksiKekoaMergeTest() {
+        //Ensimmainen keko
+        assertNull(instanssi.findMin());
+        int [] taulukko = {41,28,33,15,7,25,12};
+        alustaKeot(instanssi,taulukko);
+        //Toinen keko
+        int [] taulukko2 = {55,45,32,30,24,23,22,8,50,48,31,29,17,10,44,6,37,3,18};
+        alustaKeot(instanssi2,taulukko2);
+        Binomikeko uusi = Binomikeko.merge(instanssi, instanssi2);
+        assertEquals(3,uusi.findMin().getValue());
+        
     }
     
-     /**
-     * Testaa merge() 
-     * odotettu tulos: palauttaa uuden keko olion, jonka 
-     * pienin alkio on sama kuin t2
-     */
-    @Test
-    public void testaaT2PieninMergeTest() {
-        for (int i=12;i>=3;i--){
-            
-            solmu = new Solmu(i);
+    void alustaKeot(Binomikeko instanssi,int[] taulukko){
+        assertNull(instanssi.findMin());
+        int pienin = Integer.MAX_VALUE;
+        for (int i =0;i<taulukko.length;i++){
+            solmu = new Solmu(taulukko[i]);
             instanssi.insert(solmu);
+            if (pienin > solmu.getValue()){
+                pienin = solmu.getValue();
+            }
+            assertEquals(pienin, instanssi.findMin().getValue());
         }
-        for(int i=2;i>=1;i--){
-            solmu = new Solmu(i);
-            instanssi2.insert(solmu);
-        }
-        int summa = instanssi.getHeapSize() + instanssi2.getHeapSize();
-        instanssiUusi = Binomikeko.merge(instanssi,instanssi2);
-        assertEquals(1, instanssiUusi.findMin().getValue());
-        assertEquals(summa, instanssiUusi.getHeapSize());
+        assertEquals(pienin, instanssi.findMin().getValue());
     }
+    
 }
