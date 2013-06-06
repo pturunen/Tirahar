@@ -117,7 +117,27 @@ public class BinomikekoTest {
         assertEquals(12,instanssi.getJuuriListaMin().getValue().getValue());
     }
     
-    
+    /**
+     * Testaa insert() 
+     * odotettu lopputulos ,kekoon onnistuu solmun lisäys
+     * keko on kekoehdon mukaisesti ehyt lisäyksen jälkeen
+     * palauttaa tarkistuksessa oikean minimikeon arvon
+     * juurilistan kolme solmua,
+     * generoidaan satunnaisesti 9260 solmua
+     */
+    @Test
+    public void UseanSolmunLisaysInsertTest(){
+        assertNull(instanssi.findMin());
+        int pienin = Integer.MAX_VALUE;
+        for (int i =0;i<9260;i++){
+            solmu = new Solmu(generator.nextInt());
+            instanssi.insert(solmu);
+            if (pienin > solmu.getValue()){
+                pienin = solmu.getValue();
+            }
+        }
+        assertEquals(pienin, instanssi.findMin().getValue());
+    }
     
     /**
      * Testaa findMin 
