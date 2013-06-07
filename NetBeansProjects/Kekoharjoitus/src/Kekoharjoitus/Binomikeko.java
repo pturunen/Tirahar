@@ -149,8 +149,83 @@ public class Binomikeko {
      * @return Solmu luokan olio, poistetaan keosta
      */
     public Solmu deleteMin(){
-         /* to be implemented*/
-        return null;
+        Binomipuu poista = this.findAndRemoveMin();
+        Solmu solmu = null;
+        if (poista != null){
+            solmu = poista.getValue();
+            if (poista.getChild() != null){
+                Binomikeko keko = this.makeHeap();
+                insertBinomipuu(keko, poista.getChild());
+                Binomikeko temp=Binomikeko.merge(keko, this);
+                this.setjuuriListMin(temp.getJuuriListaMin());
+            }
+        }
+        
+        return solmu;
+    }
+    
+    /**
+     * Kääntää lapsisolmujen järjestyksen sisaruslistassa
+     * @param keko, Binomikeko jonka juuriListaMin saa uuden arvon
+     * @param puu, Binomipuu olio joka aloittaa sisaruslistan
+     */
+    private void insertBinomipuu(Binomikeko keko, Binomipuu puu){
+        if (keko == null || puu == null){
+            return;
+        }
+        insertBinomipuu(keko, puu.getSibling()); 
+        if (puu.getSibling() == null) {
+            keko.setjuuriListMin(puu);
+        }
+    }        
+            
+            
+    
+    /**
+     * Palauttaa keon pienimmän  eli Binomipuu olion juurilistasta,
+     * jonka value arvo on keon pienin.Binomipuu poistetaan juurilistasta
+     * @return null, jos keko tyhjä, muutoin Binomipuu luokan olio
+     */
+    private Binomipuu findAndRemoveMin(){
+        Binomipuu curr= juurilistaMin;
+        Binomipuu prev = null;
+        Binomipuu pienin = null;
+        Binomipuu ennenPieninta = null;
+        if (curr != null){
+            pienin = juurilistaMin;
+            while (pienin != null && curr != null){
+                if (curr.getValue() != null && 
+                        pienin.getValue().getValue() >
+                                                curr.getValue().getValue()){
+                        pienin = curr;
+                        ennenPieninta = prev;
+                    }
+                prev = curr;
+                curr = curr.getSibling();
+                    
+                }
+            this.removeMin(ennenPieninta,pienin);
+        }
+        return pienin;
+    }
+    
+    /**
+     * Poistaa keon pienimmän  eli Binomipuu olion juurilistasta,
+     * jonka value arvo on keon pienin.
+     * @param edellinen , Binomipuu olio juurilistassa ennen poistettavaa
+     * @param poistettava, Binomipuu olio joka poistetaan juurilistasta
+     * 
+     */
+    private void removeMin(Binomipuu edellinen,Binomipuu poistettava){   
+        if (poistettava != null){
+            if (edellinen == null){
+                Binomipuu next = poistettava.getSibling();
+                this.setjuuriListMin(next);
+            }
+            else {
+                edellinen.setSibling(poistettava.getSibling());
+            }
+        }
     }
     
     /**
