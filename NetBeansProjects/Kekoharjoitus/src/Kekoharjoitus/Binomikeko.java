@@ -108,10 +108,12 @@ public class Binomikeko {
      * binomipuihin, joilla sama degree arvo.
      * @return Binomikeko ,sisältää uuden yhdistetyn juurilistan
      */
-    private static Binomikeko lomitaJuuriListat(Binomikeko keko1, Binomikeko keko2){
+    private static Binomikeko lomitaJuuriListat(Binomikeko keko1,
+                                                            Binomikeko keko2){
         Binomikeko kekoUusi = null;
         if (keko1 !=null && keko2 != null &&  
-                keko1.getJuuriListaMin()!=null && keko2.getJuuriListaMin()!=null){
+                keko1.getJuuriListaMin()!=null &&
+                                        keko2.getJuuriListaMin()!=null){
             Binomipuu puu1 = keko1.getJuuriListaMin();
             Binomipuu puu2 = keko2.getJuuriListaMin();
             Binomipuu puuPrev = null;
@@ -154,10 +156,16 @@ public class Binomikeko {
         if (poista != null){
             solmu = poista.getValue();
             if (poista.getChild() != null){
-                Binomikeko keko = this.makeHeap();
+                Binomikeko keko = Binomikeko.makeHeap();
                 insertBinomipuu(keko, poista.getChild());
-                Binomikeko temp=Binomikeko.merge(keko, this);
-                this.setjuuriListMin(temp.getJuuriListaMin());
+                Binomikeko temp = null;
+                if (this.getJuuriListaMin() != null){
+                    temp=Binomikeko.merge(keko, this);
+                    this.setjuuriListMin(temp.getJuuriListaMin());
+                }
+                else {
+                    this.setjuuriListMin(keko.getJuuriListaMin());
+                }
             }
         }
         

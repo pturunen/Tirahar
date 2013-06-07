@@ -182,6 +182,34 @@ public class BinomikekoTest {
     }
 
     /**
+     * Testaa deleteMin 
+     * odotettu lopputulos ; palauttaa binomikeon pienimmän arvon omaavan
+     * Solmu olion ja poistaa sen keosta.
+     * random arvot suuremilla solmumäärillä,kaikki yksitellen
+     * kunnes keko tyhjä
+     */
+    @Test
+    public void randomDeleteMinTest() {
+        //pre-ehto
+        assertNull(instanssi.findMin());
+        assertNull(instanssi.deleteMin());
+        //keon alustus
+        int pienin = Integer.MAX_VALUE;
+        //for (int i =0;i<9260;i++){
+        for (int i =0;i<3;i++){
+            solmu = new Solmu(generator.nextInt());
+            instanssi.insert(solmu);
+            if (pienin > solmu.getValue()){
+                pienin = solmu.getValue();
+            }
+        }
+        while (instanssi.findMin() != null){
+            pienin = instanssi.findMin().getValue();
+            assertEquals(pienin, instanssi.deleteMin().getValue());
+        }
+    }
+    
+    /**
      * Testaa DecreaseKey() 
      * odotettu lopputulos,keko palauttaa -1, koska keko on tyhja
      * 
