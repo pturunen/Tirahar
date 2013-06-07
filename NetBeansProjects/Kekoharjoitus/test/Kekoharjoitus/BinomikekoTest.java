@@ -86,7 +86,9 @@ public class BinomikekoTest {
     public void insertYksiSolmuInsertTest() {
         assertNull(instanssi.findMin());
         instanssi.insert(solmu);
-        assertEquals(solmu.getValue(), instanssi.findMin().getValue());
+        Solmu solmuMin = instanssi.findMin();
+        assertNotNull(solmuMin);
+        assertEquals(solmu.getValue(), solmuMin.getValue());
     }
     
     /**
