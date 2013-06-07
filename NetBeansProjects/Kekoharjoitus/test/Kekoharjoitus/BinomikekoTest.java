@@ -195,8 +195,7 @@ public class BinomikekoTest {
         assertNull(instanssi.deleteMin());
         //keon alustus
         int pienin = Integer.MAX_VALUE;
-        //for (int i =0;i<9260;i++){
-        for (int i =0;i<3;i++){
+        for (int i =0;i<9260;i++){
             solmu = new Solmu(generator.nextInt());
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
@@ -217,9 +216,84 @@ public class BinomikekoTest {
     @Test
     public void tyhjaKekoDecreaseKeyTest() {
         assertNull(instanssi.findMin());
-        assertEquals(0, instanssi.decreaseKey(solmu, 2)); 
+        assertEquals(-1, instanssi.decreaseKey(null,solmu, 2)); 
     }
 
+    /**
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa -1, koska muutettava
+     * arvo on suurempi kuin Solmun alkuperäinen arvo
+     * 
+     */
+    @Test
+    public void liianSuuriArvoKekoDecreaseKeyTest() {
+        assertNull(instanssi.findMin());
+        assertEquals(8,solmu.getValue());
+        instanssi.insert(solmu);
+        Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
+        assertEquals(-1, instanssi.decreaseKey(puu,solmu,9 )); 
+    }
+    
+    /**
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa -1, koska solmun arvo on
+     * eri kuin annetun Binomipuu olion Solmu olion arvo
+     * 
+     */
+    @Test
+    public void EriOliotDecreaseKeyTest() {
+        assertNull(instanssi.findMin());
+        assertEquals(8,solmu.getValue());
+        instanssi.insert(solmu);
+        solmu2 = new Solmu(5);
+        Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
+        assertEquals(-1, instanssi.decreaseKey(puu,solmu2,9 )); 
+    }
+    
+    /**
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa -1, koska solmun arvo on
+     * eri kuin annetun Binomipuu olion Solmu olion arvo
+     * 
+     */
+    @Test
+    public void muutaArvoDecreaseKeyTest() {
+        assertNull(instanssi.findMin());
+        assertEquals(8,solmu.getValue());
+        instanssi.insert(solmu);
+        Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
+        assertEquals(0, instanssi.decreaseKey(puu,solmu,3 )); 
+    }
+    
+    /**
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa -1, koska solmun arvo on
+     * eri kuin annetun Binomipuu olion Solmu olion arvo
+     * 
+     */
+    @Test
+    public void randomArvoDecreaseKeyTest() {
+        //pre-ehto
+        assertNull(instanssi.findMin());
+        assertNull(instanssi.deleteMin());
+        //keon alustus
+        int suurin = 0;
+        int pienin = Integer.MAX_VALUE;
+        for (int i =0;i<9260;i++){
+            solmu = new Solmu(generator.nextInt());
+            instanssi.insert(solmu);
+            if (pienin > solmu.getValue()){
+                pienin = solmu.getValue();
+            }
+            if (suurin <solmu.getValue()){
+                suurin = solmu.getValue();
+            }
+        }
+        solmu.setValue(suurin);
+        Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
+        assertEquals(0, instanssi.decreaseKey(puu,solmu,pienin )); 
+    }
+    
     /**
      * Testaa merge() 
      *
@@ -248,6 +322,36 @@ public class BinomikekoTest {
         
     }
     
+    /**
+     * Testaa findBinomipuu() apufunktio decreaseKey funktiolle
+     * Annetaan parametrina Solmu olio jonka arvoa halutaan muuttaa
+     * Palauttaa Binomipuu olion jossa ko Solmu olio on talletettuna
+     * Testataan että funktio löytää kaikki asetetut 7 solmua
+     *
+     */
+    @Test
+    public void insert7SolmuaFindBinomipuuTest() {
+        assertNull(instanssi.findMin());
+        int pienin = Integer.MAX_VALUE;
+        int [] taulukko = {41,28,33,15,7,25,12};
+        for (int i =0;i<taulukko.length;i++){
+            solmu = new Solmu(taulukko[i]);
+            instanssi.insert(solmu);
+            if (pienin > solmu.getValue()){
+                pienin = solmu.getValue();
+            }
+            assertEquals(pienin, instanssi.findMin().getValue());
+        }
+        assertEquals(pienin, instanssi.findMin().getValue());
+        assertEquals(12,instanssi.getJuuriListaMin().getValue().getValue());
+        Binomipuu match = null; 
+        for (int j=0;j<taulukko.length;j++){
+            solmu = new Solmu(taulukko[j]);
+            match = instanssi.findBinomipuu(instanssi.getJuuriListaMin(),solmu);
+            assertEquals(taulukko[j], match.getValue().getValue());
+        }
+    }
+    
     void alustaKeot(Binomikeko instanssi,int[] taulukko){
         assertNull(instanssi.findMin());
         int pienin = Integer.MAX_VALUE;
@@ -261,5 +365,4 @@ public class BinomikekoTest {
         }
         assertEquals(pienin, instanssi.findMin().getValue());
     }
-    
 }

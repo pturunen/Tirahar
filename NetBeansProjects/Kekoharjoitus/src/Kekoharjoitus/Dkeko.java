@@ -180,6 +180,8 @@ public class Dkeko {
      */
     public int decreaseKey(Solmu solmu,int value){
         int res = error;
+        //TODO:siirrä alkion etsiminen funktion
+        //ulkopuolelle,anna parametrina haun tulos
         Kekoalkio alkio = findKekoalkio(solmu);
         if (alkio==null){
             return res;

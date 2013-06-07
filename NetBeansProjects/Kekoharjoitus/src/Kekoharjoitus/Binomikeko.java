@@ -239,15 +239,40 @@ public class Binomikeko {
     /**
      * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
+     * @param binomipuu Binomipuu olio,jonka valuen arvo on alkio
      * @param alkio, Solmu olio,jonka arvoa
      * halutaan pienentää
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
      */
-    public int decreaseKey(Solmu alkio, int value){
-        /* to be implemented*/ 
-        return -1;
+    public int decreaseKey(Binomipuu binomipuu,Solmu alkio, int value){
+        int error = -1;
+        int ok = 0;
+        Binomipuu apu = null;
+        Binomipuu apu2 = null;
+        if (binomipuu == null || alkio == null|| value > alkio.getValue()||
+                binomipuu.getValue().getValue()!= alkio.getValue()){
+            return error;
+        }
+        binomipuu.getValue().setValue(value);
+        apu = binomipuu;
+        apu2 = apu.getParent();
+        while (apu2 != null &&
+                apu.getValue().getValue() < apu2.getValue().getValue()){
+                this.vaihdaPaikkaa(apu2, apu);
+                apu = apu2;
+                apu2 = apu.getParent();
+        }
+        return ok;
     }
+    
+    private void vaihdaPaikkaa(Binomipuu iso, Binomipuu pieni){
+        Solmu solmu = null;
+        solmu = iso.getValue();
+        iso.setValue(pieni.getValue());
+        pieni.setValue(solmu);        
+    }
+    
     
     /**
      * Yhdistää kaksi kekoa toisiinsa,luoden uuden keon ja
@@ -282,8 +307,8 @@ public class Binomikeko {
        Binomipuu next = curr.getSibling();
        while (next != null){
            if (curr.getDegree() != next.getDegree() ||
-                   next.getSibling() != null && next.getSibling().getDegree() ==
-                   curr.getDegree()){
+                   next.getSibling() != null && 
+                            next.getSibling().getDegree() ==curr.getDegree()){
                prev = curr;
                curr = next;
            }
@@ -337,23 +362,24 @@ public class Binomikeko {
     }
     
     /**
-     * Palauttaa juurilistasta sen binomipuu olion, jonka
-     * degree arvo on pienempi kuin parametrina annettu value
+     * Palauttaa binomikeosta value arvoa vastaavan Binomipuu olion
+     * @param puu Binomipuu olio, keon juurilistamin
+     * @param value Solmu olio, jonka Binomipuu oliota haetaan
      * @return  Binomipuu olio ,palauttaa null, jos binomikeko on tyhjä
-     * tai juurilistan ensimmäisen degree on suurempi kuin value
      */
-  /*  private Binomipuu getEdellinenJuuriListassa(int value){
-        Binomipuu juurialkio = this.juurilistaMin;
-        Binomipuu edellinen =null;
-        while (juurialkio != null){
-            if (juurialkio.getDegree() < value){
-                edellinen = juurialkio;
-            }
-            else {
-                return edellinen;
-            }
+    public Binomipuu findBinomipuu(Binomipuu puu,Solmu value){
+        Binomipuu match = null;
+        if (puu == null || value.getValue() == Integer.MAX_VALUE ){
+            return null;
         }
-        return edellinen;
+        if (puu.getValue().getValue() == value.getValue()){
+            return puu;
+        }
+        match = findBinomipuu(puu.getSibling(),value);
+        if (match == null){
+            match = findBinomipuu(puu.getChild(),value);
+        }
+        return match;
     }
-    * */
+    
 }
