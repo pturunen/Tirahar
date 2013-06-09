@@ -347,6 +347,11 @@ public class Binomikeko {
         return count;
     }
     
+    /**
+     * Palauttaa juurilistan pienimmän alkion 
+     * @return Binomipuu juurilistan pienimmän degree
+     * arvon omaava alkio tai null jos juurilista tyhjä
+     */
     public Binomipuu getJuuriListaMin(){
         return this.juurilistaMin;
     }
