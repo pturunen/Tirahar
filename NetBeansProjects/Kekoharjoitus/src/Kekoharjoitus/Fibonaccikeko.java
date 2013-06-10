@@ -11,12 +11,14 @@ package Kekoharjoitus;
 public class Fibonaccikeko {
     
     private  Fibonaccipuu min;
+    private int n;
     
     /**
      * Konstruktori
      */
     public Fibonaccikeko(){
        this.min = null;
+       this.n =0;
     }
     
     /**
@@ -61,6 +63,7 @@ public class Fibonaccikeko {
                 this.setMin(uusi);
             }
         } 
+        n++;
     }
   
     /**
@@ -108,88 +111,134 @@ public class Fibonaccikeko {
             return null;
         }
         Fibonaccipuu minimi = this.getMin();
-        this.setMin(getUusiMinimi());
-        removeMin();
-        this.nostaLapsetJuurilistaan(minimi.getChild());
-        //todo yhdista samanasteiset
+        if (!this.getMin().hasSibling() && this.getMin().getChild()==null){
+            this.setMin(null);
+            return minimi.getValue();
+        }
         
+        Fibonaccipuu lapsi = this.getMin().getChild();
+        removeMin(minimi);
+        
+        if (minimi.hasSibling()){
+            this.setMin(minimi.getSiblingR());
+            sulauta(this.getMin(),lapsi);
+        }
+        else {
+            this.setMin(lapsi);
+        }
+        //kay juurilista lapi ja null parent ja laske samalla
+        //pienin arvo ,paivita se
+        //todo yhdista samanasteiset
+        n--;
+        puhdista();
         return minimi.getValue();
     }
     
     /**
-     * Poistaa pienimmän alkion juurilistasta ja
-     * päivittää vanhan minimin vasemman ja oikean alkion
+     * Poistaa min alkion juurilistasta ja
+     * päivittää minimin vasemman ja oikean alkion
      * linkit juurilistassa
+     * @min Fibonaccipuu olio poistettava olio jonka
+     * sisrukset linkitetään yhteen
      */
-    private void removeMin(){
-        if (this.getMin()== null){
+    private void removeMin(Fibonaccipuu min){
+        if (min== null){
             return;
         }
-        Fibonaccipuu  vasen = this.getMin().getSiblingL();
-        Fibonaccipuu  oikea = this.getMin().getSiblingR();
-        if (vasen != null && vasen != oikea){
-            vasen.setSiblingR(oikea);
-            oikea.setSiblingL(vasen);
-        }
-        else if (vasen!=null){
-            vasen.setSiblingL(null);
-            vasen.setSiblingR(null);
+        if (min.hasSibling()){
+            Fibonaccipuu  vasen = min.getSiblingL();
+            Fibonaccipuu  oikea = min.getSiblingR();
+            if (!min.isSameSibling()){
+                vasen.setSiblingR(oikea);
+                oikea.setSiblingL(vasen);
+            }
+            else {
+                vasen.setSiblingL(null);
+                oikea.setSiblingR(null);
+            }
         }
     }
     
     /**
-     * Etsii uuden minimiarvon juurilistasta ja vanhan minimin lapsilistan
-     * joukosta, päivittää vanhan minimin lapsilistan alkioiden parent = null
-     * @return Fibonaccipuu
+     * Yhdistää kahden Fibonaccipuun linkit toisiinsa
+     * @param  puu1 Fibonaccipuu yhdistettävä puu
+     * @param  puu2 Fibonaccipuu yhdistettävä puu
      */
-    private Fibonaccipuu getUusiMinimi(){
-        Fibonaccipuu uusi = null;
-        uusi = this.getMin().getSiblingR();
-        Fibonaccipuu ehdokas = uusi;
-        while (this.getMin()!= ehdokas && ehdokas !=null){
-            if (uusi.getValue().getValue() > 
-                    ehdokas.getValue().getValue()){
-                uusi = ehdokas;
-            }
-            ehdokas = ehdokas.getSiblingR();
+    private void sulauta(Fibonaccipuu puu1,Fibonaccipuu puu2){
+        if (puu1== null||puu2== null){
+            return;
         }
-        ehdokas = this.getMin().getChild();
-        if (uusi == null){
-            uusi = ehdokas;
+        Fibonaccipuu vika1 = null;
+        Fibonaccipuu vika2 = null;
+        if (puu1.hasSibling() && puu2.hasSibling()){
+            vika1 = puu1.getSiblingL();
+            vika2 = puu2.getSiblingL();
+            vika1.setSiblingR(puu2);
+            vika2.setSiblingR(puu1);
+            puu2.setSiblingL(vika1);
+            puu1.setSiblingL(vika2);
         }
-        while (this.getMin().getChild() != ehdokas && ehdokas != null){
-            if (uusi.getValue().getValue() > 
-                    ehdokas.getValue().getValue()){
-                uusi = ehdokas;
-            }
-            ehdokas.setParent(null);
-            ehdokas= ehdokas.getSiblingR();
+        if (!puu1.hasSibling() && puu2.hasSibling()){
+            vika2 = puu2.getSiblingL();
+            puu1.setSiblingR(puu2);
+            vika2.setSiblingR(puu1);
+            puu2.setSiblingL(puu1);
+            puu1.setSiblingL(vika2);
         }
-        return uusi;
+        if (puu1.hasSibling() && !puu2.hasSibling()){
+            vika1 = puu1.getSiblingL();
+            vika1.setSiblingR(puu2);
+            puu2.setSiblingR(puu1);
+            puu2.setSiblingL(vika1);
+            puu1.setSiblingL(puu2);
+        }
     }
     
     /**
-     * Nostaa lapsilistan alkiot juurilistaan
-     * Muodostaa ensin uuden keon ja yhdistaa sen vanhaan kekoon
-     * @param lapsi juurilistaan nostettavan lapsilistan ensimmainen alkio
+     * Päivittää juurilistan parent viittaukset null:ksi
+     * sekä linkittää juurilistan saman degreen omaavat yhteen
      */
-    private void nostaLapsetJuurilistaan(Fibonaccipuu lapsi){
-        if (lapsi == null){
+    private void puhdista(){
+        if (!this.getMin().hasSibling()){
             return;
         }
-        Fibonaccikeko uusikeko = Fibonaccikeko.makeHeap();
-        Fibonaccipuu pienin = lapsi;
-        Fibonaccipuu ehdokas = lapsi.getSiblingR();
-        while (lapsi != ehdokas && ehdokas != null){
-            if (pienin.getValue().getValue() > 
-                    ehdokas.getValue().getValue()){
-                pienin = ehdokas;
+        int counter = 1;
+        Fibonaccipuu current = this.getMin().getSiblingR();
+        int minimi = this.getMin().getValue().getValue();
+        while (current != null && this.getMin() != current){
+            counter++;
+            current.setParent(null);
+            if (minimi > current.getValue().getValue()){
+                minimi = current.getValue().getValue();
+                this.setMin(current);
             }
-            ehdokas= ehdokas.getSiblingR();
+            current = current.getSiblingR();
         }
-        uusikeko.setMin(pienin);
-        Fibonaccikeko temp = Fibonaccikeko.merge(uusikeko, this);
-        this.setMin(temp.getMin());
+        
+        yhdistaSamanAsteiset(counter);
+    }
+    
+    /*
+     * KESKEN JATKA ...
+     */
+    private void yhdistaSamanAsteiset(int counter){
+        int maxaste = 0;
+        double j = 2;
+        maxaste =( int)(Math.log(n)/Math.log(j));
+        Fibonaccipuu [] asteet = new Fibonaccipuu[maxaste+1];
+        Fibonaccipuu curr = this.getMin();
+        asteet[curr.getDegree()]= curr;
+        curr = curr.getSiblingR();
+        Fibonaccipuu tupla = null;
+        while (curr != null && curr != this.getMin()){
+            tupla = asteet[curr.getDegree()];
+            if (tupla != null){
+               asteet[curr.getDegree()] = null;
+               if (curr.getValue().getValue()>=tupla.getValue().getValue()){
+                   //poista curr juurilistasta ja linkita tupla ja curr
+               }
+            }
+        }
     }
     
     /**

@@ -61,6 +61,27 @@ public class Fibonaccipuu {
     }
 
     /**
+     * Funktio palauttaa tiedon onko oliolla sisaruksia
+     * Yksi olio;vasen ja oikea sibling null
+     * Yksi tai useampi sisarus, vasen ja oikea != null
+     * @return boolean ,true jos ainakin yksi sisarus, false
+     * muutoin
+     */
+    public boolean hasSibling(){
+        return this.getSiblingL() !=null;
+    }
+    
+     /**
+     * Funktio palauttaa tiedon onko vasen ja oikea sisarus sama
+     * olio
+     * @return boolean ,true jos sama olio, muutoin false eli
+     * Fibonaccipuu olioita enenmmän kuin kaksi
+     */
+    public boolean isSameSibling(){
+        return this.getSiblingL() == this.getSiblingR();
+    }
+    
+    /**
     * Funktio palauttaa Fibonaccipuu olion oikeanpuoleisen sisaruksen
     * @return Fibonaccipuu olio tai null, jos sisarusta ei ole
     */
