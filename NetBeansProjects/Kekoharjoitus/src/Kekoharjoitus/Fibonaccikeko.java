@@ -117,7 +117,7 @@ public class Fibonaccikeko {
         }
         
         Fibonaccipuu lapsi = this.getMin().getChild();
-        removeJuurilistasta(minimi);
+        removelistasta(minimi);
         
         if (minimi.hasSibling()){
             this.setMin(minimi.getSiblingR());
@@ -141,7 +141,7 @@ public class Fibonaccikeko {
      * @puu Fibonaccipuu olio poistettava olio jonka
      * sisrukset linkitetään yhteen
      */
-    private void removeJuurilistasta(Fibonaccipuu puu){
+    private void removelistasta(Fibonaccipuu puu){
         if (puu== null){
             return;
         }
@@ -192,6 +192,14 @@ public class Fibonaccikeko {
             puu2.setSiblingL(vika1);
             puu1.setSiblingL(puu2);
         }
+        if (!puu1.hasSibling() && !puu2.hasSibling()){
+            vika1 = puu1.getSiblingL();
+            vika2 = puu2.getSiblingL();
+            puu1.setSiblingR(puu2);
+            puu2.setSiblingR(puu1);
+            puu2.setSiblingL(puu1);
+            puu1.setSiblingL(puu2);
+        }
     }
     
     /**
@@ -215,8 +223,12 @@ public class Fibonaccikeko {
         }
     }
     
-    /*
-     * KESKEN JATKA ...
+    /**
+     * Funktio yhdistaa juurilistassa saman asteiset alkiot
+     * @param puu Fibonaccipuu juurilistan alkio joka yhdistetaan
+     * mahdollisesti samanasteisen toisen juurilistan alkion kanssa
+     * jos sellainen juurilistasta löytyy
+     * 
      */
     private void yhdistaSamanAsteiset(Fibonaccipuu puu){
         int maxaste = 0;
@@ -232,7 +244,7 @@ public class Fibonaccikeko {
             if (curr.getValue().getValue()>=tupla.getValue().getValue()){
                 vaihdaArvot(curr, tupla);
             }
-            removeJuurilistasta(tupla);
+            removelistasta(tupla);
             link(curr, tupla);
             //go through 
             tupla = asteet[curr.getDegree()];
@@ -257,7 +269,6 @@ public class Fibonaccikeko {
         }
     }
     
-    
     /**
      * Vaihtaa paramterina annettujen olioden arvot päittäin
      * @param puu1 paramteri osoittaa funktion kutsun jälkeen puu2 olioon
@@ -271,11 +282,96 @@ public class Fibonaccikeko {
     
     
     /**
-     *
+      * Pienentää keossa olevan solmun arvoa ja
+     * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
+     * @param binomipuu Binomipuu olio,jonka valuen arvo on alkio
+     * @param alkio, Solmu olio,jonka arvoa
+     * halutaan pienentää
+     * @param value Solmu olion valuen uusi arvo
+     * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
      */
-    public void decreaseKey(){
-        /* to be implemented*/ 
+    public int decreaseKey(Fibonaccipuu puu,int value){
+        if (puu == null ||puu.getValue()== null ||
+                        puu.getValue().getValue() < value){
+            return -1;
+        }
+        if ((puu.getParent() != null && 
+                puu.getParent().getValue().getValue() <= value)||
+                puu.getParent() == null){
+            puu.getValue().setValue(value);
+            if (this.findMin().getValue() > value){
+                this.setMin(puu);
+            }
+            return 0;
+        }
+        puu.getValue().setValue(value);
+        korota(puu);
+        return 0;
     }
+    
+    /**
+     * Korottaa parametrina annetun olion juurilistaan ja
+     * merkitsee olion parentin merkityksi, jos parent jo merkitty
+     * se myös nostetaan juurilistaan ja sen parent tarkistetaan jne.
+     * @param puu Fibonaccipuu olio joka korotetaan juurilistaan
+     */
+    private void korota(Fibonaccipuu puu){
+        if (puu == null){
+            return;
+        }
+        if (puu.getMarkedInfo()){
+            puu.setMarkedInfo(Boolean.FALSE);
+        }
+        if (puu.getParent() != null){
+            puu.getParent().setDegree(puu.getParent().getDegree()-1);
+            puu.getParent().setChild(null);
+            if (puu.hasSibling()){
+                puu.getParent().setChild(puu.getSiblingR());
+            }
+            removelistasta(puu);
+            sulauta(this.getMin(),puu);
+            if (this.getMin().getValue().getValue() >
+                                                puu.getValue().getValue()){
+               this.setMin(puu); 
+            }
+            if (puu.getParent().getMarkedInfo()){
+                    korota(puu.getParent());
+            }
+            else {
+                puu.getParent().setMarkedInfo(Boolean.TRUE);
+            }
+        }
+    }
+    
+    
+    
+    /**
+     * Palauttaa binomikeosta value arvoa vastaavan Fibonaccipuu olion
+     * @param puu Fibonaccipuu olio, keon juurilistamin
+     * @param value Solmu olio, jonka Fibonaccipuu oliota haetaan, verrataan
+     * Solmu olion arvoa ei osoitetta
+     * @param vrt Fibonaccipuu head olio listalle,alussa sama kuin puu arvo
+     * @return  Fibonaccipuu olio ,palauttaa null, jos binomikeko on tyhjä
+     */
+    public Fibonaccipuu findFibonaccipuu(Fibonaccipuu puu,Solmu value,Fibonaccipuu vrt){
+        Fibonaccipuu match = null;
+        if (puu == null || value.getValue() == Integer.MAX_VALUE ){
+            return null;
+        }
+        if (puu.getValue().getValue() == value.getValue()){
+            return puu;
+        }
+        if (vrt != puu.getSiblingR()){
+            match = findFibonaccipuu(puu.getSiblingR(),value,vrt);
+            if (match == null){
+                vrt = puu.getChild();
+                match = findFibonaccipuu(puu.getChild(),value,vrt);
+            }
+        }
+        return match;
+    }
+    
+    
     
     /**
     * Yhdistää kaksi kekoa toisiinsa,luoden uuden keon ja
@@ -293,7 +389,8 @@ public class Fibonaccikeko {
      */
     public static Fibonaccikeko merge(Fibonaccikeko keko1, Fibonaccikeko keko2){
         Fibonaccikeko keko = null;
-        if (keko1== null || keko2==null){
+        if (keko1== null || keko2==null || keko1.getMin() == null ||
+                keko2.getMin() == null){
             return nullVersionMerge(keko1, keko2);
         }
         Fibonaccipuu suurempi = null;
@@ -309,25 +406,24 @@ public class Fibonaccikeko {
         return keko;        
     }
     
-/*    private static void asetaLinkit(Fibonaccipuu vasen, Fibonaccipuu oikea){
-        if (vasen == null || oikea == null){
-            return;
-        }
-        vasen.setSiblingL(oikea);
-        oikea.setSiblingR(vasen);
-    }
-  */  
+/**
+ * Funktio palauttaa uuden keon, jos toinen annetuista keko olioista on null
+ * @param keko1 Fibonaccikeko olio 
+ * @param keko2 Fibonaccikeko olio 
+ * @return Fibonaccikeko olion, jos toinen parametrina annetuista keoista oli null
+ * muutoin jos molemmat null tai molemmat != null ,palauttaa null
+ */
     private static Fibonaccikeko nullVersionMerge(Fibonaccikeko keko1, Fibonaccikeko keko2){
         Fibonaccikeko keko = null;
         if (keko1== null && keko2==null){
             return null;
         }
         keko = Fibonaccikeko.makeHeap();
-        if (keko1 == null && keko2 != null){
+        if ((keko1 == null ||keko1.getMin() == null )&& keko2 != null){
             keko.setMin(keko2.getMin());
             keko2 = null;
         }
-        else if (keko2 == null && keko1 != null){
+        else if ((keko2 == null || keko2.getMin()== null)&& keko1 != null){
             keko.setMin(keko1.getMin());
             keko1 = null;
         }

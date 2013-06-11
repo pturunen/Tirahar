@@ -66,6 +66,7 @@ public class FibonaccikekoTest {
        assertEquals(null, instanssi.findMin());
     }
     
+    
     /**
      * Testi MakeHeap() perustapaus
      * odotettu tulos funktio palauttaa Fibonaccikeko olion
@@ -195,7 +196,7 @@ public class FibonaccikekoTest {
         assertNull(instanssi.deleteMin());
         //keon alustus
         int pienin = Integer.MAX_VALUE;
-       for (int i =0;i<9260;i++){
+       for (int i =0;i<2;i++){
             solmu = new Solmu(generator.nextInt());
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
@@ -203,21 +204,63 @@ public class FibonaccikekoTest {
             }
         }
         while (instanssi.findMin() != null){
+            pienin = instanssi.findMin().getValue();
             assertEquals(pienin, instanssi.deleteMin().getValue());
         }
     }
-    
+
     /**
      * Testaa DecreaseKey() 
      * odotettu lopputulos,keko palauttaa -1, koska keko on tyhja
      * 
      */
     @Test
-    public void tyhjaKekoDecreaseKeyTest() {
+    public void tyhjaKekoDecreaseKeyTest() { 
         assertNull(instanssi.findMin());
-    //    assertEquals(-1, instanssi.decreaseKey(null,solmu, 2)); 
+        solmu2 = new Solmu(9);
+        Fibonaccipuu puu = new Fibonaccipuu();     
+        assertEquals(-1, instanssi.decreaseKey(puu, 2)); 
+    }
+    
+    /**
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa 0, ja muutettu arvo 
+     * on keon minimiarvo joten se palautetaan finMin kyselyssä
+     * 
+     */
+    @Test
+    public void yksiAlkioDecreaseKeyTest() { 
+        assertNull(instanssi.findMin());
+        solmu = new Solmu(8);
+        instanssi.insert(solmu);
+        assertEquals(solmu.getValue(),instanssi.findMin().getValue());
+        Fibonaccipuu mini = instanssi.getMin();
+        Fibonaccipuu dec = instanssi.findFibonaccipuu(mini,solmu,mini);
+        assertEquals(dec.getValue().getValue(),solmu.getValue());
+        assertEquals(0, instanssi.decreaseKey(dec, 2)); 
+        assertEquals(2,instanssi.findMin().getValue());
     }
 
+    /**
+     * Testaa DecreaseKey() 
+     * odotettu lopputulos,keko palauttaa 0, ja muutettu arvo 
+     * on keon minimiarvo joten se palautetaan finMin kyselyssä
+     * 
+     */
+    @Test
+    public void montaAlkiotaDecreaseKeyTest() { 
+        assertNull(instanssi.findMin());  
+        int [] taulukko = {55,45,4,30,24,9,22,8,50,48,31,29,17,10,44,6,37,3,18};
+        alustaKeot(instanssi,taulukko);
+        assertEquals(3,instanssi.findMin().getValue());
+        solmu = new Solmu(29);
+        Fibonaccipuu mini = instanssi.getMin();
+        Fibonaccipuu dec = instanssi.findFibonaccipuu(mini,solmu,mini);
+        assertEquals(dec.getValue().getValue(),solmu.getValue());
+        assertEquals(0, instanssi.decreaseKey(dec, 2)); 
+        assertEquals(2,instanssi.findMin().getValue());
+    }
+    
     /**
      * Testaa DecreaseKey() 
      * odotettu lopputulos,keko palauttaa -1, koska muutettava
@@ -226,59 +269,31 @@ public class FibonaccikekoTest {
      */
     @Test
     public void liianSuuriArvoKekoDecreaseKeyTest() {
-        assertNull(instanssi.findMin());
-        assertEquals(8,solmu.getValue());
-        instanssi.insert(solmu);
-    //    Fibonaccipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
-    //    assertEquals(-1, instanssi.decreaseKey(puu,solmu,9 )); 
+        assertNull(instanssi.findMin());  
+        int [] taulukko = {55,45,4,30,24,9,22,8,50,48,31,29,17,10,44,6,37,3,18};
+        alustaKeot(instanssi,taulukko);
+        assertEquals(3,instanssi.findMin().getValue());
+        solmu = new Solmu(29);
+        Fibonaccipuu mini = instanssi.getMin();
+        Fibonaccipuu dec = instanssi.findFibonaccipuu(mini,solmu,mini);
+        assertEquals(dec.getValue().getValue(),solmu.getValue());
+        assertEquals(-1, instanssi.decreaseKey(dec, 33)); 
+        assertEquals(3,instanssi.findMin().getValue());
     }
-    
+ 
     /**
      * Testaa DecreaseKey() 
-     * odotettu lopputulos,keko palauttaa -1, koska solmun arvo on
-     * eri kuin annetun Binomipuu olion Solmu olion arvo
-     * 
-     */
-    @Test
-    public void EriOliotDecreaseKeyTest() {
-        assertNull(instanssi.findMin());
-        assertEquals(8,solmu.getValue());
-        instanssi.insert(solmu);
-        solmu2 = new Solmu(5);
-  //      Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
-  //      assertEquals(-1, instanssi.decreaseKey(puu,solmu2,9 )); 
-    }
-    
-    /**
-     * Testaa DecreaseKey() 
-     * odotettu lopputulos,keko palauttaa -1, koska solmun arvo on
-     * eri kuin annetun Binomipuu olion Solmu olion arvo
-     * 
-     */
-    @Test
-    public void muutaArvoDecreaseKeyTest() {
-        assertNull(instanssi.findMin());
-        assertEquals(8,solmu.getValue());
-        instanssi.insert(solmu);
-  //      Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
-  //      assertEquals(0, instanssi.decreaseKey(puu,solmu,3 )); 
-    }
-    
-    /**
-     * Testaa DecreaseKey() 
-     * odotettu lopputulos,keko palauttaa -1, koska solmun arvo on
-     * eri kuin annetun Binomipuu olion Solmu olion arvo
+     * odotettu lopputulos,keko palauttaa 0, 
      * 
      */
     @Test
     public void randomArvoDecreaseKeyTest() {
         //pre-ehto
         assertNull(instanssi.findMin());
-        assertNull(instanssi.deleteMin());
         //keon alustus
         int suurin = 0;
         int pienin = Integer.MAX_VALUE;
-        for (int i =0;i<9260;i++){
+        for (int i =0;i<920;i++){
             solmu = new Solmu(generator.nextInt());
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
@@ -289,23 +304,18 @@ public class FibonaccikekoTest {
             }
         }
         solmu.setValue(suurin);
-//        Binomipuu puu = instanssi.findBinomipuu(instanssi.getJuuriListaMin(), solmu);
- //       assertEquals(0, instanssi.decreaseKey(puu,solmu,pienin )); 
+        assertEquals(pienin,instanssi.findMin().getValue());
+        Fibonaccipuu mini = instanssi.getMin();
+        Fibonaccipuu dec = instanssi.findFibonaccipuu(mini,solmu,mini);
+        assertEquals(dec.getValue().getValue(),solmu.getValue());
+        assertEquals(0, instanssi.decreaseKey(dec, suurin-3)); 
     }
-    
+ 
+ 
     /**
      * Testaa merge() 
-     *
-     * keko 1
-     * 12---->7---->15
-     *       25   28 ->33
-     *            41
-     * keko 2
-     * 18----->3---------------------------->6
-     *         37               8---->29------->10--->44
-     *                   30-->23-->22  48->31   17
-     *                 45->32 24       50
-     *                 55
+     * odotettu lopputulos; taulukko2 sisaltaa pienemman minimi arvon
+     * mergen jälkeen uuden keon minimi arvo on taulukko2 minimiarvo
      */
     @Test
     public void yhdistaKaksiKekoaMergeTest() {
@@ -316,10 +326,46 @@ public class FibonaccikekoTest {
         //Toinen keko
         int [] taulukko2 = {55,45,32,30,24,23,22,8,50,48,31,29,17,10,44,6,37,3,18};
         alustaKeot(instanssi2,taulukko2);
-  //      Binomikeko uusi = Binomikeko.merge(instanssi, instanssi2);
-    //    assertEquals(3,uusi.findMin().getValue());
-        
+        Fibonaccikeko uusi = Fibonaccikeko.merge(instanssi, instanssi2);
+        assertEquals(3,uusi.findMin().getValue());
     }
+    
+    /**
+     * Testaa merge() 
+     * odotettu lopputulos; taulukko2 sisaltaa pienemman minimi arvon
+     * mergen jälkeen uuden keon minimi arvo on taulukko2 minimiarvo
+     * koska taulukko1 on null
+     */
+    @Test
+    public void yhdistaEkaNullKekoaMergeTest() {
+        //Ensimmainen keko
+        assertNull(instanssi.findMin());
+        assertNull(instanssi.getMin());
+        //Toinen keko
+        int [] taulukko2 = {55,45,32,30,24,23,22,8,50,48,31,29,17,10,44,6,37,3,18};
+        alustaKeot(instanssi2,taulukko2);
+        Fibonaccikeko uusi = Fibonaccikeko.merge(instanssi, instanssi2);
+        assertEquals(3,uusi.findMin().getValue());
+    }
+    
+     /**
+     * Testaa merge() 
+     * odotettu lopputulos; taulukko2 sisaltaa pienemman minimi arvon
+     * mergen jälkeen uuden keon minimi arvo on taulukko2 minimiarvo
+     * koska taulukko1 on null
+     */
+    @Test
+    public void yhdistaTokaNullKekoaMergeTest() {
+        //Ensimmainen keko
+        assertNull(instanssi.findMin());
+        assertNull(instanssi.getMin());
+        //Toinen keko
+        int [] taulukko2 = {55,45,32,30,24,23,22,8,50,48,31,29,17,10,44,6,37,3,18};
+        alustaKeot(instanssi2,taulukko2);
+        Fibonaccikeko uusi = Fibonaccikeko.merge(instanssi2, instanssi);
+        assertEquals(3,uusi.findMin().getValue());
+    }
+    
     
     /**
      * Testaa findBinomipuu() apufunktio decreaseKey funktiolle
@@ -342,16 +388,10 @@ public class FibonaccikekoTest {
             assertEquals(pienin, instanssi.findMin().getValue());
         }
         assertEquals(pienin, instanssi.findMin().getValue());
- /*       assertEquals(12,instanssi.getJuuriListaMin().getValue().getValue());
-        Binomipuu match = null; 
-        for (int j=0;j<taulukko.length;j++){
-            solmu = new Solmu(taulukko[j]);
-            match = instanssi.findBinomipuu(instanssi.getJuuriListaMin(),solmu);
-            assertEquals(taulukko[j], match.getValue().getValue());
-        }
-    */
     }
-    
+ 
+
+
     void alustaKeot(Fibonaccikeko instanssi,int[] taulukko){
         assertNull(instanssi.findMin());
         int pienin = Integer.MAX_VALUE;
