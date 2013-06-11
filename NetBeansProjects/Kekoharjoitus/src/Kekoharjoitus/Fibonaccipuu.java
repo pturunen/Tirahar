@@ -22,7 +22,7 @@ public class Fibonaccipuu {
      */
     public Fibonaccipuu(){
         this.parent = null;
-        this.marked = false;
+        this.marked = Boolean.FALSE;
         this.siblingL = null;
         this.siblingR = null;
         this.child = null;
@@ -41,7 +41,7 @@ public class Fibonaccipuu {
         this.child = null;
         this.siblingL = null;
         this.siblingR = null;
-        this.marked = false;
+        this.marked = Boolean.FALSE;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Fibonaccipuu {
      * muutoin
      */
     public boolean hasSibling(){
-        return this.getSiblingL() !=null;
+        return this.getSiblingL() !=null /*&& this.getSiblingR()!=null*/;
     }
     
      /**

@@ -5,7 +5,7 @@
 package Kekoharjoitus;
 
 /**
- * LUOKKA ON TYÖNALLA ,EI KUULUNUT PALAUTUS SETTIIN 5
+ * 
  * @author pturunen
  */
 public class Fibonaccikeko {
@@ -54,7 +54,7 @@ public class Fibonaccikeko {
         Fibonaccipuu uusi = createNewFibonaccipuu(x);
         if (uusi != null){
             if (this.getMin()!=null)  {
-                Fibonaccikeko keko = this.makeHeap();
+                Fibonaccikeko keko = Fibonaccikeko.makeHeap();
                 keko.setMin(uusi);
                 Fibonaccikeko temp = Fibonaccikeko.merge(keko, this);
                 this.setMin(temp.getMin());
@@ -117,7 +117,7 @@ public class Fibonaccikeko {
         }
         
         Fibonaccipuu lapsi = this.getMin().getChild();
-        removeMin(minimi);
+        removeJuurilistasta(minimi);
         
         if (minimi.hasSibling()){
             this.setMin(minimi.getSiblingR());
@@ -136,19 +136,19 @@ public class Fibonaccikeko {
     
     /**
      * Poistaa min alkion juurilistasta ja
-     * päivittää minimin vasemman ja oikean alkion
+     * päivittää puu olion vasemman ja oikean alkion
      * linkit juurilistassa
-     * @min Fibonaccipuu olio poistettava olio jonka
+     * @puu Fibonaccipuu olio poistettava olio jonka
      * sisrukset linkitetään yhteen
      */
-    private void removeMin(Fibonaccipuu min){
-        if (min== null){
+    private void removeJuurilistasta(Fibonaccipuu puu){
+        if (puu== null){
             return;
         }
-        if (min.hasSibling()){
-            Fibonaccipuu  vasen = min.getSiblingL();
-            Fibonaccipuu  oikea = min.getSiblingR();
-            if (!min.isSameSibling()){
+        if (puu.hasSibling()){
+            Fibonaccipuu  vasen = puu.getSiblingL();
+            Fibonaccipuu  oikea = puu.getSiblingR();
+            if (!puu.isSameSibling()){
                 vasen.setSiblingR(oikea);
                 oikea.setSiblingL(vasen);
             }
@@ -202,44 +202,73 @@ public class Fibonaccikeko {
         if (!this.getMin().hasSibling()){
             return;
         }
-        int counter = 1;
         Fibonaccipuu current = this.getMin().getSiblingR();
         int minimi = this.getMin().getValue().getValue();
         while (current != null && this.getMin() != current){
-            counter++;
             current.setParent(null);
             if (minimi > current.getValue().getValue()){
                 minimi = current.getValue().getValue();
                 this.setMin(current);
             }
+            yhdistaSamanAsteiset(current);
             current = current.getSiblingR();
         }
-        
-        yhdistaSamanAsteiset(counter);
     }
     
     /*
      * KESKEN JATKA ...
      */
-    private void yhdistaSamanAsteiset(int counter){
+    private void yhdistaSamanAsteiset(Fibonaccipuu puu){
         int maxaste = 0;
         double j = 2;
         maxaste =( int)(Math.log(n)/Math.log(j));
         Fibonaccipuu [] asteet = new Fibonaccipuu[maxaste+1];
-        Fibonaccipuu curr = this.getMin();
+        Fibonaccipuu curr = puu;
         asteet[curr.getDegree()]= curr;
         curr = curr.getSiblingR();
-        Fibonaccipuu tupla = null;
-        while (curr != null && curr != this.getMin()){
-            tupla = asteet[curr.getDegree()];
-            if (tupla != null){
-               asteet[curr.getDegree()] = null;
-               if (curr.getValue().getValue()>=tupla.getValue().getValue()){
-                   //poista curr juurilistasta ja linkita tupla ja curr
-               }
+        Fibonaccipuu tupla = asteet[curr.getDegree()];
+        while (tupla !=null){
+            asteet[curr.getDegree()] = null;
+            if (curr.getValue().getValue()>=tupla.getValue().getValue()){
+                vaihdaArvot(curr, tupla);
             }
+            removeJuurilistasta(tupla);
+            link(curr, tupla);
+            //go through 
+            tupla = asteet[curr.getDegree()];
+        }
+        asteet[curr.getDegree()] = curr;
+    }
+    
+    /**
+     * Yhdistää kaksi Fibonaccipuuta toisiinsa
+     * @param juuri Fibonaccipuu olio johon liitetään lapsi
+     * @param lapsi Fibonaccipuu olio joka liitetään juureen
+     * Mitään ei tehdä jos jompikumpi annetuista parametreista 
+     * on null.
+     */
+    private void link(Fibonaccipuu juuri, Fibonaccipuu lapsi){
+        if (lapsi != null && juuri != null){
+            lapsi.setParent(juuri);
+            sulauta(lapsi,juuri.getChild());
+            juuri.setChild(lapsi);
+            juuri.setDegree(juuri.getDegree()+ 1);
+            juuri.setMarkedInfo(Boolean.FALSE);
         }
     }
+    
+    
+    /**
+     * Vaihtaa paramterina annettujen olioden arvot päittäin
+     * @param puu1 paramteri osoittaa funktion kutsun jälkeen puu2 olioon
+     * @param puu2 paramteri osoittaa funktion kutsun jälkeen puu1 olioon
+     */
+    private void vaihdaArvot(Fibonaccipuu puu1, Fibonaccipuu puu2){
+        Fibonaccipuu apu = puu1;
+        puu1 = puu2;
+        puu2 = apu;
+    }
+    
     
     /**
      *
@@ -276,38 +305,18 @@ public class Fibonaccikeko {
                 keko.setMin(keko1.getMin());
                 suurempi = keko2.getMin();
             }
-        uusiMin = keko.getMin();
-        Fibonaccipuu keko1vasen = keko1.getMin().getSiblingL();
-        Fibonaccipuu keko2vasen = keko2.getMin().getSiblingL();
-        if (keko1vasen == null){
-            asetaLinkit(suurempi,uusiMin );
-            if (keko2vasen!= null){
-                asetaLinkit(uusiMin,keko2vasen );
-            }
-            else {
-                asetaLinkit(uusiMin,suurempi );
-            }
-        }
-        else {
-            asetaLinkit(suurempi,keko1vasen );
-            if (keko2vasen!= null){
-                asetaLinkit(uusiMin,keko2vasen );
-            }
-            else {
-                asetaLinkit(uusiMin,suurempi );
-            }
-        }
+        keko.sulauta(keko1.getMin(),keko2.getMin());
         return keko;        
     }
     
-    private static void asetaLinkit(Fibonaccipuu vasen, Fibonaccipuu oikea){
+/*    private static void asetaLinkit(Fibonaccipuu vasen, Fibonaccipuu oikea){
         if (vasen == null || oikea == null){
             return;
         }
         vasen.setSiblingL(oikea);
         oikea.setSiblingR(vasen);
     }
-    
+  */  
     private static Fibonaccikeko nullVersionMerge(Fibonaccikeko keko1, Fibonaccikeko keko2){
         Fibonaccikeko keko = null;
         if (keko1== null && keko2==null){

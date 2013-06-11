@@ -178,8 +178,7 @@ public class FibonaccikekoTest {
         assertNull(instanssi.findMin());
         assertNull(instanssi.deleteMin());
         instanssi.insert(solmu);
-        assertEquals(solmu.getValue(), instanssi.findMin().getValue());
-     //   assertEquals(solmu.getValue(), instanssi.deleteMin().getValue());
+        assertEquals(solmu.getValue(), instanssi.deleteMin().getValue());
     }
 
     /**
@@ -196,7 +195,7 @@ public class FibonaccikekoTest {
         assertNull(instanssi.deleteMin());
         //keon alustus
         int pienin = Integer.MAX_VALUE;
-        for (int i =0;i<9260;i++){
+       for (int i =0;i<9260;i++){
             solmu = new Solmu(generator.nextInt());
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
@@ -204,8 +203,7 @@ public class FibonaccikekoTest {
             }
         }
         while (instanssi.findMin() != null){
-            pienin = instanssi.findMin().getValue();
-   //         assertEquals(pienin, instanssi.deleteMin().getValue());
+            assertEquals(pienin, instanssi.deleteMin().getValue());
         }
     }
     
