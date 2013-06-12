@@ -93,7 +93,7 @@ public class Dkeko {
         }      
         alkio.setLeft(tail);
         tail = alkio;
-        decreaseKey(tail.getValue(),x.getValue());
+        decreaseKey(tail,x.getValue());
     }
     
     /**
@@ -178,11 +178,8 @@ public class Dkeko {
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
      */
-    public int decreaseKey(Solmu solmu,int value){
+    public int decreaseKey(Kekoalkio alkio,int value){
         int res = error;
-        //TODO:siirrä alkion etsiminen funktion
-        //ulkopuolelle,anna parametrina haun tulos
-        Kekoalkio alkio = findKekoalkio(solmu);
         if (alkio==null){
             return res;
         }

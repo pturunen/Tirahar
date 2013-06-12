@@ -385,7 +385,8 @@ public class DkekoTest extends TestCase{
     public void tyhjaKekoDecreaseKeyTest() {
         assertNull(instanssi5.findMin());
         solmu = new Solmu(3);
-        assertEquals(-1, instanssi5.decreaseKey(solmu, 2)); 
+        Kekoalkio alkio = new Kekoalkio(solmu);
+        assertEquals(-1, instanssi5.decreaseKey(alkio, 2)); 
     }
     
     
@@ -401,7 +402,8 @@ public class DkekoTest extends TestCase{
         solmu = new Solmu(3);
         instanssi5.insert(solmu);
         assertEquals(solmu.getValue(), instanssi5.findMin().getValue());
-        assertEquals(-1, instanssi5.decreaseKey(solmu1, 0)); 
+        Kekoalkio alkio = new Kekoalkio(solmu1);
+        assertEquals(-1, instanssi5.decreaseKey(alkio, 0)); 
     }
      
     /**
@@ -416,7 +418,8 @@ public class DkekoTest extends TestCase{
         solmu = new Solmu(3);
         instanssi5.insert(solmu);
         assertEquals(solmu.getValue(), instanssi5.findMin().getValue());
-        assertEquals(-1, instanssi5.decreaseKey(solmu, 4)); 
+        Kekoalkio alkio = instanssi5.findKekoalkio(solmu);
+        assertEquals(-1, instanssi5.decreaseKey(alkio, 4)); 
     }
     
     /**
@@ -443,7 +446,8 @@ public class DkekoTest extends TestCase{
         instanssi5.deleteMin();
         assertTrue(pienin != instanssi5.findMin().getValue());
         solmu1.setValue(suurin);
-        instanssi5.decreaseKey(solmu1, pienin);
+        Kekoalkio alkio = instanssi5.findKekoalkio(solmu1);
+        instanssi5.decreaseKey(alkio, pienin);
         assertEquals(pienin, instanssi5.findMin().getValue());
     }
 
