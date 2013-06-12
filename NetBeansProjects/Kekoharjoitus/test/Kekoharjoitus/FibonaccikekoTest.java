@@ -196,7 +196,7 @@ public class FibonaccikekoTest {
         assertNull(instanssi.deleteMin());
         //keon alustus
         int pienin = Integer.MAX_VALUE;
-       for (int i =0;i<2;i++){
+       for (int i =0;i<920;i++){
             solmu = new Solmu(generator.nextInt());
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
