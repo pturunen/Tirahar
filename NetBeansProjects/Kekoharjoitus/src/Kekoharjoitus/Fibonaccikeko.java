@@ -118,15 +118,16 @@ public class Fibonaccikeko {
         }
         
         Fibonaccipuu lapsi = this.getMin().getChild();
-        removelistasta(minimi);
-        
         if (minimi.hasSibling()){
             this.setMin(minimi.getSiblingR());
+            removelistasta(minimi);
             sulauta(this.getMin(),lapsi);
         }
         else {
+            removelistasta(minimi);
             this.setMin(lapsi);
         }
+        
         //kay juurilista lapi ja null parent ja laske samalla
         //pienin arvo ,paivita se
         n--;
@@ -148,6 +149,7 @@ public class Fibonaccikeko {
         if (puu.hasSibling()){
             Fibonaccipuu  vasen = puu.getSiblingL();
             Fibonaccipuu  oikea = puu.getSiblingR();
+            
             if (!puu.isSameSibling()){
                 vasen.setSiblingR(oikea);
                 oikea.setSiblingL(vasen);
@@ -166,7 +168,7 @@ public class Fibonaccikeko {
      * @param  puu1 Fibonaccipuu yhdistettävä puu
      * @param  puu2 Fibonaccipuu yhdistettävä puu
      */
-    private void sulauta(Fibonaccipuu puu1,Fibonaccipuu puu2){
+    private void sulauta(Fibonaccipuu puu1,Fibonaccipuu puu2){ 
         if (puu1== null||puu2== null){
             return;
         }
@@ -213,17 +215,24 @@ public class Fibonaccikeko {
         if (this.getMin() == null ||!this.getMin().hasSibling()){
             return;
         }
-        Fibonaccipuu current = this.getMin().getSiblingR();
+        Fibonaccipuu startingpoint = this.getMin();
+        Fibonaccipuu apu = null;
         int minimi = this.getMin().getValue().getValue();
-        Fibonaccipuu [] asteet = new Fibonaccipuu[maxdegree+40];
-        while (current != null && this.getMin() != current){
+        //TODO: maximidegree arvon laskeminen
+        //tee oma taulukko olio
+        Fibonaccipuu [] asteet = new Fibonaccipuu[1001];
+        this.getMin().setParent(null);
+        yhdistaSamanAsteiset(this.getMin(),asteet);
+        Fibonaccipuu current = this.getMin().getSiblingR();
+        while (current != null && startingpoint != current){
             current.setParent(null);
             if (minimi >= current.getValue().getValue()){
                 minimi = current.getValue().getValue();
                 this.setMin(current);
             }
+            apu = current.getSiblingR();
             yhdistaSamanAsteiset(current,asteet);
-            current = current.getSiblingR();
+            current = apu;
         }
     }
     
@@ -236,22 +245,24 @@ public class Fibonaccikeko {
      */
     private void yhdistaSamanAsteiset(Fibonaccipuu puu,Fibonaccipuu [] asteet){
         Fibonaccipuu curr = puu;
-        asteet[curr.getDegree()]= curr;
-        curr = curr.getSiblingR();
         if (curr != null){
-            Fibonaccipuu tupla = asteet[curr.getDegree()];
+            Fibonaccipuu tupla = null;
+            tupla = asteet[curr.getDegree()];
             while (tupla !=null){
                 asteet[curr.getDegree()] = null;
-                if (curr.getValue().getValue()>tupla.getValue().getValue()){
-                    vaihdaArvot(curr, tupla);
-                }
+                if (curr.getValue().getValue()>=tupla.getValue().getValue()){
+                    Fibonaccipuu apu = tupla;
+                    tupla  = curr;
+                    curr = apu;
+                }            
             removelistasta(tupla);
-            link(curr, tupla);
+            link(curr, tupla);                      
             tupla = asteet[curr.getDegree()];
             }
             asteet[curr.getDegree()] = curr;
         }
     }
+    
     
     /**
      * Yhdistää kaksi Fibonaccipuuta toisiinsa
@@ -264,8 +275,9 @@ public class Fibonaccikeko {
         if (lapsi != null && juuri != null){
             lapsi.setParent(juuri);
             sulauta(lapsi,juuri.getChild());
-            juuri.setChild(lapsi);
-            juuri.setDegree(juuri.getDegree()+ 1);
+            juuri.setChild(lapsi);          
+            int temp = juuri.getDegree() + 1;
+            juuri.setDegree(temp);                      
             if (maxdegree < juuri.getDegree()){
                 maxdegree = juuri.getDegree();
             }
@@ -283,8 +295,7 @@ public class Fibonaccikeko {
         puu1 = puu2;
         puu2 = apu;
     }
-    
-    
+     
     /**
       * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki

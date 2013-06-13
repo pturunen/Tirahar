@@ -196,13 +196,18 @@ public class BinomikekoTest {
         //keon alustus
         int pienin = Integer.MAX_VALUE;
         for (int i =0;i<9260;i++){
-            solmu = new Solmu(generator.nextInt());
+            //solmu = new Solmu(generator.nextInt());
+            solmu = new Solmu(i);
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
                 pienin = solmu.getValue();
             }
         }
-        while (instanssi.findMin() != null){
+        
+        //while (instanssi.findMin() != null){
+        int counter = 9259;
+        while (counter != 0){
+            counter--;
             pienin = instanssi.findMin().getValue();
             assertEquals(pienin, instanssi.deleteMin().getValue());
         }

@@ -186,18 +186,35 @@ public class FibonaccikekoTest {
      * Testaa deleteMin 
      * odotettu lopputulos ; palauttaa binomikeon pienimmän arvon omaavan
      * Solmu olion ja poistaa sen keosta.
+     */
+    @Test
+    public void MontaSolmuaPoistaKaikkiDeleteMinTest() {
+        assertNull(instanssi.findMin());
+        assertNull(instanssi.deleteMin());
+        int[] taulukko = {2,5,9,10,22,33,3,90,1,40,11,12,13,8,4,400,32,18,7,21,4000,200};
+        alustaKeot(instanssi,taulukko);
+        assertEquals(1, instanssi.deleteMin().getValue());
+        assertEquals(2, instanssi.deleteMin().getValue());
+        assertEquals(3, instanssi.deleteMin().getValue());
+    }
+    
+    /**
+     * Testaa deleteMin 
+     * odotettu lopputulos ; palauttaa binomikeon pienimmän arvon omaavan
+     * Solmu olion ja poistaa sen keosta.
      * random arvot suuremilla solmumäärillä,kaikki yksitellen
      * kunnes keko tyhjä
      */
     @Test
     public void randomDeleteMinTest() {
         //pre-ehto
-        assertNull(instanssi.findMin());
+       assertNull(instanssi.findMin());
         assertNull(instanssi.deleteMin());
         //keon alustus
         int pienin = Integer.MAX_VALUE;
-       for (int i =0;i<920;i++){
-            solmu = new Solmu(generator.nextInt());
+       for (int i =0;i<2000;i++){
+            //solmu = new Solmu(generator.nextInt(1000));
+           solmu = new Solmu(i);
             instanssi.insert(solmu);
             if (pienin > solmu.getValue()){
                 pienin = solmu.getValue();
