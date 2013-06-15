@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Binomikeko luokan yksikkötestiluokka
  * @author pturunen
  */
 public class BinomikekoTest {

@@ -5,7 +5,8 @@
 package Kekoharjoitus;
 
 /**
- *
+ * Fibonaccipuu luokan oliot muodostavat
+ * kaksisuuntaisen rengaslistan
  * @author pturunen
  */
 public class Fibonaccipuu {
@@ -156,7 +157,7 @@ public class Fibonaccipuu {
 
     /**
     * Funktio asettaa alkion joko merkityksi tai merkitsemättömäksi
-    * @param parent Boolean arvo true, jos alkio merkitään
+    * @param marked Boolean arvo true, jos alkio merkitään
     * muutoin false
     */
     public void setMarkedInfo(Boolean marked){

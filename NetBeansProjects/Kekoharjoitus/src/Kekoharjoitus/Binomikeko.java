@@ -5,7 +5,8 @@
 package Kekoharjoitus;
 
 /**
- * 
+ * Binomikeko tietorakenteena toteutettu
+ * minimikeko
  * @author pturunen
  */
 public class Binomikeko {
@@ -245,18 +246,18 @@ public class Binomikeko {
      * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
      * @param binomipuu Binomipuu olio,jonka valuen arvo on alkio
-     * @param alkio, Solmu olio,jonka arvoa
+     * @param salkio , Solmu olio,jonka arvoa
      * halutaan pienentää
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
      */
-    public int decreaseKey(Binomipuu binomipuu,Solmu alkio, int value){
+    public int decreaseKey(Binomipuu binomipuu, Solmu salkio, int value){
         int error = -1;
         int ok = 0;
         Binomipuu apu = null;
         Binomipuu apu2 = null;
-        if (binomipuu == null || alkio == null|| value > alkio.getValue()||
-                binomipuu.getValue().getValue()!= alkio.getValue()){
+        if (binomipuu == null || salkio == null|| value > salkio.getValue()||
+                binomipuu.getValue().getValue()!= salkio.getValue()){
             return error;
         }
         binomipuu.getValue().setValue(value);

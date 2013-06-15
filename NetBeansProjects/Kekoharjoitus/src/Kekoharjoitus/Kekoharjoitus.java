@@ -7,7 +7,9 @@ import java.sql.Timestamp;
 import java.util.Random;
 
 /**
- *
+ * Kekoharjoitus pääluokka
+ * Luokan testit kekojen suorituskyvyn vertailun 
+ * apuvälineenä
  * @author pturunen
  */
 public class Kekoharjoitus {
@@ -26,6 +28,8 @@ public class Kekoharjoitus {
         }
         return taulukko;
     }
+    
+    
     
     /*
      * dkeko,binomikeko ja fibonaccikeko testi insert operaatiolle
@@ -81,6 +85,238 @@ public class Kekoharjoitus {
         }
         System.out.println(" Fibonaccikeko     insert "+koko+" kpl solmuja,yht aika= "+(endtime-starttime)+" millisekunttia");
         
+    }
+    
+    /*
+     * dkeko,binomikeko ja fibonaccikeko yhdistelma testi operaatiolle
+     * 
+     */
+    public static void yhdistelmaTesti(int tkoko){
+        Solmu[] taulukko = null;;
+        int koko =tkoko;
+        taulukko = Kekoharjoitus.insert(koko);
+        Dkeko dkeko2 = new Dkeko(2);
+        Dkeko dkeko19 = new Dkeko(19);
+        Binomikeko bkeko = new Binomikeko();
+        Fibonaccikeko fkeko = new Fibonaccikeko();
+        
+        Dkeko dkeko2M = insertDkeko(100);
+        Dkeko dkeko19M = insertD19keko(100);
+        Binomikeko bkekoM = insertBkeko(100);
+        Fibonaccikeko fkekoM = insertFkeko(100);
+        
+        long starttime =0;
+        long endtime =0;
+        System.out.println("-----------------------------------------------------------------------------------------");
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko2.insert(taulukko[i]);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Dkeko2       syote lkm="+koko+" insert kaikki"+(endtime-starttime)+" ms yhteensa");
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko2.findMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Dkeko2       syote lkm="+koko+" findMin*syote"+(endtime-starttime)+" ms yhteensa");
+        
+        
+        starttime =0;
+        endtime =0;
+        Kekoalkio alkio=null;
+        
+        for (int i=0;i<koko;i++){
+            alkio = dkeko2.findKekoalkio(taulukko[i]);
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko2.decreaseKey(alkio,(taulukko[i].getValue()-1));
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Dkeko2       syote lkm="+koko+" decrease kaikki"+(endtime-starttime)+" ms yhteensa");
+
+        
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko2.deleteMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Dkeko2       syote lkm="+koko+" deleteMin kaikki"+(endtime-starttime)+" ms yhteensa");
+
+        
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            Dkeko.merge(dkeko2,dkeko2M);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Dkeko2       syote lkm="+koko+"+100   merge "+(endtime-starttime)+" ms yhteensa");
+
+        
+        //------------------------------------------------------------------
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko19.insert(taulukko[i]);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Dkeko19       syote lkm="+koko+" insert kaikki"+(endtime-starttime)+" ms yhteensa");
+   
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko19.findMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" dkeko19       syote lkm="+koko+" findMin*syote"+(endtime-starttime)+" ms yhteensa");
+        
+        
+        starttime =0;
+        endtime =0;
+        alkio=null;
+        
+        for (int i=0;i<koko;i++){
+            alkio = dkeko2.findKekoalkio(taulukko[i]);
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko19.decreaseKey(alkio,(taulukko[i].getValue()-1));
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" dkeko19       syote lkm="+koko+" decrease kaikki"+(endtime-starttime)+" ms yhteensa");
+
+        
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            dkeko19.deleteMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" dkeko19       syote lkm="+koko+" deleteMin kaikki"+(endtime-starttime)+" ms yhteensa");
+
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            Dkeko.merge(dkeko19,dkeko19M);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" dkeko19       syote lkm="+koko+"+100 merge"+(endtime-starttime)+" ms yhteensa");
+
+        //------------------------------------------------------------------
+        
+        starttime =0;
+        endtime =0;
+        
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            bkeko.insert(taulukko[i]);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Binomikeko    syote lkm="+koko+" insert lkm"+(endtime-starttime)+" ms yhteensa");
+    
+        
+        
+        starttime =0;
+        endtime =0;
+        
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            bkeko.findMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Binomikeko    syote lkm="+koko+" findMin*syote lkm"+(endtime-starttime)+" ms yhteensa");
+        
+        starttime =0;
+        endtime =0;
+        Binomipuu bpuu = null;
+        for (int i=0;i<koko;i++){
+            bpuu = bkeko.findBinomipuu(bkeko.getJuuriListaMin(),taulukko[i]);
+            starttime = System.currentTimeMillis()+starttime;
+            bkeko.decreaseKey(bpuu,bpuu.getValue(),(taulukko[i].getValue()-1));
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Binomikeko    syote lkm="+koko+" decrease kaikki"+(endtime-starttime)+" ms yhteensa");
+   
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            bkeko.deleteMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Binomikeko    syote lkm="+koko+" deleteMin kaikki"+(endtime-starttime)+" ms yhteensa");
+ 
+        starttime =0;
+        endtime =0;
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            Binomikeko.merge(bkeko,bkekoM);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Binomikeko    syote lkm="+koko+"+100 merge"+(endtime-starttime)+" ms yhteensa");
+
+        
+        //------------------------------------------------------------------
+        starttime =0;
+        endtime =0;
+        
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            fkeko.insert(taulukko[i]);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Fibonaccikeko  syote lkm="+koko+" insert kaikki"+(endtime-starttime)+" ms yhteensa");
+        
+        starttime =0;
+        endtime =0;
+        
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            fkeko.findMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Fibonaccikeko  syote lkm="+koko+" findMin*syote lkm"+(endtime-starttime)+" ms yhteensa");
+  
+        starttime =0;
+        endtime =0;
+        Fibonaccipuu fpuu = null;
+        for (int i=0;i<koko;i++){
+            fpuu = fkeko.findFibonaccipuu(fkeko.getMin(),taulukko[i] , fkeko.getMin());
+            starttime = System.currentTimeMillis()+starttime;
+            fkeko.decreaseKey(fpuu,taulukko[i].getValue()-1);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Fibonaccikeko  syote lkm="+koko+" decrease kaikki"+(endtime-starttime)+" ms yhteensa");
+  
+        starttime =0;
+        endtime =0;
+        
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            fkeko.deleteMin();
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Fibonaccikeko  syote lkm="+koko+" deleteMin kaikki"+(endtime-starttime)+" ms yhteensa");
+  
+        starttime =0;
+        endtime =0;
+        
+        for (int i=0;i<koko;i++){
+            starttime = System.currentTimeMillis()+starttime;
+            Fibonaccikeko.merge(fkeko,fkekoM);
+            endtime = System.currentTimeMillis()+endtime;
+        }
+        System.out.println(" Fibonaccikeko  syote lkm="+koko+"+100 merge"+(endtime-starttime)+" ms yhteensa");
+ 
+        
+          
+       
     }
     
     /*
@@ -601,7 +837,7 @@ public class Kekoharjoitus {
         solmu = mergeKeko.deleteMin();
         mergeKeko.insert(solmu5);
         endtime = System.currentTimeMillis();
-        System.out.println(" Dkeko 2:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko 2:insert+findMin+insert+makeHeap+insert+merge+insert+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");
         
         
         Dkeko keko19 = null;
@@ -622,7 +858,7 @@ public class Kekoharjoitus {
         mergeKeko19.insert(solmu5);
         solmu = mergeKeko19.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Dkeko 19:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+        System.out.println(" Dkeko 19:insert+findMin+insert+makeHeap+insert+merge+insert+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
         
  
         Binomikeko binomikeko = null;
@@ -642,7 +878,7 @@ public class Kekoharjoitus {
         bkekoMerge.insert(solmu5);
         solmu = bkekoMerge.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Binomikeko:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+        System.out.println(" Binomikeko:insert+findMin+insert+makeHeap+insert+merge+insert+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
  
         
 //------------------------------------------------------------------------        
@@ -666,7 +902,7 @@ public class Kekoharjoitus {
         fkekoMerge.insert(solmu5);
         solmu = fkekoMerge.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Fibonaccikeko:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+        System.out.println(" Fibonaccikeko:insert+findMin+insert+makeHeap+insert+merge+insert+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
  
 
     }
@@ -699,7 +935,7 @@ public class Kekoharjoitus {
             decreaseKeyTesti(taulu3[i]);
         }
       
-        int[]taulu4 = {30002};
+        int[]taulu4 = {5002};
         for (int i=0;i<taulu4.length;i++){
             doAllTesti(taulu4[i]);
         }
@@ -709,6 +945,12 @@ public class Kekoharjoitus {
         for (int i=0;i<taulu4.length;i++){
             doAllTesti2(taulu4[i]);
         }
+       
+        int[]taulu5 = {6002};
+        for (int i=0;i<taulu4.length;i++){
+            yhdistelmaTesti(taulu4[i]);
+        }
+        
         
     }
 }

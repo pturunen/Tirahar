@@ -5,7 +5,8 @@
 package Kekoharjoitus;
 
 /**
- * 
+ * Fibonaccikeko tietorakenteena toteutettu
+ * minimikeko
  * @author pturunen
  */
 public class Fibonaccikeko {
@@ -71,7 +72,7 @@ public class Fibonaccikeko {
      * Palauttaa Fibonaccikeko olion pienimmän arvon omaavan
      * Fibonaccipuu olion
      * 
-     * @param fibonaccipuu Fibonacipuu olio tai null jos keko tyhjä
+     * @return  Fibonaccipuu olio tai null jos keko tyhjä
      */
     public Fibonaccipuu getMin(){
         return this.min;
@@ -299,8 +300,8 @@ public class Fibonaccikeko {
     /**
       * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
-     * @param binomipuu Binomipuu olio,jonka valuen arvo on alkio
-     * @param alkio, Solmu olio,jonka arvoa
+     * @param puu Fibonaccipuu olio,jonka valuen arvo on alkio
+     * @param alkio , Solmu olio,jonka arvoa
      * halutaan pienentää
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä

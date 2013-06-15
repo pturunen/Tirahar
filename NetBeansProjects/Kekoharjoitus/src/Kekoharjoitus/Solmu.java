@@ -5,7 +5,10 @@
 package Kekoharjoitus;
 
 /**
- *
+ * Minimikekojen perustietorakenne
+ * Solmu luokan value arvo vastaa minimikeon key arvoa.
+ * Minimikeko palauttaa pienimmän keon solmun, jonka Solmu.value
+ * arvo on pienin.
  * @author pturunen
  */
 public class Solmu {

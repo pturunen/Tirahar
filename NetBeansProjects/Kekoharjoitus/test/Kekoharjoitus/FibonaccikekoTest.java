@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Fibonaccikeko luokan yksikkötestiluokka
  * @author pturunen
  */
 public class FibonaccikekoTest {

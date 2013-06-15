@@ -5,7 +5,8 @@
 package Kekoharjoitus;
 
 /**
- * Kekoalkio luokan oliot muodostavat linkitetyn listan
+ * Kekoalkio luokan oliot muodostavat 
+ * kaksisuuntaisen linkitetyn listan
  * @author pturunen
  */
 public class Kekoalkio {
@@ -26,7 +27,7 @@ public class Kekoalkio {
     }
     
     /**
-     * Kekoalkion luokan konstruktori
+     * Konstruktori
      * @param value Solmu luokan olio
      * 
      */

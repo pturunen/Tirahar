@@ -11,10 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.Random;
-//import static org.junit.Assert.*;
 
 /**
- *
+ * Dkeko luokan yksikkötestiluokka
  * @author pturunen
  */
 public class DkekoTest extends TestCase{

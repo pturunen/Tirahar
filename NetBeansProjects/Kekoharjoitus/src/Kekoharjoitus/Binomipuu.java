@@ -5,7 +5,8 @@
 package Kekoharjoitus;
 
 /**
- *
+ * Binomipuu luokan oliot muodostavat yksisuuntaisen 
+ * linkitetyn listan
  * @author pturunen
  */
 public class Binomipuu {

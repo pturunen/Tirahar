@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Binomipuu luokan yksikkötestiluokka
  * @author pturunen
  */
 public class BinomipuuTest {

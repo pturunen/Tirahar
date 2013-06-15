@@ -12,7 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Kekoalkio luokan yksikkötestiluokka
  * @author pturunen
  */
 public class KekoalkioTest {

@@ -12,7 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Solmu luokan yksikkötestiluokka
  * @author pturunen
  */
 public class SolmuTest {

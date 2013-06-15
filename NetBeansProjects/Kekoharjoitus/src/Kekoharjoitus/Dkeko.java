@@ -5,7 +5,8 @@
 package Kekoharjoitus;
 
 /**
- *
+ * Dkeko tietorakenteena toteutettu
+ * minimikeko
  * @author pturunen
  */
 public class Dkeko {
@@ -48,7 +49,7 @@ public class Dkeko {
     
     /**
      * Luo uuden tyhjän keon
-     * @param d, alustaa dkeon haarautumisasteen
+     * @param d , alustaa dkeon haarautumisasteen
      * @return Dkeko luokan olion
      */
     public static Dkeko makeHeap(int d){
@@ -173,7 +174,7 @@ public class Dkeko {
     /**
      * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
-     * @param alkio, Solmu olio,jonka arvoa
+     * @param alkio , Solmu olio,jonka arvoa
      * halutaan pienentää
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
