@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author pturunen
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({FibonaccikekoTest.class, DkekoTest.class, KekoharjoitusTest.class, BinomikekoTest.class})
+@Suite.SuiteClasses({FibonaccikekoTest.class, DkekoTest.class, BinomikekoTest.class})
 public class KekoharjoitusSuite {
 
     @BeforeClass
