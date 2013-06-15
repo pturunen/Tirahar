@@ -48,7 +48,7 @@ public class Kekoharjoitus {
             dkeko2.insert(taulukko[i]);
             endtime = System.currentTimeMillis()+endtime;
         }
-        System.out.println(" Dkeko (2 haaraa)  insert "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (2 haaraa)  insert "+koko+" kpl solmuja,yht: aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
@@ -57,7 +57,7 @@ public class Kekoharjoitus {
             dkeko19.insert(taulukko[i]);
             endtime = System.currentTimeMillis()+endtime;
         }
-        System.out.println(" Dkeko (19 haaraa)  insert "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (19 haaraa)  insert "+koko+" kpl solmuja,yht: aika= "+(endtime-starttime)+" millisekunttia");
    
         
         starttime =0;
@@ -68,7 +68,7 @@ public class Kekoharjoitus {
             bkeko.insert(taulukko[i]);
             endtime = System.currentTimeMillis()+endtime;
         }
-        System.out.println(" Binomikeko        insert "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Binomikeko        insert "+koko+" kpl solmuja,yht: aika= "+(endtime-starttime)+" millisekunttia");
         
         
         starttime =0;
@@ -79,7 +79,7 @@ public class Kekoharjoitus {
             fkeko.insert(taulukko[i]);
             endtime = System.currentTimeMillis()+endtime;
         }
-        System.out.println(" Fibonaccikeko     insert "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Fibonaccikeko     insert "+koko+" kpl solmuja,yht aika= "+(endtime-starttime)+" millisekunttia");
         
     }
     
@@ -128,7 +128,7 @@ public class Kekoharjoitus {
             System.out.println("TULOS VIRHEELLINEN!!!!!!!!!!");
         }
         
-        System.out.println(" Dkeko (19 haaraa)  findMin "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (19 haaraa)  findMin "+koko+" kpl solmuja, aika= "+(endtime-starttime)+" millisekunttia");
    
         
         starttime =0;
@@ -144,7 +144,7 @@ public class Kekoharjoitus {
             System.out.println("TULOS VIRHEELLINEN!!!!!!!!!!");
         }
         
-        System.out.println(" Binomikeko        findMin "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Binomikeko        findMin "+koko+" kpl solmuja, aika= "+(endtime-starttime)+" millisekunttia");
         
         
         starttime =0;
@@ -161,7 +161,7 @@ public class Kekoharjoitus {
             System.out.println("TULOS VIRHEELLINEN!!!!!!!!!!");
         }
         
-        System.out.println(" Fibonaccikeko     findMin "+koko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Fibonaccikeko     findMin "+koko+" kpl solmuja, aika= "+(endtime-starttime)+" millisekunttia");
         
     }
     
@@ -271,7 +271,7 @@ public class Kekoharjoitus {
             endtime =0;
         }
         System.out.println(" Dkeko (2 haaraa)  deleteMin "+tkoko+
-            " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+            " kpl solmuja, KAIKKI aika= "+kokoaika+" millisekunttia");
         
 //--------------------------------------------------------------------------        
         starttime =0;
@@ -280,7 +280,7 @@ public class Kekoharjoitus {
         solmu = dkeko19.deleteMin();
         endtime = System.currentTimeMillis();
         System.out.println(" Dkeko (19 haaraa)  deleteMin "+tkoko+
-                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+                " kpl solmuja, aika= "+(endtime-starttime)+" millisekunttia");
    
         starttime =0;
         endtime =0;
@@ -298,7 +298,7 @@ public class Kekoharjoitus {
         }
          System.out.println("dkeko19 counter="+counter);
         System.out.println(" Dkeko (19 haaraa)  deleteMin "+tkoko+
-                " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+                " kpl solmuja KAIKKI aika= "+kokoaika+" millisekunttia");
  
 //------------------------------------------------------------------------        
         
@@ -308,7 +308,7 @@ public class Kekoharjoitus {
         solmu = bkeko.deleteMin();
         endtime = System.currentTimeMillis();
         System.out.println(" Binomikeko        deleteMin "+tkoko+
-                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+                " kpl solmuja, aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
@@ -326,7 +326,7 @@ public class Kekoharjoitus {
         
         System.out.println("binomikeko counter="+counter);
         System.out.println(" Binomikeko         deleteMin "+tkoko+
-                " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+                " kpl solmuja, KAIKKI aika= "+kokoaika+" millisekunttia");
  
 //-------------------------------------------------------------------------        
         starttime =0;
@@ -335,7 +335,7 @@ public class Kekoharjoitus {
         solmu = fkeko.deleteMin();
         endtime = System.currentTimeMillis();
         System.out.println(" Fibonaccikeko     deleteMin "+tkoko+
-                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+                " kpl solmuja, aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
@@ -351,7 +351,7 @@ public class Kekoharjoitus {
             endtime =0;
         }
         System.out.println(" Fibonaccikeko   "+counter+" deleteMin "+tkoko+
-                " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+                " kpl solmuja, KAIKKI aika= "+kokoaika+" millisekunttia");
 
     }
     
@@ -386,7 +386,7 @@ public class Kekoharjoitus {
         
         starttime =0;
         endtime =0;
-        solmu = new Solmu(tkoko-300);
+        solmu = new Solmu(tkoko);
         puu = dkeko2.findKekoalkio(solmu);
         value = 1;
         tulos =0;
@@ -428,7 +428,7 @@ public class Kekoharjoitus {
         
         starttime =0;
         endtime =0;
-        solmu = new Solmu(tkoko-300);
+        solmu = new Solmu(tkoko);
         bpuu = bkeko.findBinomipuu(bkeko.getJuuriListaMin(), solmu);
         value = 1;
         tulos =0;
@@ -458,7 +458,7 @@ public class Kekoharjoitus {
 
         starttime =0;
         endtime =0;
-        solmu = new Solmu(tkoko-300);
+        solmu = new Solmu(tkoko);
         fpuu = fkeko.findFibonaccipuu(fkeko.getMin(),solmu, fkeko.getMin());
         value = 1;
         tulos =0;
@@ -472,6 +472,206 @@ public class Kekoharjoitus {
                 " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
     }
     
+    
+    /*
+     * dkeko,binomikeko ja fibonaccikeko testi deleteMin operaatiolle
+     * 
+     */
+    public static void doAllTesti(int tkoko){
+        Dkeko dkeko2 = insertDkeko(tkoko);
+        Dkeko dkeko19 = insertD19keko(tkoko);
+        Binomikeko bkeko = insertBkeko(tkoko);
+        Fibonaccikeko fkeko = insertFkeko(tkoko);
+        
+        long starttime =0;
+        long endtime =0;
+       
+        System.out.println("--kekon koko alussa ="+tkoko+" solmua---------");
+        
+        Solmu solmu = null;
+        Solmu solmu2 = null;
+        Solmu solmu3 = null;
+        
+        Dkeko keko2 = null;
+        Dkeko mergeKeko = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        
+        starttime = System.currentTimeMillis();
+        dkeko2.insert(solmu);
+        dkeko2.findMin();
+        keko2 = Dkeko.makeHeap(2);
+        keko2.insert(solmu2);
+        mergeKeko = Dkeko.merge(dkeko2, keko2);
+        solmu = mergeKeko.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Dkeko 2:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");
+        
+        
+        Dkeko keko19 = null;
+        Dkeko mergeKeko19 = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        
+        starttime = System.currentTimeMillis();
+        dkeko19.insert(solmu);
+        dkeko19.findMin();
+        keko19 = Dkeko.makeHeap(19);
+        keko19.insert(solmu2);
+        mergeKeko19 = Dkeko.merge(dkeko19, keko19);
+        solmu = mergeKeko19.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Dkeko 19:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+        
+ 
+        Binomikeko binomikeko = null;
+        Binomikeko bkekoMerge = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        
+        starttime = System.currentTimeMillis();
+        bkeko.insert(solmu);
+        bkeko.findMin();
+        binomikeko = Binomikeko.makeHeap();
+        binomikeko.insert(solmu2);
+        bkekoMerge = Binomikeko.merge(binomikeko, bkeko);
+        solmu = bkekoMerge.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Binomikeko:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+ 
+        
+//------------------------------------------------------------------------        
+        
+        Fibonaccikeko fibokeko = null;
+        Fibonaccikeko fkekoMerge = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        
+        starttime = System.currentTimeMillis();
+        fkeko.insert(solmu);
+        fkeko.findMin();
+        fibokeko = Fibonaccikeko.makeHeap();
+        fibokeko.insert(solmu2);
+        fkekoMerge = Fibonaccikeko.merge(fibokeko, fkeko);
+        solmu = fkekoMerge.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Fibonaccikeko:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+ 
+
+    }
+    
+    
+    /*
+     * dkeko,binomikeko ja fibonaccikeko testi deleteMin operaatiolle
+     * Insert,ja decrase ja findMin ennemistö , muutama delete
+     * 
+     */
+    public static void doAllTesti2(int tkoko){
+        Dkeko dkeko2 = insertDkeko(tkoko);
+        Dkeko dkeko19 = insertD19keko(tkoko);
+        Binomikeko bkeko = insertBkeko(tkoko);
+        Fibonaccikeko fkeko = insertFkeko(tkoko);
+        
+        long starttime =0;
+        long endtime =0;
+       
+        System.out.println("--kekon koko alussa ="+tkoko+" solmua---------");
+        
+        Solmu solmu = null;
+        Solmu solmu2 = null;
+        Solmu solmu3 = null;
+        Solmu solmu4 = null;
+        Solmu solmu5 = null;
+        
+        
+        Dkeko keko2 = null;
+        Dkeko mergeKeko = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        solmu4 = new Solmu(6);
+        solmu5 = new Solmu(9);
+        
+        starttime = System.currentTimeMillis();
+        dkeko2.insert(solmu);
+        dkeko2.findMin();
+        dkeko2.insert(solmu4);
+        keko2 = Dkeko.makeHeap(2);
+        keko2.insert(solmu2);
+        mergeKeko = Dkeko.merge(dkeko2, keko2);
+        solmu = mergeKeko.deleteMin();
+        mergeKeko.insert(solmu5);
+        endtime = System.currentTimeMillis();
+        System.out.println(" Dkeko 2:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");
+        
+        
+        Dkeko keko19 = null;
+        Dkeko mergeKeko19 = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        solmu4 = new Solmu(6);
+        solmu4 = new Solmu(6);
+        solmu5 = new Solmu(9);
+        
+        starttime = System.currentTimeMillis();
+        dkeko19.insert(solmu);
+        dkeko19.findMin();
+        dkeko19.insert(solmu4);
+        keko19 = Dkeko.makeHeap(19);
+        keko19.insert(solmu2);
+        mergeKeko19 = Dkeko.merge(dkeko19, keko19);
+        mergeKeko19.insert(solmu5);
+        solmu = mergeKeko19.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Dkeko 19:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+        
+ 
+        Binomikeko binomikeko = null;
+        Binomikeko bkekoMerge = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        solmu4 = new Solmu(6);
+        solmu5 = new Solmu(9);
+        
+        starttime = System.currentTimeMillis();
+        bkeko.insert(solmu);
+        bkeko.findMin();
+        bkeko.insert(solmu4);
+        binomikeko = Binomikeko.makeHeap();
+        binomikeko.insert(solmu2);
+        bkekoMerge = Binomikeko.merge(binomikeko, bkeko);
+        bkekoMerge.insert(solmu5);
+        solmu = bkekoMerge.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Binomikeko:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+ 
+        
+//------------------------------------------------------------------------        
+        
+        Fibonaccikeko fibokeko = null;
+        Fibonaccikeko fkekoMerge = null;
+        solmu = new Solmu(8989);
+        solmu2 = new Solmu(3);
+        solmu4 = new Solmu(6);
+        solmu5 = new Solmu(9);
+        
+        
+        
+        starttime = System.currentTimeMillis();
+        fkeko.insert(solmu);
+        fkeko.findMin();
+        fkeko.insert(solmu4);
+        fibokeko = Fibonaccikeko.makeHeap();
+        fibokeko.insert(solmu2);
+        fkekoMerge = Fibonaccikeko.merge(fibokeko, fkeko);
+        fkekoMerge.insert(solmu5);
+        solmu = fkekoMerge.deleteMin();
+        endtime = System.currentTimeMillis();
+        System.out.println(" Fibonaccikeko:insert+findMin+makeHeap+insert+merge+deleteMin, aika= "+(endtime-starttime)+" millisekunttia");       
+ 
+
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -480,8 +680,8 @@ public class Kekoharjoitus {
         int koko =1;
         taulukko = Kekoharjoitus.insert(koko);
         
-        
-        int[]taulu = {30002};
+       
+        int[]taulu = {1,100,1000,30002};
         for (int i=0;i<taulu.length;i++){
             insertTesti(taulu[i]);
         }
@@ -489,19 +689,26 @@ public class Kekoharjoitus {
             findMinTesti(taulu[i]);
         }
        
-        int[]taulu2 = {30004};
+        int[]taulu2 = {1,100,1000,30004};
         for (int i=0;i<taulu2.length;i++){
             deleteMinTesti(taulu2[i]);
         }
-        
+       
         int[]taulu3 = {3002};
         for (int i=0;i<taulu3.length;i++){
             decreaseKeyTesti(taulu3[i]);
         }
-       
+      
+        int[]taulu4 = {30002};
+        for (int i=0;i<taulu4.length;i++){
+            doAllTesti(taulu4[i]);
+        }
         
         
         
+        for (int i=0;i<taulu4.length;i++){
+            doAllTesti2(taulu4[i]);
+        }
         
     }
 }
