@@ -489,7 +489,7 @@ public class Kekoharjoitus {
             findMinTesti(taulu[i]);
         }
        
-        int[]taulu2 = {3004};
+        int[]taulu2 = {30004};
         for (int i=0;i<taulu2.length;i++){
             deleteMinTesti(taulu2[i]);
         }
