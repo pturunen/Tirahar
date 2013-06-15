@@ -158,6 +158,7 @@ public class Binomikeko {
             if (poista.getChild() != null){
                 Binomikeko keko = Binomikeko.makeHeap();
                 insertBinomipuu(keko, poista.getChild());
+                poista.getChild().setSibling(null);
                 Binomikeko temp = null;
                 if (this.getJuuriListaMin() != null){
                     temp=Binomikeko.merge(keko, this);
@@ -168,12 +169,12 @@ public class Binomikeko {
                 }
             }
         }
-        
         return solmu;
     }
     
     /**
      * Kääntää lapsisolmujen järjestyksen sisaruslistassa
+     * asettaa myös sisarus linkit uudestaan
      * @param keko, Binomikeko jonka juuriListaMin saa uuden arvon
      * @param puu, Binomipuu olio joka aloittaa sisaruslistan
      */
@@ -181,9 +182,14 @@ public class Binomikeko {
         if (keko == null || puu == null){
             return;
         }
-        insertBinomipuu(keko, puu.getSibling()); 
-        if (puu.getSibling() == null) {
-            keko.setjuuriListMin(puu);
+        if (keko.getJuuriListaMin() == null){
+            insertBinomipuu(keko, puu.getSibling());
+            if (puu.getSibling() == null) {
+                keko.setjuuriListMin(puu);
+            }
+            else {
+                puu.getSibling().setSibling(puu);
+            }
         }
     }        
             
@@ -209,8 +215,7 @@ public class Binomikeko {
                         ennenPieninta = prev;
                     }
                 prev = curr;
-                curr = curr.getSibling();
-                    
+                curr = curr.getSibling();     
                 }
             this.removeMin(ennenPieninta,pienin);
         }
@@ -224,7 +229,7 @@ public class Binomikeko {
      * @param poistettava, Binomipuu olio joka poistetaan juurilistasta
      * 
      */
-    private void removeMin(Binomipuu edellinen,Binomipuu poistettava){   
+    private void removeMin(Binomipuu edellinen,Binomipuu poistettava){
         if (poistettava != null){
             if (edellinen == null){
                 Binomipuu next = poistettava.getSibling();

@@ -12,19 +12,25 @@ import java.util.Random;
  */
 public class Kekoharjoitus {
     
+    /*
+     * alustaa kaikissa keko testeissa käytetyn syötetaulukon
+     */
     public static Solmu[] insert(int koko){
         Random generator = null;
         generator = new Random();
         Solmu solmu=null;
         Solmu[] taulukko = new Solmu[koko];
         for (int i =0;i<koko;i++){
-            //solmu = new Solmu(generator.nextInt(10000));
             solmu = new Solmu(i+2);
             taulukko[i] = solmu;
         }
         return taulukko;
     }
     
+    /*
+     * dkeko,binomikeko ja fibonaccikeko testi insert operaatiolle
+     * 
+     */
     public static void insertTesti(int tkoko){
         Solmu[] taulukko = null;;
         int koko =tkoko;
@@ -77,7 +83,10 @@ public class Kekoharjoitus {
         
     }
     
-    
+    /*
+     * dkeko,binomikeko ja fibonaccikeko testi findMin operaatiolle
+     * 
+     */
     public static void findMinTesti(int tkoko){
         Solmu[] taulukko = null;;
         int koko =tkoko;
@@ -156,6 +165,9 @@ public class Kekoharjoitus {
         
     }
     
+    /*
+     * dkeon alustus delete ja decrease testeja varten
+     */
     public static Dkeko insertDkeko(int tkoko){
         Solmu[] taulukko = null;
         int koko =tkoko;
@@ -171,6 +183,9 @@ public class Kekoharjoitus {
         return dkeko2;
     }
     
+    /*
+     * dkekon alustus delete ja decrease testeja varten
+     */
     public static Dkeko insertD19keko(int tkoko){
         Solmu[] taulukko = null;
         int koko =tkoko;
@@ -186,6 +201,9 @@ public class Kekoharjoitus {
         return dkeko19;
     }
     
+    /*
+     * binomikeon alustus delete ja decrease testeja varten
+     */
     public static Binomikeko insertBkeko(int tkoko){
         Solmu[] taulukko = null;
         int koko =tkoko;
@@ -201,6 +219,9 @@ public class Kekoharjoitus {
         return bkeko;
     }
     
+    /*
+     * fibonaccikeon alustus delete ja decrease testeja varten
+     */
     public static Fibonaccikeko insertFkeko(int tkoko){
         Solmu[] taulukko = null;
         int koko =tkoko;
@@ -216,23 +237,27 @@ public class Kekoharjoitus {
         return fkeko;
     }
     
+     /*
+     * dkeko,binomikeko ja fibonaccikeko testi deleteMin operaatiolle
+     * 
+     */
     public static void deleteMinTesti(int tkoko){
         Dkeko dkeko2 = insertDkeko(tkoko);
         Dkeko dkeko19 = insertD19keko(tkoko);
         Binomikeko bkeko = insertBkeko(tkoko);
-        //int pkoko = 25;
         Fibonaccikeko fkeko = insertFkeko(tkoko);
-        
+        //-------------------------------------------------------------------
         long starttime =0;
         long endtime =0;
        
-        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------");
         
         Solmu solmu = null;
         starttime = System.currentTimeMillis();
         solmu = dkeko2.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Dkeko (2 haaraa)  deleteMin "+tkoko+" kpl solmuja , yhden solmun aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (2 haaraa)  deleteMin "+tkoko+
+   " kpl solmuja , yhden solmun aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
@@ -245,20 +270,25 @@ public class Kekoharjoitus {
             starttime =0;
             endtime =0;
         }
-              System.out.println(" Dkeko (2 haaraa)  deleteMin "+tkoko+" kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+        System.out.println(" Dkeko (2 haaraa)  deleteMin "+tkoko+
+            " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
         
-        
+//--------------------------------------------------------------------------        
         starttime =0;
         endtime =0;
         starttime = System.currentTimeMillis();
         solmu = dkeko19.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Dkeko (19 haaraa)  deleteMin "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (19 haaraa)  deleteMin "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
    
         starttime =0;
         endtime =0;
         kokoaika = 0;
+        int counter = 0;
         while (dkeko19.findMin() != null){
+           
+            counter++;
             starttime = System.currentTimeMillis();
             solmu = dkeko19.deleteMin();
             endtime = System.currentTimeMillis();
@@ -266,21 +296,26 @@ public class Kekoharjoitus {
             starttime =0;
             endtime =0;
         }
-        System.out.println(" Dkeko (19 haaraa)  deleteMin "+tkoko+" kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+         System.out.println("dkeko19 counter="+counter);
+        System.out.println(" Dkeko (19 haaraa)  deleteMin "+tkoko+
+                " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
  
-        
+//------------------------------------------------------------------------        
         
         starttime =0;
         endtime =0;
         starttime = System.currentTimeMillis();
         solmu = bkeko.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Binomikeko        deleteMin "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Binomikeko        deleteMin "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
         kokoaika = 0;
+        counter =0;
         while (bkeko.findMin() != null){
+            counter++;
             starttime = System.currentTimeMillis();
             solmu = bkeko.deleteMin();
             endtime = System.currentTimeMillis();
@@ -288,20 +323,24 @@ public class Kekoharjoitus {
             starttime =0;
             endtime =0;
         }
-        System.out.println(" Binomikeko         deleteMin "+tkoko+" kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
- 
         
+        System.out.println("binomikeko counter="+counter);
+        System.out.println(" Binomikeko         deleteMin "+tkoko+
+                " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+ 
+//-------------------------------------------------------------------------        
         starttime =0;
         endtime =0;
         starttime = System.currentTimeMillis();
         solmu = fkeko.deleteMin();
         endtime = System.currentTimeMillis();
-        System.out.println(" Fibonaccikeko     deleteMin "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Fibonaccikeko     deleteMin "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
-     /*   starttime =0;
+        starttime =0;
         endtime =0;
         kokoaika = 0;
-        int counter =0;
+        counter =0;
         while (fkeko.findMin() != null){
             counter++;
             starttime = System.currentTimeMillis();
@@ -311,10 +350,15 @@ public class Kekoharjoitus {
             starttime =0;
             endtime =0;
         }
-        System.out.println(" Fibonaccikeko   "+counter+"      deleteMin "+pkoko+" kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
- */
+        System.out.println(" Fibonaccikeko   "+counter+" deleteMin "+tkoko+
+                " kpl solmuja kaikki aika= "+kokoaika+" millisekunttia");
+
     }
     
+     /*
+     * dkeko,binomikeko ja fibonaccikeko testi decreaseKey operaatiolle
+     * 
+     */
     public static void decreaseKeyTesti(int tkoko){
         Dkeko dkeko2 = insertDkeko(tkoko);
         Dkeko dkeko19 = insertD19keko(tkoko);
@@ -324,7 +368,7 @@ public class Kekoharjoitus {
         long starttime =0;
         long endtime =0;
        
-        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------");
         
         
         Solmu solmu = null;
@@ -337,7 +381,8 @@ public class Kekoharjoitus {
         if (tulos != 0){
             System.out.println("TULOS VIRHEELLINEN");
         }
-        System.out.println(" Dkeko (2 haaraa)  decreaseKey, pienin arvo "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (2 haaraa)  decreaseKey, pienin arvo "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
@@ -351,7 +396,8 @@ public class Kekoharjoitus {
         if (dkeko2.findMin().getValue()!=1){
             System.out.println("TULOS VIRHEELLINEN");
         }
-        System.out.println(" Dkeko (2 haaraa)  decreaseKey,not min  "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (2 haaraa)  decreaseKey,not min  "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
         
         starttime =0;
@@ -364,7 +410,8 @@ public class Kekoharjoitus {
         if (tulos != 0){
             System.out.println("TULOS VIRHEELLINEN");
         }
-        System.out.println(" Dkeko (19 haaraa)  decreaseKey "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Dkeko (19 haaraa)  decreaseKey "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
    
         starttime =0;
         endtime =0;
@@ -376,7 +423,8 @@ public class Kekoharjoitus {
         if (tulos != 0){
             System.out.println("TULOS VIRHEELLINEN");
         }
-        System.out.println(" Binomikeko        decreaseKey "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Binomikeko        decreaseKey "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
         starttime =0;
         endtime =0;
@@ -390,9 +438,10 @@ public class Kekoharjoitus {
         if (bkeko.findMin().getValue()!=1){
             System.out.println("TULOS VIRHEELLINEN");
         }
-         System.out.println(" Binomikeko        decreaseKey not minimi"+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+         System.out.println(" Binomikeko        decreaseKey not minimi"+tkoko+
+                 " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
-        
+       
         starttime =0;
         endtime =0;
         value = fkeko.findMin().getValue() -1;
@@ -404,7 +453,8 @@ public class Kekoharjoitus {
         if (tulos != 0){
             System.out.println("TULOS VIRHEELLINEN");
         }
-        System.out.println(" Fibonaccikeko     decreaseKey "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Fibonaccikeko     decreaseKey "+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
 
         starttime =0;
         endtime =0;
@@ -418,7 +468,8 @@ public class Kekoharjoitus {
         if (fkeko.findMin().getValue()!=1){
             System.out.println("TULOS VIRHEELLINEN");
         }
-        System.out.println(" Fibonaccikeko     decreaseKey not minimi"+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        System.out.println(" Fibonaccikeko     decreaseKey not minimi"+tkoko+
+                " kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
     }
     
     /**
@@ -438,7 +489,7 @@ public class Kekoharjoitus {
             findMinTesti(taulu[i]);
         }
        
-        int[]taulu2 = {3002};
+        int[]taulu2 = {3004};
         for (int i=0;i<taulu2.length;i++){
             deleteMinTesti(taulu2[i]);
         }

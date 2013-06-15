@@ -203,9 +203,12 @@ public class BinomikekoTest {
                 pienin = solmu.getValue();
             }
         }
-        
-        while (instanssi.findMin() != null){                        
+        int counter = 1;
+        while (instanssi.findMin() != null){  
+            System.out.println("kierros counter="+counter);
+            counter++;
             pienin = instanssi.findMin().getValue();
+            System.out.println("pienin ="+pienin);
             assertEquals(pienin, instanssi.deleteMin().getValue());
         }
     }
