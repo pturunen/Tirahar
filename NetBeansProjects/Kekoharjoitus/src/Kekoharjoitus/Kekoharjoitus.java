@@ -341,14 +341,17 @@ public class Kekoharjoitus {
         
         starttime =0;
         endtime =0;
-        solmu = new Solmu(9000);
+        solmu = new Solmu(tkoko-300);
         puu = dkeko2.findKekoalkio(solmu);
         value = 1;
         tulos =0;
         starttime = System.currentTimeMillis();
         tulos =dkeko2.decreaseKey(puu, value);
         endtime = System.currentTimeMillis();
-        System.out.println(" Dkeko (2 haaraa)  decreaseKey,9000  "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        if (dkeko2.findMin().getValue()!=1){
+            System.out.println("TULOS VIRHEELLINEN");
+        }
+        System.out.println(" Dkeko (2 haaraa)  decreaseKey,not min  "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
         
         
         starttime =0;
@@ -377,6 +380,21 @@ public class Kekoharjoitus {
         
         starttime =0;
         endtime =0;
+        solmu = new Solmu(tkoko-300);
+        bpuu = bkeko.findBinomipuu(bkeko.getJuuriListaMin(), solmu);
+        value = 1;
+        tulos =0;
+        starttime = System.currentTimeMillis();
+        tulos = bkeko.decreaseKey(bpuu, solmu, value);
+        endtime = System.currentTimeMillis();
+        if (bkeko.findMin().getValue()!=1){
+            System.out.println("TULOS VIRHEELLINEN");
+        }
+         System.out.println(" Binomikeko        decreaseKey not minimi"+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+        
+        
+        starttime =0;
+        endtime =0;
         value = fkeko.findMin().getValue() -1;
         Fibonaccipuu fpuu = fkeko.findFibonaccipuu(fkeko.getMin(),fkeko.findMin(), fkeko.getMin());
         
@@ -387,6 +405,20 @@ public class Kekoharjoitus {
             System.out.println("TULOS VIRHEELLINEN");
         }
         System.out.println(" Fibonaccikeko     decreaseKey "+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
+
+        starttime =0;
+        endtime =0;
+        solmu = new Solmu(tkoko-300);
+        fpuu = fkeko.findFibonaccipuu(fkeko.getMin(),solmu, fkeko.getMin());
+        value = 1;
+        tulos =0;
+        starttime = System.currentTimeMillis();
+        tulos = fkeko.decreaseKey(fpuu, value);
+        endtime = System.currentTimeMillis();
+        if (fkeko.findMin().getValue()!=1){
+            System.out.println("TULOS VIRHEELLINEN");
+        }
+        System.out.println(" Fibonaccikeko     decreaseKey not minimi"+tkoko+" kpl solmuja aika= "+(endtime-starttime)+" millisekunttia");
     }
     
     /**
@@ -406,12 +438,12 @@ public class Kekoharjoitus {
             findMinTesti(taulu[i]);
         }
        
-        int[]taulu2 = {30002};
+        int[]taulu2 = {3002};
         for (int i=0;i<taulu2.length;i++){
             deleteMinTesti(taulu2[i]);
         }
         
-        int[]taulu3 = {30002};
+        int[]taulu3 = {3002};
         for (int i=0;i<taulu3.length;i++){
             decreaseKeyTesti(taulu3[i]);
         }

@@ -204,10 +204,7 @@ public class BinomikekoTest {
             }
         }
         
-        //while (instanssi.findMin() != null){
-        int counter = 9259;
-        while (counter != 0){
-            counter--;
+        while (instanssi.findMin() != null){                        
             pienin = instanssi.findMin().getValue();
             assertEquals(pienin, instanssi.deleteMin().getValue());
         }
