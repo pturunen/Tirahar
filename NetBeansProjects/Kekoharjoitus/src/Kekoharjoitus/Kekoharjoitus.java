@@ -710,7 +710,7 @@ public class Kekoharjoitus {
     
     
     /*
-     * dkeko,binomikeko ja fibonaccikeko testi deleteMin operaatiolle
+     * dkeko,binomikeko ja fibonaccikeko testi kaikilla operaatiolle
      * 
      */
     public static void doAllTesti(int tkoko){
