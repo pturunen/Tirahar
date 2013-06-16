@@ -300,8 +300,6 @@ public class Fibonaccikeko {
       * Pienentää keossa olevan solmun arvoa ja
      * muuttaa solmun paikkaa keossa ylöspäin, jos kekoehto rikki
      * @param puu Fibonaccipuu olio,jonka valuen arvo on alkio
-     * @param alkio , Solmu olio,jonka arvoa
-     * halutaan pienentää
      * @param value Solmu olion valuen uusi arvo
      * @return int saa arvon 0, tai -1 jos virhe käsittelyssä
      */
