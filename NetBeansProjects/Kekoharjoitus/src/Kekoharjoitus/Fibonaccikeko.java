@@ -219,9 +219,8 @@ public class Fibonaccikeko {
         Fibonaccipuu startingpoint = this.getMin();
         Fibonaccipuu apu = null;
         int minimi = this.getMin().getValue().getValue();
-        //TODO: maximidegree arvon laskeminen
-        //tee oma taulukko olio
-        Fibonaccipuu [] asteet = new Fibonaccipuu[1001];
+      
+        Fibonaccipuu [] asteet = new Fibonaccipuu[n+100];
         this.getMin().setParent(null);
         yhdistaSamanAsteiset(this.getMin(),asteet);
         Fibonaccipuu current = this.getMin().getSiblingR();
